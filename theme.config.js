@@ -2,9 +2,9 @@ export default {
   github: 'https://github.com/Tobotis/fft-introduction',
   logo: (
     <>
-      <span className="mr-2 font-extrabold hidden md:inline">Fourier?</span>
+      <span className="mr-2 font-extrabold hidden md:inline">Fourier...?</span>
       <span className="text-gray-600 font-normal hidden md:inline">
-        eine Einführung
+        Eine Einführung
       </span>
     </>
   ),
