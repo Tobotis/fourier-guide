@@ -28,6 +28,7 @@
     "vec-la": "^1.5.0"
   },
   "devDependencies": {
+    "@types/lodash.range": "^3.2.7",
     "@types/lodash.sumby": "^4.6.7",
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",

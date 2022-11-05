@@ -214,6 +214,13 @@
   "resolved" "https://registry.npmjs.org/@types/katex/-/katex-0.11.1.tgz"
   "version" "0.11.1"
 
+"@types/lodash.range@^3.2.7":
+  "integrity" "sha512-sq3eRZWspMKGAE0QLH+tIE/EWeSEVKlFqaUoqmgR/c4keXiTP8ob24TUzclYKihw/ojftz6vBb632NRmxR4qrQ=="
+  "resolved" "https://registry.npmjs.org/@types/lodash.range/-/lodash.range-3.2.7.tgz"
+  "version" "3.2.7"
+  dependencies:
+    "@types/lodash" "*"
+
 "@types/lodash.sumby@^4.6.7":
   "integrity" "sha512-KmclwYKp3Lj8Y6zFQrhkd7O0NYdARge7eAVdJ8DlZ3CeDBGeX4DvjWW62dCvK417eGZOj+O54M2as+KGAdsw/w=="
   "resolved" "https://registry.npmjs.org/@types/lodash.sumby/-/lodash.sumby-4.6.7.tgz"
