@@ -1,6 +1,6 @@
-import * as React from "react"
-import { useCoordinateContext } from "./CoordinateContext"
-import { range, Interval } from "../math"
+import * as React from 'react'
+import { useCoordinateContext } from './CoordinateContext'
+import { range, Interval } from '../math'
 
 interface PaneContextShape {
   xPanes: Interval[]
@@ -15,13 +15,13 @@ const PaneContext = React.createContext<PaneContextShape>({
   xPaneRange: [0, 0],
   yPaneRange: [0, 0],
 })
-PaneContext.displayName = "PaneContext"
+PaneContext.displayName = 'PaneContext'
 
 export function usePaneContext(): PaneContextShape {
   return React.useContext(PaneContext)
 }
 
-const PaneManager: React.FC = ({ children }) => {
+const PaneManager: React.FC<any> = ({ children }) => {
   const { xMin, xMax, yMin, yMax } = useCoordinateContext()
 
   const base = 2
@@ -37,12 +37,18 @@ const PaneManager: React.FC = ({ children }) => {
   const yUpperBound = Math.ceil(yMax / yStep) * yStep
 
   const xPanes = React.useMemo(
-    () => range(xLowerBound, xUpperBound, xStep).map((xMin) => [xMin, xMin + xStep] as Interval),
+    () =>
+      range(xLowerBound, xUpperBound, xStep).map(
+        (xMin) => [xMin, xMin + xStep] as Interval
+      ),
     [xLowerBound, xUpperBound, xStep]
   )
 
   const yPanes = React.useMemo(
-    () => range(yLowerBound, yUpperBound, yStep).map((yMin) => [yMin, yMin + yStep] as Interval),
+    () =>
+      range(yLowerBound, yUpperBound, yStep).map(
+        (yMin) => [yMin, yMin + yStep] as Interval
+      ),
     [yLowerBound, yUpperBound, yStep]
   )
 

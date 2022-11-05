@@ -12,6 +12,7 @@ export interface TextProps {
   size?: number
   color?: string
   svgTextProps?: React.SVGAttributes<SVGTextElement>
+  children?: string
 }
 
 export const Text: React.FC<TextProps> = ({

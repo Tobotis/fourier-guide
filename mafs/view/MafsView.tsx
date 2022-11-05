@@ -1,13 +1,13 @@
-import * as React from "react"
-import CoordinateContext, { CoordinateContextShape } from "./CoordinateContext"
-import PaneManager from "./PaneManager"
-import MapContext from "./MapContext"
-import useResizeObserver from "use-resize-observer"
-import * as vec from "vec-la"
+import * as React from 'react'
+import CoordinateContext, { CoordinateContextShape } from './CoordinateContext'
+import PaneManager from './PaneManager'
+import MapContext from './MapContext'
+import useResizeObserver from 'use-resize-observer'
+import * as vec from 'vec-la'
 
-import { useGesture } from "@use-gesture/react"
-import ScaleContext, { ScaleContextShape } from "./ScaleContext"
-import { round, Interval, Vector2 } from "../math"
+import { useGesture } from '@use-gesture/react'
+import ScaleContext, { ScaleContextShape } from './ScaleContext'
+import { round, Interval, Vector2 } from '../math'
 
 export interface MafsViewProps {
   width?: number | string
@@ -15,17 +15,12 @@ export interface MafsViewProps {
   pan?: boolean
   xAxisExtent?: Interval
   yAxisExtent?: Interval
-  /**
-   * Enable rendering on the server side. If false, an empty view will still be rendered, with
-   * nothing in it.
-   *
-   * Note that server-side rendering complicated graphs can really bloat your HTML.
-   */
   ssr?: boolean
+  children?: any
 }
 
 export const MafsView: React.FC<MafsViewProps> = ({
-  width: desiredWidth = "auto",
+  width: desiredWidth = 'auto',
   height = 500,
   pan = true,
   xAxisExtent = [-5.5, 5.5],
@@ -34,7 +29,7 @@ export const MafsView: React.FC<MafsViewProps> = ({
   ssr = false,
 }) => {
   const [visible, setVisible] = React.useState(ssr ? true : false)
-  const desiredCssWidth = desiredWidth === "auto" ? "100%" : `${desiredWidth}px`
+  const desiredCssWidth = desiredWidth === 'auto' ? '100%' : `${desiredWidth}px`
 
   const { ref, width = ssr ? 500 : 1 } = useResizeObserver<HTMLDivElement>()
 
@@ -70,9 +65,18 @@ export const MafsView: React.FC<MafsViewProps> = ({
     [yMin, yMax, height]
   )
 
-  const scaleX = React.useCallback((x: number) => round((x / xSpan) * width, 5), [xSpan, width])
-  const scaleY = React.useCallback((y: number) => round((-y / ySpan) * height, 5), [ySpan, height])
-  const unscaleX = React.useCallback((x: number) => round((x / width) * xSpan, 5), [xSpan, width])
+  const scaleX = React.useCallback(
+    (x: number) => round((x / xSpan) * width, 5),
+    [xSpan, width]
+  )
+  const scaleY = React.useCallback(
+    (y: number) => round((-y / ySpan) * height, 5),
+    [ySpan, height]
+  )
+  const unscaleX = React.useCallback(
+    (x: number) => round((x / width) * xSpan, 5),
+    [xSpan, width]
+  )
   const unscaleY = React.useCallback(
     (y: number) => round((-y / height) * ySpan, 5),
     [ySpan, height]
@@ -129,7 +133,10 @@ export const MafsView: React.FC<MafsViewProps> = ({
                 height={height}
                 viewBox={`${-mapX(0)} ${-mapY(0)} ${width} ${height}`}
                 preserveAspectRatio="xMidYMin"
-                style={{ width: desiredCssWidth, touchAction: pan ? "none" : "auto" }}
+                style={{
+                  width: desiredCssWidth,
+                  touchAction: pan ? 'none' : 'auto',
+                }}
                 className="MafsView"
               >
                 {visible && children}

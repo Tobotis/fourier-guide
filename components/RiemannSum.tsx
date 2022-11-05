@@ -59,9 +59,7 @@ function RiemannSum() {
     <>
       <Mafs xAxisExtent={[-1.75, 12.75]} yAxisExtent={[-3.75, 10.25]}>
         <CartesianCoordinates subdivisions={2} />
-
         <FunctionGraph.OfX y={wave} color="#358CF1" />
-
         {partitions.map((partition, index) => (
           <Polygon
             key={index}
@@ -72,19 +70,15 @@ function RiemannSum() {
             }
           />
         ))}
-
         <Text x={1.2} y={5.5} size={20}>
           Midpoint Riemann sum:
         </Text>
-
         <Text x={1.2} y={4.5} size={30}>
           {areaApprox.toFixed(4)}
         </Text>
-
         <Text x={1.2} y={3.5} size={20}>
           True area:
         </Text>
-
         <Text x={1.2} y={2.5} size={30}>
           {exactArea.toFixed(4)}
         </Text>
