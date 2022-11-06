@@ -12,8 +12,17 @@ import {
   Vector,
 } from '../mafs'
 
-const WaveSummation: React.FC = () => {
+const WaveSummationInverted: React.FC = () => {
   const [numPoints, setNumPoints] = React.useState(3)
+
+  const fixedCoordinates: Vector2[] = [
+    [2, 3],
+    [0.5, 0.2],
+    [1, 1],
+    [5, 2],
+    [7, 1],
+    [0.1, 0.05],
+  ]
 
   let [coordinates, setCoordinates] = React.useState<Vector2[]>([])
 
@@ -29,7 +38,29 @@ const WaveSummation: React.FC = () => {
       <>
         <FrameMafs
           component={
-            <Mafs>
+            <Mafs
+              yAxisExtent={[
+                -1 *
+                  fixedCoordinates.reduce(
+                    (pSum, coordinate) => pSum + Math.abs(coordinate[1]),
+                    0
+                  ),
+                fixedCoordinates.reduce(
+                  (pSum, coordinate) => pSum + Math.abs(coordinate[1]),
+                  0
+                ),
+              ]}
+              xAxisExtent={[
+                -5 *
+                  Math.max(
+                    ...fixedCoordinates.map((value) => Math.abs(value[0]))
+                  ),
+                5 *
+                  Math.max(
+                    ...fixedCoordinates.map((value) => Math.abs(value[0]))
+                  ),
+              ]}
+            >
               <CartesianCoordinates subdivisions={2} />
               {coordinates.map(function (coordinate, i) {
                 return (
@@ -73,25 +104,35 @@ const WaveSummation: React.FC = () => {
               pan={false}
               yAxisExtent={[
                 -1 *
-                  coordinates.reduce(
+                  fixedCoordinates.reduce(
                     (pSum, coordinate) => pSum + Math.abs(coordinate[1]),
                     0
                   ),
-                coordinates.reduce(
+                fixedCoordinates.reduce(
                   (pSum, coordinate) => pSum + Math.abs(coordinate[1]),
                   0
                 ),
               ]}
               xAxisExtent={[
                 -5 *
-                  Math.max(...coordinates.map((value) => Math.abs(value[0]))),
-                5 * Math.max(...coordinates.map((value) => Math.abs(value[0]))),
+                  Math.max(
+                    ...fixedCoordinates.map((value) => Math.abs(value[0]))
+                  ),
+                5 *
+                  Math.max(
+                    ...fixedCoordinates.map((value) => Math.abs(value[0]))
+                  ),
               ]}
             >
               <CartesianCoordinates subdivisions={2} />
               <FunctionGraph.OfX
                 quality="high"
                 y={(x) => sinSum(x, coordinates)}
+              ></FunctionGraph.OfX>
+              <FunctionGraph.OfX
+                quality="high"
+                y={(x) => sinSum(x, fixedCoordinates)}
+                color="red"
               ></FunctionGraph.OfX>
             </Mafs>
           </>
@@ -100,4 +141,4 @@ const WaveSummation: React.FC = () => {
     </div>
   )
 }
-export default WaveSummation
+export default WaveSummationInverted
