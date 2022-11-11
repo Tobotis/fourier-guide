@@ -26,6 +26,7 @@ export default {
   footer: true,
   titleSuffix: false,
   footerEditLink: false,
+  defaultMenuCollapsed: false,
   footerText: (
     <>{new Date().getFullYear()} © Florian Reinecke und Tobias Steinbrecher.</>
   ),

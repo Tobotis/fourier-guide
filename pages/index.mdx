@@ -1,20 +1,22 @@
 ---
-title: Einführung in FFT
+title: Fourier... ? Eine Einführung
 ---
 
-import Bleed from 'nextra-theme-docs/bleed'
+import Callout from 'nextra-theme-docs/callout'
 import FrameMafs from '../components/FrameMafs.jsx'
 import VectorFieldExample from '../components/VectorFieldExample.tsx'
 
 # Fourier... ? Eine Einführung
 
-$$
-(\mathcal{F}f)(y)
-  = \int_{\R^n} f(x)\, \mathrm e^{-\mathrm{i} y \cdot x} \,\mathrm{d} x\;,
-$$
+<Callout emoji="💡">
+  Dieses Projekt ist im Rahmen des Seminarfaches an der Bismarckschule
+  entstanden.
+</Callout>
 
-Dies ist ein ziemlich interessanter Artikel, da es sich um die Fourier Transformation handelt.
+### Ziel
 
----
+Dieser Artikel soll eine Einführung in die **Fourier-Transformation** und den Algorithmus der **Schnellen-Fourier-Transformation** vermitteln. Dabei
 
-<FrameMafs component={<VectorFieldExample />} />
+### Funktionsweise des Artikels
+
+Es steht vor allem im Vordergrund, dass keine Annahmen getätigt werden, sondern nachdem dieser Artikel gelesen ist, ein grundlegendes Verständnis der **Fourier-Transformation** vorliegt. Aus diesem Grund, müssen womöglich zwischenzeitlich einige Grundlagen erklärt werden.
