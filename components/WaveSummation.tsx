@@ -27,34 +27,32 @@ const WaveSummation: React.FC = () => {
   return (
     <div>
       <>
-        <FrameMafs
-          component={
-            <Mafs>
-              <CartesianCoordinates subdivisions={2} />
-              {coordinates.map(function (coordinate, i) {
-                return (
-                  <>
-                    <FunctionGraph.OfX
-                      quality="high"
-                      y={(x) =>
-                        coordinate[1] *
-                        Math.sin(((x / coordinate[0]) * Math.PI) / 2)
-                      }
-                    ></FunctionGraph.OfX>
-                    <MovablePoint
-                      point={coordinate}
-                      onMove={(newPos) => {
-                        let copy = coordinates
-                        copy[i] = newPos
-                        setCoordinates(copy)
-                      }}
-                    />
-                  </>
-                )
-              })}
-            </Mafs>
-          }
-        ></FrameMafs>
+        <FrameMafs>
+          <Mafs>
+            <CartesianCoordinates subdivisions={2} />
+            {coordinates.map(function (coordinate, i) {
+              return (
+                <>
+                  <FunctionGraph.OfX
+                    quality="high"
+                    y={(x) =>
+                      coordinate[1] *
+                      Math.sin(((x / coordinate[0]) * Math.PI) / 2)
+                    }
+                  ></FunctionGraph.OfX>
+                  <MovablePoint
+                    point={coordinate}
+                    onMove={(newPos) => {
+                      let copy = coordinates
+                      copy[i] = newPos
+                      setCoordinates(copy)
+                    }}
+                  />
+                </>
+              )
+            })}
+          </Mafs>
+        </FrameMafs>
         <div className="">
           Anzahl Wellen:{' '}
           <input
@@ -66,37 +64,32 @@ const WaveSummation: React.FC = () => {
           />
         </div>
       </>
-      <FrameMafs
-        component={
-          <>
-            <Mafs
-              pan={false}
-              yAxisExtent={[
-                -1 *
-                  coordinates.reduce(
-                    (pSum, coordinate) => pSum + Math.abs(coordinate[1]),
-                    0
-                  ),
-                coordinates.reduce(
-                  (pSum, coordinate) => pSum + Math.abs(coordinate[1]),
-                  0
-                ),
-              ]}
-              xAxisExtent={[
-                -5 *
-                  Math.max(...coordinates.map((value) => Math.abs(value[0]))),
-                5 * Math.max(...coordinates.map((value) => Math.abs(value[0]))),
-              ]}
-            >
-              <CartesianCoordinates subdivisions={2} />
-              <FunctionGraph.OfX
-                quality="high"
-                y={(x) => sinSum(x, coordinates)}
-              ></FunctionGraph.OfX>
-            </Mafs>
-          </>
-        }
-      />
+      <FrameMafs>
+        <Mafs
+          pan={false}
+          yAxisExtent={[
+            -1 *
+              coordinates.reduce(
+                (pSum, coordinate) => pSum + Math.abs(coordinate[1]),
+                0
+              ),
+            coordinates.reduce(
+              (pSum, coordinate) => pSum + Math.abs(coordinate[1]),
+              0
+            ),
+          ]}
+          xAxisExtent={[
+            -5 * Math.max(...coordinates.map((value) => Math.abs(value[0]))),
+            5 * Math.max(...coordinates.map((value) => Math.abs(value[0]))),
+          ]}
+        >
+          <CartesianCoordinates subdivisions={2} />
+          <FunctionGraph.OfX
+            quality="high"
+            y={(x) => sinSum(x, coordinates)}
+          ></FunctionGraph.OfX>
+        </Mafs>
+      </FrameMafs>
     </div>
   )
 }
