@@ -25,7 +25,7 @@ const SingleSignal: React.FC = () => {
           />
         </Mafs>
       }
-      text="Es lässt sich zum Beispiel dieses Signal betrachten. Es handelt sich hierbei um ein einzelnes Signal, welches somit nur endliche Zeit existiert. Man kann jedoch ein periodische erzwingen, indem man das einzelne Signal einfach wiederholt."
+      text="Es handelt sich hierbei um ein einzelnes Signal, welches somit nur endliche Zeit existiert. Man kann jedoch eine Periodizität erzwingen, indem man das einzelne Signal einfach wiederholt."
     />
   )
 }

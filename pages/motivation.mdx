@@ -3,12 +3,10 @@ title: Fourier... ? Eine Einführung
 ---
 
 import Callout from 'nextra-theme-docs/callout'
+import SingleSignal from '../components/SingleSignal.tsx'
+import PeriodicSignal from '../components/PeriodicSignal.tsx'
 
 # Motivation
-
-<Callout type="warning" emoji="🚧">
-  Dieser Bereich ist in Arbeit
-</Callout>
 
 > The Fast-Fourier-Transform is the most important numerical algorithm of our lifetime.  
 > ~ <cite>[Gilbert Strang](https://en.wikipedia.org/wiki/Gilbert_Strang)</cite>
@@ -18,13 +16,36 @@ Zunächst soll jedoch geklärt werden, warum eine **Fourier-Transformation** so 
 
 ---
 
-Eine sehr _offentsichtliche Anwendung_ der **Fourier-Transformation** ist die Zerlegung eines Tons, in seine Frequenzbestandteile.
+Die **Fourier-Transformation** bzw. allgemeiner die **Fourier-Analysis** umfasst letztendlich alles, was mit **periodischen Phänomen** zutun hat. **Periodische Phänomene** sind von unglaublicher Bedeutung für fast alle Bereiche in der Gesellschaft. Häufig handelt es sich
+um Periodizität in der Zeit und/oder im Raum.
 
+### Periodisierung
+
+Es gibt zwar viele Phänomene, welche periodisches Verhalten aufweisen, jedoch gibt es auch solche, welche zunächst periodisch erscheinen, jedoch nach einer Zeit aufhören, oder solche, die nur einzelne _Signale sind_.
+
+<SingleSignal />
+<PeriodicSignal />
+
+Die Werkzeuge für periodisches Verhalten, lassen sich somit auch auf solch einzelne _Signale_ anwenden, indem sich nach der Anwendung wieder auf ein einzelnes _Signal_ beschränkt wird. Die Periodizität ist somit nicht unbedigt eine Einschränkung.
+
+### Anwendungszwecke
+
+Es lassen sich zahlreiche Anwendungszwecke der **Fourier-Transformation** bzw. sogar spezifischer, nur des Algorithmus der **FFT** auflisten.
+
+<br />
+
+| Anwendungsbereiche                           | im Detail                                                                                                                                                                                               |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Signalverarbeitung (z.B. im Rahmen von WLAN) | Jegliche Form von digitaler Signalverarbeitung basiert auf Wellen, welche bestimmte Informationen übermitteln. Dabei werden Signale spezifischer Frequenzen zur Informationsübertragung genutzt. Um ein |
+| Radioastronomie                              |                                                                                                                                                                                                         |
+| Elektrokardiographie                         |                                                                                                                                                                                                         |
+| Seismologie                                  |                                                                                                                                                                                                         |
+| Dateikompression                             |                                                                                                                                                                                                         |
+
+<Callout emoji="🚧">
+  Man sollte sich hieraus später ungefähr denken können, was eine
+  Fourier-Transformation macht.
+</Callout>
 ---
 
-Die **Fourier-Transformation** bzw. allgemeiner die **Fourier-Analysis** umfasst letztendlich alles, was mit **perdioschen Phänomen** zutun hat. **Periodische Phänomene** sind von unglaublicher Bedeutung für fast alle Bereiche in der Gesellschaft. Häufig handelt es sich
-dabei um Periodizität in der Zeit und/oder im Raum.
-
----
-
-Es ist bleibt jedoch weiterhin unklar, was eine **Fourier-Transformation** genau ist.
+Es bleibt jedoch weiterhin unklar, wie genau die **Fourier-Transformation** funktioniert bzw. was genau durch eine **Fourier-Transformation** passiert.
