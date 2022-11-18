@@ -1,0 +1,33 @@
+---
+title: Fourier... ? Eine Einführung
+---
+
+import SingleSignal from '../../components/SingleSignal.tsx'
+import PeriodicSignal from '../../components/PeriodicSignal.tsx'
+
+# Periodische Funktionen
+
+Auf dem Weg zur **Fourier-Transformation** lassen sich zunächst einige Stationen, wie z.B. die **Fourier-Reihe**, betrachten. Grundlegend lässt sich mit den mathematischen Funktionen Sinus und Kosinus beginnen.
+
+### Periodizität von $\sin$ und $\cos$
+
+Eine grundlegende Verbindung zwischen der Mathematik und **periodischen Phänomenen**, sind die periodischen Funktionen $\sin$ und $\cos$.  
+Nun kann man sich fragen, warum die Funktionen $\sin$ und $\cos$ überhaupt periodisch sind?  
+Die Periodizität von $\sin$ und $\cos$ basiert grundlegend auf der Rotationssymmetrie eines Kreises.  
+Bewegt man sich auf dem Rand eines Kreises, so kommt man nach einer Weile wieder am Punkt an, wo man gestartet ist.  
+Wenn man nun einen solchen Kreis mit dem Radius $r = 1$ betrachtet, so folgt für den Umfang dieses Kreises $U = 2 \pi$. Daraus folgt, dass $\sin$ und $\cos$ periodisch mit der Periodenlänge $2\pi$ sind. Es folgt also:
+
+$$
+sin(t) = sin(t+2\pi) \qquad \text{und}\qquad cos(t) = cos(t+2\pi)
+$$
+
+Die Periodizität der Funktionen $\sin$ und $\cos$ resultiert somit aus der räumlichen Periodizität von Kreisen.
+
+### Modellierung von komplizierten periodischen Phänomenen
+
+Es gibt zwar viele Phänomene, welche periodisches Verhalten aufweisen, jedoch gibt es auch solche, welche zunächst periodisch erscheinen, jedoch nach einer Zeit aufhören, oder solche, die nur einzelne _Signale sind_.
+
+<SingleSignal />
+<PeriodicSignal />
+
+Die Werkzeuge für periodisches Verhalten, lassen sich somit auch auf solch einzelne _Signale_ anwenden, indem sich nach der Anwendung wieder auf ein einzelnes _Signal_ beschränkt wird. Die Periodizität ist somit nicht unbedigt eine Einschränkung.
