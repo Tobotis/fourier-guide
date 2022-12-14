@@ -2,6 +2,9 @@
 title: Fourier... ? Eine Einführung
 ---
 
+import Callout from 'nextra-theme-docs/callout'
+import InteractiveSin from '../../components/InteractiveSin.tsx'
+
 # Periodische Funktionen
 
 Auf dem Weg zur **Fourier-Transformation** lassen sich zunächst einige Stationen, wie z.B. die **Fourier-Reihe**, betrachten. Grundlegend lässt sich mit den mathematischen Funktionen Sinus und Kosinus beginnen.
@@ -22,4 +25,15 @@ Die Periodizität der Funktionen $\sin$ und $\cos$ resultiert somit aus der räu
 
 ### Komplizierte Verhalten aus einfachen Funktionen
 
-Um nun etwas kompliziertes Verhalten aus den bekannten Funktionen $\sin$ und $\cos$ zu erhalten, lassen sich verschiede
+Es gibt verschiedene Möglichkeiten die Sinus- und Kosinusterme zu verändern, welche wahrscheinlich aus der Schulmathematik bekannt sein sollten:
+
+$$
+f(t) = A \sin(\omega t + \Delta \varphi) \qquad \text{und} \qquad f(t) = A \cos(\omega t + \Delta \varphi)
+$$
+
+Dabei gilt $\Delta \varphi$: Phasenverschiebung, $\omega$: Kreisfrequenz, $A$: Amplitude. Im Folgenden lassen sich jene Veränderungen ausprobieren:
+
+<Callout emoji="🚧">Muss überarbeitet werden</Callout>
+<InteractiveSin />
+
+Um nun kompliziertes Verhalten mit $\sin$ bzw. $\cos$ zu modellieren, lassen sich zum Beispiel verschiedene $\sin$ und $\cos$ Funktionen addieren:
