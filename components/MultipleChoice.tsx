@@ -91,7 +91,7 @@ const Quiz: React.FC = ({ children }: any) => {
   }).length
 
   return (
-    <div className="border-2 border-gray-400 p-3 rounded-2xl">
+    <div className="border-2 border-gray-400 p-3 rounded-2xl my-5 w-auto">
       <div className="flex flex-col space-y-0">
         <p className="text-lg p-0 m-0">{question}</p>
         <p className="text-gray-600 text-xs m-0 pt-0">
