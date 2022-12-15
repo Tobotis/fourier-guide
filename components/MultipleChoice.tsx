@@ -1,6 +1,6 @@
 import { type } from 'os'
 import * as React from 'react'
-import { arraysEqual } from '../utils/general.jsx'
+import { arraysEqual } from '../utils/general'
 
 /* Beispiel-Nutzung:
 
@@ -22,7 +22,13 @@ export class Answer {
   }
 }
 
-const Quiz: React.FC = ({ children }: any) => {
+const MultipleCorrectAnswersQuiz: any = (
+  children: Array<any>,
+  elements: Array<any>,
+  question: string,
+  answers: Array<any>,
+  correct_answers: Array<boolean>
+) => {
   let [result, setResult]: any = React.useState('')
   let [result_positive, setResult_positive]: any = React.useState(true)
 
@@ -65,17 +71,9 @@ const Quiz: React.FC = ({ children }: any) => {
     }
   }
 
-  let elements: Array<any> = children.props.children
-  let question: string = elements[0]
-  let answers: Array<any> = elements.filter((e) => {
-    return typeof e == typeof {}
-  })
-
   let [selected_answers, set_selected_answers] = React.useState(
     Array(answers.length).fill(false)
   )
-
-  let correct_answers: Array<boolean> = Array(answers.length).fill(false)
 
   answers.forEach((answer, index) => {
     if (answer.props['correct']) {
@@ -105,6 +103,7 @@ const Quiz: React.FC = ({ children }: any) => {
             <div>
               <input
                 type="checkbox"
+                key={i}
                 onClick={onTickedWrapper(i)}
                 value={selected_answers[i]}
               />{' '}
@@ -129,6 +128,139 @@ const Quiz: React.FC = ({ children }: any) => {
         </div>
       </button>
     </div>
+  )
+}
+
+const OneCorrectAnswersQuiz: any = (
+  children: Array<any>,
+  elements: Array<any>,
+  question: string,
+  answers: Array<any>,
+  correct_answers: Array<boolean>
+) => {
+  let [result, setResult]: any = React.useState('')
+  let [result_positive, setResult_positive]: any = React.useState(true)
+
+  function onTickedWrapper(index: number) {
+    return (event: React.BaseSyntheticEvent) => {
+      onTicked(event, index)
+    }
+  }
+
+  function onTicked(event: React.BaseSyntheticEvent, index: number) {
+    let new_ticked_answers = Array(answers.length).fill(false)
+    new_ticked_answers[index] = true
+    set_selected_answers(new_ticked_answers)
+  }
+
+  function onAnswer() {
+    if (arraysEqual(selected_answers, correct_answers)) {
+      setResult('Richtig!')
+      setResult_positive(true)
+      return
+    } else {
+      setResult('Dies ist leider nicht korrekt. Probiere es nochmal!')
+      setResult_positive(false)
+      return
+    }
+  }
+
+  let [selected_answers, set_selected_answers] = React.useState(
+    Array(answers.length).fill(false)
+  )
+
+  answers.forEach((answer, index) => {
+    if (answer.props['correct']) {
+      correct_answers[index] = true
+    }
+  })
+
+  let correct_answer_count = answers.filter((e) => {
+    let props = e.props
+    if (props['correct']) {
+      return true
+    }
+  }).length
+
+  return (
+    <div className="border-2 border-gray-400 p-3 rounded-2xl my-5 w-auto">
+      <div className="flex flex-col space-y-0">
+        <p className="text-lg p-0 m-0">{question}</p>
+        <p className="text-gray-600 text-xs m-0 pt-0">
+          Es gibt {correct_answer_count} korrekte{' '}
+          {correct_answer_count == 1 ? 'Antwort' : 'Antworten'}.
+        </p>
+      </div>
+      <form>
+        <fieldset className="pt-3">
+          {answers.map((e, i) => {
+            return (
+              <div>
+                <input
+                  type="radio"
+                  onClick={onTickedWrapper(i)}
+                  key={i}
+                  name="answer"
+                />{' '}
+                {e.props.children}
+              </div>
+            )
+          })}
+        </fieldset>
+      </form>
+      {result != '' ? (
+        result_positive ? (
+          <div className={'text-xs text-green-500'}>{result}</div>
+        ) : (
+          <div className={'text-xs text-red-700'}>{result}</div>
+        )
+      ) : (
+        <></>
+      )}
+
+      <button type="button" onClick={onAnswer} className="mt-3">
+        <div className="bg-sky-500 text-white rounded-lg px-2 py-1">
+          Antworten
+        </div>
+      </button>
+    </div>
+  )
+}
+
+const Quiz: React.FC = ({ children }: any) => {
+  let elements: Array<any> = children.props.children
+  let question: string = elements[0]
+  let answers: Array<any> = elements.filter((e) => {
+    return typeof e == typeof {}
+  })
+
+  let correct_answers: Array<boolean> = Array(answers.length).fill(false)
+
+  let correct_answer_count = answers.filter((e) => {
+    let props = e.props
+    if (props['correct']) {
+      return true
+    }
+  }).length
+
+  console.log(correct_answer_count)
+
+  if (correct_answer_count == 1) {
+    return OneCorrectAnswersQuiz(
+      children,
+      elements,
+      question,
+      answers,
+      correct_answers
+    )
+  }
+
+  return MultipleCorrectAnswersQuiz(
+    children,
+    elements,
+    question,
+    answers,
+    correct_answers
   )
 }
 

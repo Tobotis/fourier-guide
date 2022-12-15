@@ -1,4 +1,4 @@
-export function arraysEqual(a, b) {
+export function arraysEqual(a: Array<any>, b: Array<any>) {
   if (a === b) return true
   if (a == null || b == null) return false
   if (a.length !== b.length) return false
