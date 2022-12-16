@@ -8,26 +8,17 @@ import {
   useMovablePoint,
   Text,
   Theme,
+  Vector2,
+  MovablePoint,
+  Vector,
 } from '../mafs'
 import FrameMafs from './FrameMafs'
 
 function InteractiveSin() {
-  const phase = useMovablePoint([0, 0], {
-    constrain: 'horizontal',
-    color: Theme.orange,
-  })
+  let [phase, setPhase] = React.useState<Vector2>([0, 0])
+  let [amplitude, setAmplitude] = React.useState<Vector2>([Math.PI / 2, 1])
+  let [period, setPeriod] = React.useState<Vector2>([2 * Math.PI, 0])
 
-  const translation = vec.matrixBuilder().translate(phase.x, phase.y).get()
-  const freq = useMovablePoint([2 * Math.PI, 0], {
-    constrain: 'horizontal',
-    transform: translation,
-    color: Theme.blue,
-  })
-  const amplitude = useMovablePoint([Math.PI / 2, 1], {
-    constrain: 'vertical',
-    transform: translation,
-    color: Theme.indigo,
-  })
   return (
     <div>
       <FrameMafs>
@@ -38,16 +29,23 @@ function InteractiveSin() {
           />
           <FunctionGraph.OfX
             y={(x) =>
-              amplitude.y *
-              Math.sin(((2 * Math.PI) / (freq.x - phase.x)) * x - phase.x)
+              amplitude[0] *
+              Math.sin(((2 * Math.PI) / period[0]) * x - phase[0])
             }
           />
-          {freq.element}
-          {amplitude.element}
-          {phase.element}
-          <Text x={2} y={2}>
-            {phase.x.toFixed(3)}
-          </Text>
+          <MovablePoint
+            point={period}
+            onMove={(newPos) => {
+              setPeriod([newPos[0], 0])
+            }}
+          />
+          <MovablePoint
+            point={phase}
+            onMove={(newPos) => {
+              setPeriod([newPos[0] + (period[0] - phase[0]), 0])
+              setPhase([newPos[0], 0])
+            }}
+          />
         </Mafs>
       </FrameMafs>
     </div>

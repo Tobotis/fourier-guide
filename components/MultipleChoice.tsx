@@ -1,4 +1,3 @@
-import { type } from 'os'
 import * as React from 'react'
 import { arraysEqual } from '../utils/general'
 

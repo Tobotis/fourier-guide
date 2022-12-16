@@ -4,6 +4,7 @@ title: Fourier... ? Eine Einführung
 
 import Callout from 'nextra-theme-docs/callout'
 import InteractiveSin from '../../components/InteractiveSin.tsx'
+import Quiz, { Answer } from '../../components/MultipleChoice.tsx'
 
 # Periodische Funktionen
 
@@ -28,7 +29,7 @@ Die Periodizität der Funktionen $\sin$ und $\cos$ resultiert somit aus der räu
 Es gibt verschiedene Möglichkeiten die Sinus- und Kosinusterme zu verändern, welche wahrscheinlich aus der Schulmathematik bekannt sein sollten:
 
 $$
-f(t) = A \sin(\omega t + \Delta \varphi) \qquad \text{und} \qquad f(t) = A \cos(\omega t + \Delta \varphi)
+f(t) = A \sin(\omega t - \Delta \varphi) \qquad \text{und} \qquad f(t) = A \cos(\omega t - \Delta \varphi)
 $$
 
 Dabei gilt $\Delta \varphi$: Phasenverschiebung, $\omega$: Kreisfrequenz, $A$: Amplitude. Im Folgenden lassen sich jene Veränderungen ausprobieren:
@@ -36,4 +37,13 @@ Dabei gilt $\Delta \varphi$: Phasenverschiebung, $\omega$: Kreisfrequenz, $A$: A
 <Callout emoji="🚧">Muss überarbeitet werden</Callout>
 <InteractiveSin />
 
-Um nun kompliziertes Verhalten mit $\sin$ bzw. $\cos$ zu modellieren, lassen sich zum Beispiel verschiedene $\sin$ und $\cos$ Funktionen addieren:
+<Quiz>
+<>
+    <p>Für welche Phasenverschiebung $\Delta \varphi$ gilt $A \cdot \sin(\omega t - \Delta \varphi) = A \cdot \cos(\omega t)$?</p>
+    <Answer>$\Delta \varphi = \frac{\pi}{2}$</Answer>
+    <Answer>$\Delta \varphi = \pi$</Answer>
+    <Answer correct={true}>$\Delta \varphi = -\frac{\pi}{2}$</Answer>
+    <Answer>$\Delta \varphi = - \pi$ </Answer>
+    <Answer>Es existiert kein $ \Delta \varphi$, welches die gewünschte Gleichheit erzeugt.</Answer>
+</>
+</Quiz>
