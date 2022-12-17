@@ -25,10 +25,20 @@ const WaveSummation: React.FC = () => {
   coordinates = coordinates.slice(0, numPoints)
 
   return (
-    <div>
+    <div className="flex-row">
       <>
+        <div className="text-center my-10">
+          Anzahl Sinus-Terme:{' '}
+          <input
+            type="range"
+            min={1}
+            max={10}
+            value={numPoints}
+            onChange={(event) => setNumPoints(+event.target.value)}
+          />
+        </div>
         <FrameMafs>
-          <Mafs>
+          <Mafs height={300}>
             <CartesianCoordinates subdivisions={2} />
             {coordinates.map(function (coordinate, i) {
               return (
@@ -53,19 +63,10 @@ const WaveSummation: React.FC = () => {
             })}
           </Mafs>
         </FrameMafs>
-        <div className="">
-          Anzahl Wellen:{' '}
-          <input
-            type="range"
-            min={1}
-            max={10}
-            value={numPoints}
-            onChange={(event) => setNumPoints(+event.target.value)}
-          />
-        </div>
       </>
       <FrameMafs>
         <Mafs
+          height={300}
           pan={false}
           yAxisExtent={[
             -1 *

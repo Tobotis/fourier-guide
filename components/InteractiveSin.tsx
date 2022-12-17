@@ -21,7 +21,7 @@ function InteractiveSin() {
     <>
       <p className="text-lg text-center">
         Funktion: $f(t) = {parseFloat(amplitude[1].toFixed(2))} \cdot \sin(
-        {parseFloat(omega.toFixed(2))} \cdot t {delPhi > 0 ? '-' : '+'}
+        {parseFloat(omega.toFixed(2))} \cdot t {delPhi > 0 ? '- ' : '+ '}
         {Math.abs(parseFloat(delPhi.toFixed(2)))}
         )$
       </p>
