@@ -1,8 +1,4 @@
----
-title: Fourier... ? Eine Einführung
----
-
-import Callout from 'nextra-theme-docs/callout'
+import { Callout } from 'nextra-theme-docs'
 import InteractiveSin from '../../components/InteractiveSin.tsx'
 import Quiz, { Answer } from '../../components/MultipleChoice.tsx'
 import SampleAddition from '../../components/SampleAddition'
@@ -14,7 +10,7 @@ import FrameMafs from '../../components/FrameMafs'
 
 Auf dem Weg zur **Fourier-Transformation** lassen sich zunächst einige Stationen, wie z.B. die **Fourier-Reihe**, betrachten. Grundlegend lässt sich mit den mathematischen Funktionen Sinus und Kosinus beginnen.
 
-### Periodizität von $\sin$ und $\cos$
+## Periodizität von Sinus und Kosinus
 
 Eine grundlegende Verbindung zwischen der Mathematik und **periodischen Phänomenen**, sind die periodischen Funktionen $\sin$ und $\cos$.  
 Nun kann man sich fragen, warum die Funktionen $\sin$ und $\cos$ überhaupt periodisch sind?  
@@ -23,7 +19,7 @@ Bewegt man sich auf dem Rand eines Kreises, so kommt man nach einer Weile wieder
 Wenn man nun einen solchen Kreis mit dem Radius $r = 1$ betrachtet, so folgt für den Umfang dieses Kreises $U = 2 \pi$. Daraus folgt, dass $\sin$ und $\cos$ periodisch mit der Periodenlänge $2\pi$ sind. Es folgt also:
 
 $$
-sin(t) = sin(t+2\pi) \qquad \text{und}\qquad cos(t) = cos(t+2\pi)
+\sin(t) = \sin(t+2\pi) \qquad \text{und}\qquad \cos(t) = \cos(t+2\pi)
 $$
 
 Die Periodizität der Funktionen $\sin$ und $\cos$ resultiert somit aus der räumlichen Periodizität von Kreisen.
@@ -36,7 +32,7 @@ Es kann somit eine harmonische Schwingung erzeugt werden.
 
 Die ausführliche, trigonometrische Definition der Funktionen $\sin$ und $\cos$ soll hierbei erspart bleiben ([Wikipedia: Sinus und Kosinus](https://de.wikipedia.org/wiki/Sinus_und_Kosinus)).
 
-### Kompliziertes Verhalten aus einfachen Funktionen
+## Kompliziertes Verhalten aus einfachen Funktionen
 
 Es gibt verschiedene Möglichkeiten die Sinus- und Kosinusterme zu verändern, welche wahrscheinlich aus der Schulmathematik bekannt sein sollten:
 
@@ -46,15 +42,16 @@ $$
 
 Dabei gilt:
 
-<center>
+<br/>
+<div align="center">
 
-| Parameter        | Bedeutung                         |
-| ---------------- | --------------------------------- |
-| $\Delta \varphi$ | Phasenverschiebung                |
-| $\omega$         | Kreisfrequenz (Bogenmaß pro Zeit) |
-| $A$              | Amplitude                         |
+| Parameter        | Bedeutung                                                |
+| ---------------- | -------------------------------------------------------- |
+| $\Delta \varphi$ | Phasenverschiebung                                       |
+| $\omega$         | Kreisfrequenz (Bogenmaß pro Zeit) mit $\omega = 2 \pi f$ |
+| $A$              | Amplitude                                                |
 
-</center>
+</div>
 ____
 Im Folgenden lassen sich jene Parameter variieren:
 
@@ -62,24 +59,24 @@ Im Folgenden lassen sich jene Parameter variieren:
 
 <Quiz>
 <>
-    <p>Für welche Phasenverschiebung $\Delta \varphi$ gilt $A \cdot \sin(\omega t - \Delta \varphi) = A \cdot \cos(\omega t)$?</p>
-    <Answer>$\Delta \varphi = -\frac{\pi}{2}$</Answer>
-    <Answer>$\Delta \varphi = \pi$</Answer>
-    <Answer correct={true}>$\Delta \varphi = \frac{\pi}{2}$</Answer>
-    <Answer>$\Delta \varphi = - \pi$ </Answer>
-    <Answer>Es existiert kein $ \Delta \varphi$, welches die gewünschte Gleichheit erzeugt.</Answer>
+  <p>Für welche Phasenverschiebung $\Delta \varphi$ gilt $A \cdot \sin(\omega t + \Delta \varphi) = A \cdot \cos(\omega t)$?</p>
+  <Answer>$\Delta \varphi = -\frac{\pi}{2}$</Answer>
+  <Answer>$\Delta \varphi = \pi$</Answer>
+  <Answer correct={true}>$\Delta \varphi = \frac{\pi}{2}$</Answer>
+  <Answer>$\Delta \varphi = - \pi$ </Answer>
+  <Answer>Es existiert kein $ \Delta \varphi$, welches die gewünschte Gleichheit erzeugt.</Answer>
 </>
 </Quiz>
 Die $\sin$ und $\cos$ Funktionen lassen sich also umfangreich modifizieren. Um nun kompliziertere periodische Vorgänge mithilfe von diesen periodischen Funktionen zu modellieren, erscheint es intuitiv, mehrere periodische Funktionen zu kombinieren.  
 Der erste Gedanke bei einer Kombination von mehreren Funktionswerten, könnte beispielsweise eine einfache **Addition** sein. Es lassen sich also beispielsweise mehrere $\sin$-Funktionen addieren.   
 Zum Beispiel: 
 $$
-f(t) = sin(t) + 2 sin (2t)+  sin(9t)
+f(t) = \sin(t) + 2 \sin (2t)+  \sin(9t)
 $$
 <SampleAddition/>
 Es wird komplizierter, wenn noch mehr Sinus-Funktionen addiert werden:
 <WaveSummation/>
-Zusätlich kann auch noch die Phasenverschiebung der einzelnen Terme modifiziert werden.
+Zusätzlich kann auch noch die Phasenverschiebung der einzelnen Terme modifiziert werden.
 Ein solche
 
 ---
@@ -93,9 +90,7 @@ $$
 wobei $A_k$ die Amplitude, $\omega_k$ die Kreisfrequenz und $\Delta \varphi_k$ die Phasenverschiebung für den $k$-ten Sinus-Term ist.
 
 <Callout>
-  Das Summenzeichen $\sum_{k = 1}^n$ bedeutet, dass der folgende Term, mit
-  allen Werten für $k$ von $1$ bis $n$ aufsummiert wird. Somit gilt beispielsweise:
-  $$
-  \sum_{k = 1}^n k = 1 + 2 + ... + n
-  $$
+  Das Summenzeichen $\sum_{(k = 1)}^n$ bedeutet, dass der folgende Term, mit
+  allen Werten für $k$ von $1$ bis $n$ aufsummiert wird. Somit gilt
+  beispielsweise: $$ \sum_{(k = 1)}^n k = 1 + 2 + ... + n $$
 </Callout>

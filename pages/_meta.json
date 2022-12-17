@@ -3,5 +3,9 @@
   "motivation": "Motivation",
   "fourier-analysis": "Kapitel 1: Fourier-Analysis",
   "fft": "Kapitel 2: FFT",
-  "references": "Verweise"
+  "references": "Verweise",
+  "about": {
+    "type": "page",
+    "title": "Über dieses Projekt"
+  }
 }

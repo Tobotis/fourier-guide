@@ -1,4 +1,5 @@
 import * as React from 'react'
+import TeX from '@matejmazur/react-katex'
 import {
   Mafs,
   CartesianCoordinates,
@@ -17,13 +18,15 @@ function InteractiveSin() {
 
   let delPhi = (phase[0] * (2 * Math.PI)) / (period[0] - phase[0])
   let omega = (2 * Math.PI) / (period[0] - phase[0])
+  let functionTex = `f(t) = ${parseFloat(
+    amplitude[1].toFixed(2)
+  )} \\cdot \\sin(${parseFloat(omega.toFixed(2))} \\cdot t ${
+    delPhi > 0 ? '- ' : '+ '
+  }${Math.abs(parseFloat(delPhi.toFixed(2)))})`
   return (
     <>
-      <p className="text-lg text-center">
-        Funktion: $f(t) = {parseFloat(amplitude[1].toFixed(2))} \cdot \sin(
-        {parseFloat(omega.toFixed(2))} \cdot t {delPhi > 0 ? '- ' : '+ '}
-        {Math.abs(parseFloat(delPhi.toFixed(2)))}
-        )$
+      <p className="text-lg text-center mt-5">
+        <TeX>{functionTex}</TeX>
       </p>
       <FrameMafs>
         <Mafs height={400} yAxisExtent={[-2.5, 2.5]} xAxisExtent={[-15, 15]}>
