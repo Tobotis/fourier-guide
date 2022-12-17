@@ -1,4 +1,3 @@
-import { type } from 'os'
 import * as React from 'react'
 import { arraysEqual } from '../utils/general'
 
@@ -231,7 +230,7 @@ const Quiz: React.FC = ({ children }: any) => {
   let elements: Array<any> = children.props.children
   let question: string = elements[0]
   let answers: Array<any> = elements.filter((e) => {
-    return typeof e == typeof {}
+    return typeof e == typeof {} && e.type != 'p'
   })
 
   let correct_answers: Array<boolean> = Array(answers.length).fill(false)

@@ -1,56 +1,72 @@
 import * as React from 'react'
-import * as vec from 'vec-la'
 import {
   Mafs,
   CartesianCoordinates,
   FunctionGraph,
   labelPi,
-  useMovablePoint,
-  Text,
   Theme,
+  Vector2,
+  MovablePoint,
 } from '../mafs'
 import FrameMafs from './FrameMafs'
 
 function InteractiveSin() {
-  const phase = useMovablePoint([0, 0], {
-    constrain: 'horizontal',
-    color: Theme.orange,
-  })
+  let [phase, setPhase] = React.useState<Vector2>([0, 0])
+  let [amplitude, setAmplitude] = React.useState<Vector2>([Math.PI / 2, 1])
+  let [period, setPeriod] = React.useState<Vector2>([2 * Math.PI, 0])
 
-  const translation = vec.matrixBuilder().translate(phase.x, phase.y).get()
-  const freq = useMovablePoint([2 * Math.PI, 0], {
-    constrain: 'horizontal',
-    transform: translation,
-    color: Theme.blue,
-  })
-  const amplitude = useMovablePoint([Math.PI / 2, 1], {
-    constrain: 'vertical',
-    transform: translation,
-    color: Theme.indigo,
-  })
+  let delPhi = (phase[0] * (2 * Math.PI)) / (period[0] - phase[0])
+  let omega = (2 * Math.PI) / (period[0] - phase[0])
   return (
-    <div>
+    <>
+      <p className="text-lg text-center">
+        Funktion: $f(t) = {parseFloat(amplitude[1].toFixed(2))} \cdot \sin(
+        {parseFloat(omega.toFixed(2))} \cdot t {delPhi > 0 ? '-' : '+'}
+        {Math.abs(parseFloat(delPhi.toFixed(2)))}
+        )$
+      </p>
       <FrameMafs>
-        <Mafs yAxisExtent={[-2.5, 2.5]} xAxisExtent={[-15, 15]}>
+        <Mafs height={400} yAxisExtent={[-2.5, 2.5]} xAxisExtent={[-15, 15]}>
           <CartesianCoordinates
             subdivisions={4}
             xAxis={{ lines: Math.PI, labels: labelPi }}
           />
           <FunctionGraph.OfX
-            y={(x) =>
-              amplitude.y *
-              Math.sin(((2 * Math.PI) / (freq.x - phase.x)) * x - phase.x)
-            }
+            y={(x) => amplitude[1] * Math.sin(omega * x - delPhi)}
           />
-          {freq.element}
-          {amplitude.element}
-          {phase.element}
-          <Text x={2} y={2}>
-            {phase.x.toFixed(3)}
-          </Text>
+          <MovablePoint
+            point={period}
+            onMove={(newPos) => {
+              setPeriod([newPos[0], 0])
+              setAmplitude([
+                phase[0] + (newPos[0] - phase[0]) / 4,
+                amplitude[1],
+              ])
+            }}
+            color={Theme.green}
+          />
+          <MovablePoint
+            point={phase}
+            onMove={(newPos) => {
+              setPeriod([period[0] + (newPos[0] - phase[0]), 0])
+              setPhase([newPos[0], 0])
+              setAmplitude([
+                newPos[0] + (period[0] - newPos[0]) / 4,
+                amplitude[1],
+              ])
+            }}
+            color={Theme.orange}
+          />
+          <MovablePoint
+            point={amplitude}
+            onMove={(newPos) => {
+              setAmplitude([amplitude[0], newPos[1]])
+            }}
+            color={Theme.blue}
+          />
         </Mafs>
       </FrameMafs>
-    </div>
+    </>
   )
 }
 export default InteractiveSin
