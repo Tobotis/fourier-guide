@@ -192,7 +192,7 @@ const OneCorrectAnswersQuiz: any = (
         </p>
       </div>
       <form>
-        <fieldset className="pt-3">
+        <div className="pt-3">
           {answers.map((e, i) => {
             return (
               <div>
@@ -206,7 +206,7 @@ const OneCorrectAnswersQuiz: any = (
               </div>
             )
           })}
-        </fieldset>
+        </div>
       </form>
       {result != '' ? (
         result_positive ? (
