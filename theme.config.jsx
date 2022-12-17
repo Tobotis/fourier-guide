@@ -24,7 +24,9 @@ export default {
     </>
   ),
   //primaryHue: 299,
-  search: false,
+  search: {
+    placeholder: 'Suchen...',
+  },
   navigation: true,
   footer: true,
   titleSuffix: false,
