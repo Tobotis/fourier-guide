@@ -84,13 +84,67 @@ Ein solche
 Es lässt sich eine kompaktere Schreibweise für die Addition der verschiedenen Sinus-Terme formulieren:
 
 $$
-f(t) = \sum_{k=1}^n A_k \cdot sin(\omega_k t + \Delta \varphi_k)
+\begin{equation}
+f(t) = \sum_{k=1}^n A_k \cdot \sin(\omega_k t + \Delta \varphi_k)
+\end{equation}
 $$
 
-wobei $A_k$ die Amplitude, $\omega_k$ die Kreisfrequenz und $\Delta \varphi_k$ die Phasenverschiebung für den $k$-ten Sinus-Term ist.
+wobei $A_k$ die Amplitude, $\omega_k$ die Kreisfrequenz und $\Delta \varphi_k$ die Phasenverschiebung für den $k$-ten Sinus-Term beschreibt.
 
 <Callout>
-  Das Summenzeichen $\sum_{(k = 1)}^n$ bedeutet, dass der folgende Term, mit
-  allen Werten für $k$ von $1$ bis $n$ aufsummiert wird. Somit gilt
-  beispielsweise: $$ \sum_{(k = 1)}^n k = 1 + 2 + ... + n $$
+  Das Summenzeichen $\sum_{(k = 1)}^n g(k)$ bedeutet, dass der folgende Term
+  $g(k)$, mit allen Werten für $k$ von $1$ bis $n$ aufsummiert wird. Somit gilt
+  beispielsweise (mit $g(k) = k$): $$ \sum_{(k = 1)}^n k = 1 + 2 + ... + n $$
 </Callout>
+
+### Winkelsummenidentität
+
+Es gibt nun verschiedene praktischere Wege, die obige Summe zu schreiben.
+Um die Summe $\omega_k t + \Delta \varphi_k$ innerhalb des $\sin$ aufzulösen, lässt sich ein Zusammenhang für **Winkelsummen** anwenden:
+
+$$
+\sin(\alpha+ \beta) = \sin(\alpha)\cos(\beta) + \cos(\alpha)\sin(\beta)
+$$
+
+<Callout>
+  Beweis der Winkelsummenidentität für $\sin$: [PLACEHOLDER] (proof by picture:
+  [Proof 6](https://proofwiki.org/wiki/Sine_of_Sum))
+</Callout>
+
+Wenn man also diesen Zusammenhang auf einen der obigen Sinus-Terme anwendet und ausmultipliziert folgt:
+
+$$
+\begin{equation}
+\begin{split}
+A_k  \sin(\omega_k t + \Delta \varphi_k) &= A_k (\sin(\omega_k t) \cos(\Delta \varphi_k) + \sin(\Delta \varphi_k)\cos(\omega_k t)) \\
+&= A_k \sin(\omega_k t) \cos(\Delta \varphi_k) + A_k \sin(\Delta \varphi_k)\cos(\omega_k t)
+\end{split}
+\end{equation}
+$$
+
+Um das ganze etwas zu vereinfachen, soll die Summe nun zu
+
+$$
+\begin{equation}
+f(t) = \sum_{k=1}^n a_k \cdot \sin(\omega_k t) + b_k \cdot \cos(\omega_k t)
+\end{equation}
+$$
+
+umgeschrieben werden.
+
+<Quiz>
+<>
+  <p>
+    Für welche $a_k$ und $b_k$ ist sind die Ausdrücke $(1)$ und $(3)$ gleich? (Nutze $(2)$)
+  </p>
+  <Answer>$a_k = A_k \cdot \frac{\sin(\Delta \varphi_k)}{\cos(\Delta \varphi_k)}$ und $b_k = \frac{\cos(\Delta \varphi_k)}{\sin(\Delta \varphi_k)}$</Answer>
+  <Answer>$a_k = A_k \cdot \sin(\Delta \varphi_k)$ und $b_k = A_k \cdot \cos(\Delta \varphi_k)$</Answer>
+  <Answer correct={true}>$a_k = A_k \cdot \cos(\Delta \varphi_k)$ und $b_k = A_k \cdot \sin(\Delta \varphi_k)$</Answer>
+</>
+</Quiz>
+
+Die Darstellungen $(1)$ und $(3)$ lassen sich also problemlos ineinander überführen, ohne Information über die Phasenverschiebung zu verlieren oder Infromation hinzuzufügen. Die Frage, warum Darstellung $(3)$ nützlich ist, bleibt jedoch weiterhin offen.
+
+---
+
+### Darstellung mit komplexen Exponentialfunktionen
