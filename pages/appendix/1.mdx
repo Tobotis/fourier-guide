@@ -1,4 +1,18 @@
+import { Callout } from 'nextra-theme-docs'
+
 # Komplexe Ebene
+
+import FrameText from '../../components/FrameText.tsx'
+import ComplexPlaneAdder from '../../components/ComplexPlaneAdder.tsx'
+import {
+  CartesianCoordinates,
+  Mafs,
+  FunctionGraph,
+  Text,
+  Vector,
+} from '../../mafs/'
+
+## Neue Zahlensysteme
 
 Es ergibt sich eine Problematik, wenn man Gleichungen wie
 
@@ -6,4 +20,110 @@ $$
 x^2 = -1
 $$
 
-lösen will.
+mit den reellen Zahlen $\mathbb{R}$ lösen will.
+In der Schule lernt man, dass diese Gleichung keine Lösung hat. Sie ist äquivalent zum Problem, Nullstellen der Funktion $f(x)= x^2+1$ zu finden.
+
+<FrameText
+  display={
+    <Mafs
+      height={200}
+      yAxisExtent={[-3, 5]}
+      xAxisExtent={[-5, 5]}
+      width={400}
+      pan={false}
+    >
+      <CartesianCoordinates />
+      <FunctionGraph.OfX y={(x) => x * x + 1} />
+    </Mafs>
+  }
+  text={
+    'Es scheint logisch, dass es keine Lösung gibt, da die Funktion nunmal in dieser Darstellung keine Nullstellen besitzt bzw. die x-Achse nicht schneidet.'
+  }
+/>
+
+Warum besitzt die Gleichung $x + 5 = 4$ aber ein Lösung?
+
+<FrameText
+  display={
+    <Mafs
+      height={200}
+      yAxisExtent={[-2, 5]}
+      xAxisExtent={[0, 5]}
+      width={400}
+      pan={false}
+    >
+      <CartesianCoordinates />
+      <FunctionGraph.OfX y={(x) => x + 1} />
+    </Mafs>
+  }
+  text={
+    'Wenn man nur die positiven Zahlen betrachtet, ist kein Schnittpunkt sichtbar. Es scheint uns dennoch logisch, dass es eine bei -1 Lösung gibt. Die Bedeutung dieser Lösung ist in der Realität jedoch auch fraglich: Wie viele Äpfel bleiben übrig, wenn man 4 Äpfel hat und 5 weggenommen werden?'
+  }
+/>
+
+Die Zahlensysteme wurden immer wenn man auf Probleme gestoßen ist erweitert. Auch wenn die _neuen_ Zahlen nicht immer einen direkt nachvollziehbaren Realitätsbezug bieten (z.B. negative Anzahlen oder Längen).
+
+$$
+\mathbb{N} \rightarrow \mathbb{Z} \rightarrow \mathbb{Q} \rightarrow \mathbb{R} \rightarrow \text{ ? }
+$$
+
+Um eine Lösung für die obige Gleichung zu finden, lässt sich somit ein weiteres Zahlensystem einführen: $\mathbb{C}$ (die **komplexen Zahlen**).
+Diese werden auch als _imaginäre Zahlen_ bezeichnet, was jedoch ein problematischer Name ist.
+Selbstverständlich lässt sich die Frage stellen, welche Zahlen denn wirklich existieren: $1,-1,\pi,\sqrt{-1},\infty$?
+
+---
+
+Die komplexen Zahlen haben tatsächlich unglaublich viele Anwendungen bei der Beschreibung von Phänomenen der **Realtiät**.
+
+## Die _imaginäre_ Einheit
+
+Um das Problem von $x^2 = -1$ zu lösen, gebe es also eine Zahl
+
+$$
+i^2 = -1
+$$
+
+Das scheint absurd, da es unserer Intuition widerspricht: Egal welche Zahl man quadriert, das Vorzeichen des Ergebnis ist immer positiv.
+Man muss annehmen, dass $i$ genau so definiert ist, dass $i^2 = -1$. Die Zahl $i$ erscheint also zunächst irgendwie nicht wie eine gewöhnliche Zahl, welche ein Vorzeichen besitzt und auf dem Zahlenstrahl eingeordnet werden kann.
+Für das Erste ist es schwer, die Annahme $i^2 = -1$ zu akzeptieren. Im Verlauf erscheint dieser Schritt, des Definierens von $i$ als $\sqrt{-1}$ jedoch immer natürlicher.
+
+## Darstellung komplexer Zahlen
+
+Es folgt eine weitere absurde Annahme, welche zunächst beziehungslos zu $i=\sqrt{-1}$ scheint. Da wie bereits beschrieben, die _imaginäre_ Einheit $i$ irgendwie nicht auf dem Zahlenstrahl lokalisiert werden kann,
+betrachtet man die Zahlen nicht mehr als eindimensional, sondern erweitert die Zahlen um eine Dimension. Es existiert also nicht mehr ein **Strahl** an Zahlen, sondern eine **Ebene** (zweidimensional) an Zahlen.
+Jede Zahl kann durch einen Punkt bzw. Vektor auf dieser Ebene dargestellt werden:
+
+<FrameText
+  display={
+    <Mafs width={400} height={300} pan={false}>
+      <CartesianCoordinates
+        yAxis={{
+          labels: (y) => {
+            return y.toString() + 'i'
+          },
+        }}
+      />
+      <Vector tip={[-3, 1]} />
+      <Text x={-3} y={1} attach="w" attachDistance={15}>
+        i-3
+      </Text>
+      <Vector tip={[2, -1]} />
+      <Text x={2} y={-1} attach="s" attachDistance={15}>
+        2-i
+      </Text>
+      <Vector tip={[4, 0]} />
+      <Text x={4} y={0} attach="n" attachDistance={15}>
+        4
+      </Text>
+    </Mafs>
+  }
+  text={
+    'Es ist weiterhin fraglich, was diese Zahlenebene mit der Definition der imaginären Einheit zutun hat. Wichtig ist, dass man auf dieser Zahleneben jede komplexe Zahl darstellen kann. Selbstverständlich existieren weiterhin die reelen Zahlen ohne Einschränkungen. Drei Zahlen sind links durch Vektoren mit ihren Koordinaten gekennzeichnet.'
+  }
+/>
+
+### Addition von komplexen Zahlen
+
+Ein Bezug zwischen der eingeführten Ebene und
+
+<ComplexPlaneAdder />
