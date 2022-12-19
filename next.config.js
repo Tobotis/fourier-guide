@@ -3,7 +3,7 @@ const rehypeKatex = require('rehype-katex')
 
 const withNextra = require('nextra')({
   theme: 'nextra-theme-docs',
-  themeConfig: './theme.config.js',
+  themeConfig: './theme.config.jsx',
   // ...
   mdxOptions: {
     remarkPlugins: [remarkMath],

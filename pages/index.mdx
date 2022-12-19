@@ -2,38 +2,43 @@
 title: Fourier... ? Eine Einführung
 ---
 
-import Callout from 'nextra-theme-docs/callout'
+import { Callout } from 'nextra-theme-docs'
 import FrameMafs from '../components/FrameMafs.tsx'
 import VectorFieldExample from '../components/VectorFieldExample.tsx'
 import Quiz, { Answer } from '../components/MultipleChoice.tsx'
 
 # Fourier... ? Eine Einführung
 
-<Callout emoji="💡">
-  Dieses Projekt ist im Rahmen des Seminarfaches "Astronomie & Astrophysik" an
-  der Bismarckschule entstanden.
-</Callout>
-
-### Ziel
+## Ziel
 
 Nach dem Lesen dieses Artikels solltest du einen Überblick über die **Fourier-Transformation** und den Algorithmus der **Schnellen-Fourier-Transformation** haben. Es steht dabei vor allem im Vordergrund, dass keine Annahmen getätigt werden,
 sondern ein Verständnis auf dem Fundament der Schulphysik/-mathematik aufgebaut wird.
-Dabei steht das aktive Lernen auf Basis von Intuition im Vordergrund. Aus diesem Grund werden kleine Zwischenfragen zum Nachdenken gestellt, diese sind wie folgt aufgebaut:
+
+Es ist wichtig, sich selbst Gedanken über den Inhalt zu machen und _aktiv_ zu lernen. Dabei ist vor allem die Intuition wichtig um sich den Inhalt plausibel zu machen.
+Aus diesem Grund werden kleine Zwischenfragen zum Nachdenken gestellt, diese sind wie folgt aufgebaut:
 
 <Quiz>
-  Bist du bereit?
-  <Answer correct={true}>Ja</Answer>
-  <Answer>Nein</Answer>
+  <>
+    <p>Was ergibt $\sin(0)$?</p>
+    <Answer correct={true}>$0$</Answer>
+    <Answer>$1$</Answer>
+    <Answer>$\pi$</Answer>
+  </>
 </Quiz>
 
-Zudem befinden sich an manchen Stellen Kästen:
+Es ist nicht schlimm, wenn man manche Fragen nicht beantworten kann.
+Wenn man eine Frage nicht richtig beantwortet, sollte man jedoch versuchen die richtige Antwort nachzuvollziehen und sich plausibel zu machen.
+
+## Anmerkungen
+
+Zudem befinden sich an manchen Stellen Anmerkungen der Formen:
 
 <Callout>
-  Diese Kästen sind für Ergänzungen mathematischer Natur, welche teilweise von
-  Nutzen sein könnten.
+  Diese Anmerkungen sind für Ergänzungen mathematischer Natur, welche teilweise
+  von Nutzen sein könnten.
 </Callout>
 
 <Callout type="info" emoji="📚">
-  Diese Kästen sollen auf Material zum Vertiefen bzw. Nachlesen hinweisen. Jenes
-  ist jedoch nicht essentiell für das Verstehen des Artikels.
+  Diese Anmerkungen sollen auf Material zum Vertiefen bzw. Nachlesen hinweisen.
+  Dies ist jedoch nicht essentiell für das Verstehen des Artikels.
 </Callout>

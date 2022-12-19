@@ -1,5 +1,8 @@
 export default {
-  github: 'https://github.com/Tobotis/fft-introduction',
+  project: {
+    link: 'https://github.com/Tobotis/fft-introduction',
+  },
+  docsRepositoryBase: 'https://github.com/Tobotis/fft-introduction',
   logo: (
     <>
       <span className="mr-2 font-extrabold hidden md:inline">Fourier...?</span>
@@ -20,15 +23,28 @@ export default {
       <meta name="apple-mobile-web-app-title" content="Fourier?" />
     </>
   ),
-  search: false,
-  prevLinks: true,
-  nextLinks: true,
+  //primaryHue: 299,
+  search: {
+    placeholder: 'Suchen...',
+  },
+  navigation: true,
   footer: true,
   titleSuffix: false,
-  footerEditLink: false,
-  defaultMenuCollapsed: false,
-  footerText: (
-    <>{new Date().getFullYear()} © Florian Reinecke und Tobias Steinbrecher.</>
-  ),
-  unstable_faviconGlyph: '𝓕',
+  editLink: {
+    text: 'Bearbeite diese Seite auf GitHub →',
+  },
+  feedback: {
+    content: 'Fragen? Gebe uns Feedback →',
+  },
+  footer: {
+    text: (
+      <span>
+        {new Date().getFullYear()} © Florian Reinecke und Tobias Steinbrecher.
+      </span>
+    ),
+  },
+  toc: {
+    title: 'Auf dieser Seite:',
+  },
+  faviconGlyph: '𝓕',
 }
