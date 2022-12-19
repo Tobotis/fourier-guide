@@ -1,0 +1,286 @@
+import { Callout } from 'nextra-theme-docs'
+
+# Komplexe Ebene
+
+import FrameText from '../../../components/FrameText.tsx'
+import ComplexPlaneAdder from '../../../components/ComplexPlaneAdder.tsx'
+import ComplexPlaneRotation from '../../../components/ComplexPlaneRotation.tsx'
+import Quiz, { Answer } from '../../../components/MultipleChoice.tsx'
+import {
+  CartesianCoordinates,
+  Mafs,
+  FunctionGraph,
+  Text,
+  Vector,
+} from '../../../mafs/'
+
+## Neue Zahlensysteme
+
+Es ergibt sich eine Problematik, wenn man Gleichungen wie
+
+$$
+x^2 = -1
+$$
+
+mit den reellen Zahlen $\mathbb{R}$ lösen will.
+In der Schule lernt man, dass diese Gleichung keine Lösung hat. Sie ist äquivalent zum Problem, Nullstellen der Funktion $f(x)= x^2+1$ zu finden.
+
+<FrameText
+  display={
+    <Mafs
+      height={200}
+      yAxisExtent={[-3, 5]}
+      xAxisExtent={[-5, 5]}
+      width={400}
+      pan={false}
+    >
+      <CartesianCoordinates />
+      <FunctionGraph.OfX y={(x) => x * x + 1} />
+    </Mafs>
+  }
+  text={
+    'Es scheint logisch, dass es keine Lösung gibt, da die Funktion nunmal in dieser Darstellung keine Nullstellen besitzt bzw. die x-Achse nicht schneidet.'
+  }
+/>
+
+Warum besitzt die Gleichung $x + 5 = 4$ aber ein Lösung?
+
+<FrameText
+  display={
+    <Mafs
+      height={200}
+      yAxisExtent={[-2, 5]}
+      xAxisExtent={[0, 5]}
+      width={400}
+      pan={false}
+    >
+      <CartesianCoordinates />
+      <FunctionGraph.OfX y={(x) => x + 1} />
+    </Mafs>
+  }
+  text={
+    'Wenn man nur die positiven Zahlen betrachtet, ist kein Schnittpunkt sichtbar. Es scheint uns dennoch logisch, dass es eine bei -1 Lösung gibt. Die Bedeutung dieser Lösung ist in der Realität jedoch auch fraglich: Wie viele Äpfel bleiben übrig, wenn man 4 Äpfel hat und 5 weggenommen werden?'
+  }
+/>
+
+Die Zahlensysteme wurden immer wenn man auf Probleme gestoßen ist erweitert. Auch wenn die _neuen_ Zahlen nicht immer einen direkt nachvollziehbaren Realitätsbezug bieten (z.B. negative Anzahlen oder Längen).
+
+$$
+\mathbb{N} \rightarrow \mathbb{Z} \rightarrow \mathbb{Q} \rightarrow \mathbb{R} \rightarrow \text{ ? }
+$$
+
+Um eine Lösung für die obige Gleichung zu finden, lässt sich somit ein weiteres Zahlensystem einführen: $\mathbb{C}$ (die **komplexen Zahlen**).
+Diese werden auch als _imaginäre Zahlen_ bezeichnet, was jedoch ein problematischer Name ist.
+Selbstverständlich lässt sich die Frage stellen, welche Zahlen denn wirklich existieren: $1,-1,\pi,\sqrt{-1},\infty$?
+
+---
+
+Die komplexen Zahlen haben tatsächlich unglaublich viele Anwendungen bei der Beschreibung von Phänomenen der **Realtiät**.
+
+## Die _imaginäre_ Einheit
+
+Um das Problem von $x^2 = -1$ zu lösen, gebe es also eine Zahl
+
+$$
+i^2 = -1
+$$
+
+Das scheint absurd, da es unserer Intuition widerspricht: Egal welche Zahl man quadriert, das Vorzeichen des Ergebnis ist immer positiv.
+Man muss annehmen, dass $i$ genau so definiert ist, dass $i^2 = -1$. Die Zahl $i$ erscheint also zunächst irgendwie nicht wie eine gewöhnliche Zahl, welche ein Vorzeichen besitzt und auf dem Zahlenstrahl eingeordnet werden kann.
+Für das Erste ist es schwer, die Annahme $i^2 = -1$ zu akzeptieren. Im Verlauf erscheint dieser Schritt, des Definierens von $i$ als $\sqrt{-1}$ jedoch immer natürlicher.
+Mithilfe von $i$ lässt sich selbstverständlich auch jede andere negative Wurzel darstellen:
+
+$$
+\sqrt{-a} = \sqrt{a \cdot -1} = \sqrt{a} \cdot \sqrt{-1} = \sqrt{a} \cdot i
+$$
+
+Komplexe Zahlen können auch mit reelen Zahlen addiert werden. Was das bedeutet, bleibt weiterhin fraglich. Der Term $5+i$ beispielsweise lässt sich jedoch nicht weiter vereinfachen. Er wird als komplexe Zahl betrachtet. Die allgemeine Form einer komplexen Zahl stellt sich dabei als $a+bi \in \mathbb{C}$ heraus.
+
+## Darstellung komplexer Zahlen
+
+Es folgt eine weitere absurde Annahme, welche zunächst beziehungslos zu $i=\sqrt{-1}$ scheint. Da wie bereits beschrieben, die _imaginäre_ Einheit $i$ irgendwie nicht auf dem Zahlenstrahl lokalisiert werden kann,
+betrachtet man die Zahlen nicht mehr als eindimensional, sondern erweitert die Zahlen um eine Dimension. Es existiert also nicht mehr ein **Strahl** an Zahlen, sondern eine **Ebene** (zweidimensional) an Zahlen.
+Jede Zahl kann durch einen Punkt bzw. Vektor auf dieser Ebene dargestellt werden:
+
+<FrameText
+  display={
+    <Mafs width={400} height={300} pan={false}>
+      <CartesianCoordinates
+        yAxis={{
+          labels: (y) => {
+            return y.toString() + 'i'
+          },
+        }}
+      />
+      <Vector tip={[-3, 1]} />
+      <Text x={-3} y={1} attach="w" attachDistance={15}>
+        i-3
+      </Text>
+      <Vector tip={[2, -1]} />
+      <Text x={2} y={-1} attach="s" attachDistance={15}>
+        2-i
+      </Text>
+      <Vector tip={[4, 0]} />
+      <Text x={4} y={0} attach="n" attachDistance={15}>
+        4
+      </Text>
+    </Mafs>
+  }
+  text={
+    'Es ist weiterhin fraglich, was diese Zahlenebene mit der Definition der imaginären Einheit zutun hat. Wichtig ist, dass man auf dieser Zahleneben jede komplexe Zahl darstellen kann. Selbstverständlich existieren weiterhin die reelen Zahlen ohne Einschränkungen. Drei Zahlen sind links durch Vektoren mit ihren Koordinaten gekennzeichnet.'
+  }
+/>
+
+Ähnlich zum kartesischen Koordinatensystem, gibt es eine vertikale Achse und eine horizontale Achse, welche orthogonal zueinander sind.
+
+### Real- und Imaginärteil
+
+Man kann eine komplexe Zahl immer in einen **Realteil**
+und in einen **Imaginärteil** zerlegen. Die Namensgebung, ist auch hierbei, wie bereits herausgestellt problematisch. Der **Realteil** von einer komplexen Zahl $a+bi \in \mathbb{C}$ wird im Folgenden mit $\Re (a+bi)$ und der Imaginärteil $\Im (a+bi)$ abgekürzt.
+
+<Quiz>
+  <>
+    <p>Was könnte deiner Meinung nach $\Re (5+2i)$ sein?</p>
+    <Answer correct={true}>$\Re (5+2i) = 5$</Answer>
+    <Answer>$\Re (5+2i) = 7$</Answer>
+    <Answer>$\Re (5+2i) = 2i$</Answer>
+    <Answer>$\Re (5+2i) = 2$</Answer>
+  </>
+</Quiz>
+
+Der **Realteil** ist nach obiger geometrischer Interpretation, die horizontale Komponente der komplexen Zahl:
+
+$$
+
+\Re (a+bi) = a
+
+
+$$
+
+Der **Imaginärteil** ist nach obiger geometrischer Interpretation, die vertikale Komponente der komplexen Zahl:
+
+$$
+
+\Im (a+bi) = b
+
+
+$$
+
+### Addition von komplexen Zahlen
+
+Im Folgenden lässt sich die Addition von komplexen Zahlen betrachten. Sie funktioniert tatsächlich wahrscheinlich genauso wie du es erwartest.
+
+<ComplexPlaneAdder />
+<Quiz>
+  <>
+    <p>Was ergibt $(2+2i)+ (-3+i)$?</p>
+    <Answer> $5+3i$</Answer>
+    <Answer> $-1-3i $</Answer>
+    <Answer correct={true}> $-1+3i$ </Answer>
+  </>
+</Quiz>
+
+Die Addition von komplexen Zahlen ist also analog zur Addition von reelen Zahlen, bloß im zweidimensionalen Raum. Zum Einen addiert man die horizontalen Komponenten (den **Realteil**) und zum Anderen addiert man die vertikalen Komponenten (den **Imaginärteil**).
+
+Der Zusammenhang zwischen der aufgezeigten _geometrische_ Interpretation der komplexen Zahlen und der Definition der **imaginären Einheit** $i = \sqrt{-1}$ bleibt weiterhin fraglich.
+Der Zusammenhang wird jedoch bei der Multiplikation von komplexen Zahlen sehr deutlich. Danach erscheint es logisch, warum es Sinn macht, die **imaginäre Einheit** auf einer neuen orthogonalen Achse zu platzieren.
+
+### Multiplikation von komplexen Zahlen
+
+#### Rotation von Vektoren um den Urpsrung
+
+Zunächst soll ein scheinbar bezugloses Phänomen betrachtet werden: die **Rotation** um $90°$ um den Ursprung:
+
+<ComplexPlaneRotation />
+
+Jeder Vektor bzw. Punkt auf der **komplexen Ebene** bzw. auch im **kartesischen Koordinatensystem** lässt sich um den Ursprung rotieren.
+
+<Quiz>
+  <>
+    <p>
+      Welche Zahl ergibt sich, wenn man $-2+i$ um $90°$ gegen den Urzeigersinn
+      rotiert um den Ursprung rotiert?
+    </p>
+    <Answer>$2-i$</Answer>
+    <Answer correct={true}> $-1-2i$ </Answer>
+    <Answer> $-2+1$ </Answer>
+    <Answer> $1+i$ </Answer>
+  </>
+</Quiz>
+
+Im Folgenden soll ein Punkt $(a,b) \in \mathbb{R}^2$ im **kartesischen Koordinatensystem** betrachtet werden.
+
+<Callout>
+  $\mathbb{R}^2$ enthält alle zweidimensionalen Punkte der reellen Zahlen. Man
+  schreibt auch $\mathbb{R} \times \mathbb{R} = \mathbb{R}^2$. $\mathbb{R}^3$
+  ist die Menge aller $3$-dimensionalen Punkte mit reellen Zahlen; $\mathbb{R}
+  ^n$ die Menge der $n$-dimensionalen Punkte mit reellen Zahlen.
+</Callout>
+
+<Quiz>
+  <>
+    <p>
+      Welcher Punkt bzw. Vektor ergibt sich, wenn man $(a,b) \in \mathbb{R}^2$
+      um $90°$ gegen den Urzeigersinn um den Ursprung rotiert?
+    </p>
+    <Answer correct={true}>$(-b,a)$</Answer>
+    <Answer> $(-a,b)$ </Answer>
+    <Answer> $(b,a)$ </Answer>
+    <Answer> $(a,-b)$ </Answer>
+  </>
+</Quiz>
+
+Wenn man einen Punkt $(a,b) \in \mathbb{R}^2$ somit vier mal um $90°$ um den Ursprung gegen den Uhrzeigersinn rotiert, müsste man wieder $(a,b)$ erhalten:
+
+$$
+(a,b) \xrightarrow{90°} (-b,a)\xrightarrow{90°} (-a,-b) \xrightarrow{90°} (b,-a) \xrightarrow{90°} (a,b)
+$$
+
+Wie bereits herausgestellt, ist die **komplexe Ebene** sehr ähnlich zum **kartesischen Koordinatensystem**. Die vertikale Achse beschreibt $\Im$ und die horizontale beschreibt $\Re$.
+
+Wenn man eine **komplexe Zahl** $a+bi \in \mathbb{C}$ also um $90°$ gegen den Uhrzeigersinn um den Ursprung rotiert, müsste analog zum **kartesischen Koordinatensystem** Folgendes passieren:
+
+$$
+a+bi\xrightarrow{90°}-b+ai \xrightarrow{90°} -a-bi \xrightarrow{90°} b-ai \xrightarrow{90°}a+bi \tag{1}
+$$
+
+---
+
+#### Multiplikation mit der _imaginären_ Einheit
+
+Nun soll betrachtet werden, was unabhängig von der **geometrischen** Intepretation einer komplexen Zahl, passiert, wenn man komplexe Zahlen multipliziert.
+
+<Quiz>
+  <>
+    <p>Was müsste $i\cdot (-2+i)$ ergeben? (Bedenke $i= \sqrt{-1}$)</p>
+    <Answer>$-1+2i$</Answer>
+    <Answer> $2-i$ </Answer>
+    <Answer> $-2-i$ </Answer>
+    <Answer correct={true}> $-1-2i$ </Answer>
+  </>
+</Quiz>
+
+<Quiz>
+  <>
+    <p>Was müsste $i\cdot (a+bi)$ ergeben? (Bedenke $i= \sqrt{-1}$)</p>
+    <Answer>$b-ai$</Answer>
+    <Answer> $b+ai$ </Answer>
+    <Answer correct={true}> $-b+ai$ </Answer>
+    <Answer> $-a+bi$ </Answer>
+
+  </>
+</Quiz>
+
+---
+
+Es fällt möglicherweise auf, dass durch die Multiplikation einer komplexen Zahl $a+bi \in \mathbb{C}$ das gleiche passiert wie in $(1)$ (bei der Rotation einer **komplexen Zahl** um $90°$ gegen den Uhrzeigersinn um den Ursprung).
+
+$$
+a+bi\xrightarrow{\cdot i}-b+ai \xrightarrow{\cdot i} -a-bi \xrightarrow{\cdot i} b-ai \xrightarrow{\cdot i}a+bi \tag{2}
+$$
+
+$(2)$ und $(1)$ sind also äquivalent.
+
+#### Einklang zwischen Rotation und Multiplikation mit $i$
+
+Die Multiplikation mit $i$ ist also äquivalent zu einer Rotation um $90°$ gegen den Uhrzeigersinn
