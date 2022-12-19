@@ -230,7 +230,7 @@ const Quiz: React.FC = ({ children }: any) => {
   let elements: Array<any> = children.props.children
   let question: string = elements[0]
   let answers: Array<any> = elements.filter((e) => {
-    return typeof e == typeof {} && e.type != 'p'
+    return e.type?.name == 'Answer'
   })
 
   let correct_answers: Array<boolean> = Array(answers.length).fill(false)
@@ -241,8 +241,6 @@ const Quiz: React.FC = ({ children }: any) => {
       return true
     }
   }).length
-
-  console.log(correct_answer_count)
 
   if (correct_answer_count == 1) {
     return OneCorrectAnswersQuiz(
