@@ -5,7 +5,7 @@ import { Callout } from 'nextra-theme-docs'
 import FrameText from '../../../components/FrameText.tsx'
 import ComplexPlaneAdder from '../../../components/ComplexPlaneAdder.tsx'
 import ComplexPlaneRotation from '../../../components/ComplexPlaneRotation.tsx'
-import Quiz, { Answer } from '../../../components/MultipleChoice.tsx'
+import QuestionAnswer, { Answer } from '../../../components/QuestionAnswer.tsx'
 import {
   CartesianCoordinates,
   Mafs,
@@ -138,15 +138,13 @@ Jede Zahl kann durch einen Punkt bzw. Vektor auf dieser Ebene dargestellt werden
 Man kann eine komplexe Zahl immer in einen **Realteil**
 und in einen **Imaginärteil** zerlegen. Die Namensgebung, ist auch hierbei, wie bereits herausgestellt problematisch. Der **Realteil** von einer komplexen Zahl $a+bi \in \mathbb{C}$ wird im Folgenden mit $\Re (a+bi)$ und der Imaginärteil $\Im (a+bi)$ abgekürzt.
 
-<Quiz>
-  <>
-    <p>Was könnte deiner Meinung nach $\Re (5+2i)$ sein?</p>
-    <Answer correct={true}>$\Re (5+2i) = 5$</Answer>
-    <Answer>$\Re (5+2i) = 7$</Answer>
-    <Answer>$\Re (5+2i) = 2i$</Answer>
-    <Answer>$\Re (5+2i) = 2$</Answer>
-  </>
-</Quiz>
+<QuestionAnswer>
+  <>Was könnte deiner Meinung nach $\Re (5+2i)$ sein?</>
+  <Answer correct={true}>$\Re (5+2i) = 5$</Answer>
+  <Answer>$\Re (5+2i) = 7$</Answer>
+  <Answer>$\Re (5+2i) = 2i$</Answer>
+  <Answer>$\Re (5+2i) = 2$</Answer>
+</QuestionAnswer>
 
 Der **Realteil** ist nach obiger geometrischer Interpretation, die horizontale Komponente der komplexen Zahl:
 
@@ -171,14 +169,12 @@ $$
 Im Folgenden lässt sich die Addition von komplexen Zahlen betrachten. Sie funktioniert tatsächlich wahrscheinlich genauso wie du es erwartest.
 
 <ComplexPlaneAdder />
-<Quiz>
-  <>
-    <p>Was ergibt $(2+2i)+ (-3+i)$?</p>
-    <Answer> $5+3i$</Answer>
-    <Answer> $-1-3i $</Answer>
-    <Answer correct={true}> $-1+3i$ </Answer>
-  </>
-</Quiz>
+<QuestionAnswer>
+  <>Was ergibt $(2+2i)+ (-3+i)$?</>
+  <Answer> $5+3i$</Answer>
+  <Answer> $-1-3i $</Answer>
+  <Answer correct={true}> $-1+3i$ </Answer>
+</QuestionAnswer>
 
 Die Addition von komplexen Zahlen ist also analog zur Addition von reelen Zahlen, bloß im zweidimensionalen Raum. Zum Einen addiert man die horizontalen Komponenten (den **Realteil**) und zum Anderen addiert man die vertikalen Komponenten (den **Imaginärteil**).
 
@@ -195,18 +191,15 @@ Zunächst soll ein scheinbar bezugloses Phänomen betrachtet werden: die **Rotat
 
 Jeder Vektor bzw. Punkt auf der **komplexen Ebene** bzw. auch im **kartesischen Koordinatensystem** lässt sich um den Ursprung rotieren.
 
-<Quiz>
+<QuestionAnswer>
   <>
-    <p>
-      Welche Zahl ergibt sich, wenn man $-2+i$ um $90°$ gegen den Urzeigersinn
-      rotiert um den Ursprung rotiert?
-    </p>
-    <Answer>$2-i$</Answer>
-    <Answer correct={true}> $-1-2i$ </Answer>
-    <Answer> $-2+1$ </Answer>
-    <Answer> $1+i$ </Answer>
+    Welche Zahl ergibt sich, wenn man $-2+i$ um $90°$ gegen den Urzeigersinn
+    rotiert um den Ursprung rotiert?
   </>
-</Quiz>
+  <Answer>$2-i$</Answer>
+  <Answer correct={true}> $-1-2i$ </Answer>
+  <Answer> $-2+1$ </Answer>
+</QuestionAnswer>
 
 Im Folgenden soll ein Punkt $(a,b) \in \mathbb{R}^2$ im **kartesischen Koordinatensystem** betrachtet werden.
 
@@ -217,18 +210,16 @@ Im Folgenden soll ein Punkt $(a,b) \in \mathbb{R}^2$ im **kartesischen Koordinat
   ^n$ die Menge der $n$-dimensionalen Punkte mit reellen Zahlen.
 </Callout>
 
-<Quiz>
+<QuestionAnswer>
   <>
-    <p>
-      Welcher Punkt bzw. Vektor ergibt sich, wenn man $(a,b) \in \mathbb{R}^2$
-      um $90°$ gegen den Urzeigersinn um den Ursprung rotiert?
-    </p>
-    <Answer correct={true}>$(-b,a)$</Answer>
-    <Answer> $(-a,b)$ </Answer>
-    <Answer> $(b,a)$ </Answer>
-    <Answer> $(a,-b)$ </Answer>
+    Welcher Punkt bzw. Vektor ergibt sich, wenn man $(a,b) \in \mathbb{R}^2$ um
+    $90°$ gegen den Urzeigersinn um den Ursprung rotiert?
   </>
-</Quiz>
+  <Answer correct={true}>$(-b,a)$</Answer>
+  <Answer> $(-a,b)$ </Answer>
+  <Answer> $(b,a)$ </Answer>
+  <Answer> $(a,-b)$ </Answer>
+</QuestionAnswer>
 
 Wenn man einen Punkt $(a,b) \in \mathbb{R}^2$ somit vier mal um $90°$ um den Ursprung gegen den Uhrzeigersinn rotiert, müsste man wieder $(a,b)$ erhalten:
 
@@ -250,26 +241,23 @@ $$
 
 Nun soll betrachtet werden, was unabhängig von der **geometrischen** Intepretation einer komplexen Zahl, passiert, wenn man komplexe Zahlen multipliziert.
 
-<Quiz>
-  <>
-    <p>Was müsste $i\cdot (-2+i)$ ergeben? (Bedenke $i= \sqrt{-1}$)</p>
-    <Answer>$-1+2i$</Answer>
-    <Answer> $2-i$ </Answer>
-    <Answer> $-2-i$ </Answer>
-    <Answer correct={true}> $-1-2i$ </Answer>
-  </>
-</Quiz>
+<QuestionAnswer>
+  <>Was müsste $i\cdot (-2+i)$ ergeben? (Bedenke $i= \sqrt{-1}$)</>
+  <Answer>$-1+2i$</Answer>
+  <Answer> $2-i$ </Answer>
+  <Answer> $-2-i$ </Answer>
+  <Answer correct={true}> $-1-2i$ </Answer>
+</QuestionAnswer>
 
-<Quiz>
-  <>
-    <p>Was müsste $i\cdot (a+bi)$ ergeben? (Bedenke $i= \sqrt{-1}$)</p>
+<QuestionAnswer>
+  
+    <>Was müsste $i\cdot (a+bi)$ ergeben? (Bedenke $i= \sqrt{-1}$)</>
     <Answer>$b-ai$</Answer>
     <Answer> $b+ai$ </Answer>
     <Answer correct={true}> $-b+ai$ </Answer>
     <Answer> $-a+bi$ </Answer>
 
-  </>
-</Quiz>
+</QuestionAnswer>
 
 ---
 
@@ -292,5 +280,3 @@ Wie bereits gezeigt wurde, wird jede komplexe Zahl bei Multiplikation mit $i$ um
 Um im Folgenden diese Verknüpfung zwischen Multiplikation und Rotation zu verallgemeinern, lässt sich eine neue Form für die **Repräsentation** der komplexen Zahlen einführen.
 
 Jede komplexe Zahl ist eindeutig durch ihren Realteil $\Re$ und ihren Imaginärteil $\Im$ bestimmt. Man kann sich nun überlegen, durch welche Informationen man eine komplexe Zahl ebenfalls eindeutig bestimmen kann.
-
-
