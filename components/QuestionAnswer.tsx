@@ -19,7 +19,7 @@ interface Props {
 const QuestionAnswer: React.FC<Props> = ({ children }: Props) => {
   let question = children[0]
   let answers: Array<any> = children.filter((child: any) => {
-    return child.type?.name == 'Answer'
+    return child.type === Answer
   })
 
   // Ermitteln der korrekten Antworten
