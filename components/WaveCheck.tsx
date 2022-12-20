@@ -2,6 +2,7 @@ import * as React from 'react'
 import FrameMafs from './FrameMafs'
 import * as vec from 'vec-la'
 import { sinSum } from '../utils/math_ext'
+import { Integral } from '../utils/mafs_extended/area/integral_display'
 import {
   Mafs,
   FunctionGraph,
@@ -37,7 +38,17 @@ const WaveCheck: React.FC<props> = ({ children, fixed_periodendauer }) => {
             ]}
           >
             <CartesianCoordinates subdivisions={2} />
-
+            {
+              <Integral
+                y={(x: number) =>
+                  Math.sin((x / fixed_periodendauer) * (2 * Math.PI)) *
+                  Math.sin((x / periodendauer) * (2 * Math.PI))
+                }
+                belowColor="red"
+                aboveColor="green"
+                quality="high"
+              ></Integral>
+            }
             <>
               <FunctionGraph.OfX
                 quality="high"

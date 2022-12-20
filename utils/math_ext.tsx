@@ -17,3 +17,6 @@ export function e_pow_ipi(theta: number): Vector {
   let im = Math.cos(theta)
   return [real, im]
 }
+
+export const clamp = (num: number, min: number, max: number) =>
+  Math.min(Math.max(num, min), max)
