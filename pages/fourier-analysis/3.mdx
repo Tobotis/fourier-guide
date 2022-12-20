@@ -2,7 +2,91 @@
 
 import FrameMafs from '../../components/FrameMafs.tsx'
 import WaveSummationInverted from '../../components/WaveSummationInverted.tsx'
+import WaveCheck from '../../components/WaveCheck.tsx'
+import { Callout } from 'nextra-theme-docs'
 
 Möchte man von einer überlagerten Funktion auf die ursprünglichen Anteilen zurückschließen ist das erstmal ziemlich schwierig.
 Probiere es doch mal selbst aus.
-<WaveSummationInverted />
+
+<WaveSummationInverted
+  fixedCoordinates={[
+    [2, 3],
+    [0.5, 0.2],
+    [1, 1],
+    [5, 2],
+    [7, 1],
+    [0.1, 0.05],
+  ]}
+/>
+
+Wie du wahrscheinlich merkst, ist es ganz schön schwierig eine passende Zusammensetzung von Sinuskurven zu finden. Selbst wenn du weißt, dass sich die Funktion aus 6 Sinuskurven zusammensetzt ist es praktisch unmöglich Sinuskurven zu finden, die summiert die Funktion ergeben.
+
+## Übereinstimmung prüfen
+
+Lass uns das Beispiel erstmal etwas vereinfachen. Im folgenden Beispiel ist es sehr einfach passende Sinus-Anteile zu finden, die die gesuchte Funktion ausmachen:
+
+<WaveSummationInverted fixedCoordinates={[[2, 3]]} />
+
+Mit dem bloßen Auge kann man in beiden Beispielen gut erkennen, ob die Funktionen übereinstimmen.
+
+Wie kann man dies jedoch mathematisch feststellen, um sich sicher zu sein, dass die Funktionen wirklich übereinstimmen?
+
+Für die beiden Funktionen gilt:
+
+$$
+\color{red}{}f(t) = A \cdot sin(\omega_1 \cdot t)
+$$
+
+$$
+\color{cyan}{}g(t) = B \cdot sin(\omega_2 \cdot t)
+$$
+
+Dafür bildet man das Produkt der beiden Funktionen:
+
+$$
+\color{purple}{}p(t) = f(t) \cdot g(t) = A \cdot sin(\omega_1 \cdot t) \cdot B \cdot sin(\omega_2 \cdot t)
+$$
+
+Um nun zu überprüfen, ob die Periodendauern übereinstimmen berechnet man das Integral von $\color{purple}{}p(t)$:
+
+$$
+A = \int_{-\infty}^{\infty} p(t) dt
+$$
+
+<Callout emoji="💡">
+  Ein Integral ($\int_{a}^{b} f(x) dx$) gibt die **Fläche** zwischen x-Achse und
+  dem Graphen von $f(x)$ im Bereich von $a$ bis $b$ an. Dabei werden Flächen
+  oberhalb der x-Achse als positiv angesehen und Flächen unterhalb als negativ.
+</Callout>
+
+<Callout type="info" emoji="📚">
+  Der obige Hinweis reicht für das Verständis dieses Artikels aus. Falls du
+  jedoch mehr über Integralrechnung erfahren möchtest, schau dir doch mal diesen
+  [Wikipedia-Artikel zu
+  Integralen](https://de.wikipedia.org/wiki/Integralrechnung) an.
+</Callout>
+
+Ist das Integral $A$ gleich $0$, stimmen die Periodendauern nicht überein. Anderenfalls stimmen die beiden überein.
+**Erklärung**
+**Fläche einfügen**
+
+<WaveCheck fixed_periodendauer={4} />
+
+Da es häufig schwierig ist ein Integral von $-\infty$ bis $\infty$ zu berechnen, kann man zur Vereinfachung sehr große Grenzen nehmen, da dies zur Annäherung ausreicht.
+
+<Callout>
+  Der numerische Wert ist hierbei irrelevant. Die _"Größe"_ der Grenzen hängt auch von der Periodendauer der Schwingungen ab.
+
+  Beispiel:\
+  Hat man eine Schwingung mit der Periodendauer $T_1=1$ umfassen die Grenzen von $-10$ bis $10$ 20 Perioden, was meist für die Auswertung ausreicht.
+  Sollte es sich im Gegensatz dazu, um eine Schwingung mit der Periodendauer $T_2=100$ handeln, würden die Grenzen zu klein sein, da nur ein sehr geringer Ausschnitt einer einzigen Periode betrachtet werden würde.
+</Callout>
+__Erklärung__
+
+**Wavecheck mit 1000**
+
+In diesem Beispiel nehmen wir als Grenzen mal $-1000$ und $1000$ an.
+
+$$
+A = \int_{-1000}^{1000} p(t) dt
+$$

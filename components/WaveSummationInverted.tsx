@@ -12,17 +12,16 @@ import {
   Vector,
 } from '../mafs'
 
-const WaveSummationInverted: React.FC = () => {
-  const [numPoints, setNumPoints] = React.useState(3)
+type props = {
+  children: any
+  fixedCoordinates: Vector2[]
+}
 
-  const fixedCoordinates: Vector2[] = [
-    [2, 3],
-    [0.5, 0.2],
-    [1, 1],
-    [5, 2],
-    [7, 1],
-    [0.1, 0.05],
-  ]
+const WaveSummationInverted: React.FC<props> = ({
+  children,
+  fixedCoordinates,
+}) => {
+  const [numPoints, setNumPoints] = React.useState(3)
 
   let [coordinates, setCoordinates] = React.useState<Vector2[]>([])
 
@@ -39,15 +38,16 @@ const WaveSummationInverted: React.FC = () => {
         <FrameMafs>
           <Mafs
             yAxisExtent={[
-              -1 *
+              -1.1 *
                 fixedCoordinates.reduce(
                   (pSum, coordinate) => pSum + Math.abs(coordinate[1]),
                   0
                 ),
-              fixedCoordinates.reduce(
-                (pSum, coordinate) => pSum + Math.abs(coordinate[1]),
-                0
-              ),
+              1.1 *
+                fixedCoordinates.reduce(
+                  (pSum, coordinate) => pSum + Math.abs(coordinate[1]),
+                  0
+                ),
             ]}
             xAxisExtent={[
               -5 *
@@ -99,15 +99,16 @@ const WaveSummationInverted: React.FC = () => {
         <Mafs
           pan={false}
           yAxisExtent={[
-            -1 *
+            -1.1 *
               fixedCoordinates.reduce(
                 (pSum, coordinate) => pSum + Math.abs(coordinate[1]),
                 0
               ),
-            fixedCoordinates.reduce(
-              (pSum, coordinate) => pSum + Math.abs(coordinate[1]),
-              0
-            ),
+            1.1 *
+              fixedCoordinates.reduce(
+                (pSum, coordinate) => pSum + Math.abs(coordinate[1]),
+                0
+              ),
           ]}
           xAxisExtent={[
             -5 *
