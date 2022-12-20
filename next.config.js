@@ -9,6 +9,10 @@ const withNextra = require('nextra')({
     remarkPlugins: [remarkMath],
     rehypePlugins: [rehypeKatex],
   },
+  images: {
+    unoptimized: true,
+  }
 })
 
 module.exports = withNextra()
+
