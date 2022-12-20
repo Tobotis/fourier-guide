@@ -5,6 +5,8 @@ import WaveSummationInverted from '../../components/WaveSummationInverted.tsx'
 import WaveCheck from '../../components/WaveCheck.tsx'
 import { Callout } from 'nextra-theme-docs'
 
+## Probleme beim Umkehren
+
 Möchte man von einer überlagerten Funktion auf die ursprünglichen Anteilen zurückschließen ist das erstmal ziemlich schwierig.
 Probiere es doch mal selbst aus.
 
@@ -47,11 +49,22 @@ $$
 \color{purple}{}p(t) = f(t) \cdot g(t) = A \cdot sin(\omega_1 \cdot t) \cdot B \cdot sin(\omega_2 \cdot t)
 $$
 
+### Integral mit Unendlich
+
 Um nun zu überprüfen, ob die Periodendauern übereinstimmen berechnet man das Integral von $\color{purple}{}p(t)$:
 
 $$
 A = \int_{-\infty}^{\infty} p(t) dt
 $$
+
+
+<Callout emoji="💡">
+  Genaugenommen notiert man hier nicht direkt die $\infty$-Symbole, sondern notiert diese wiefolgt als Grenzwert:
+  $$
+  A = \lim_{n\to \infty}\int_{-n}^{n} p(t) dt
+  $$
+  $$\lim_{n\to \infty}$$ bedeutet hierbei einfach, dass sich $n$ immer näher an $\infty$ nähert.
+</Callout>
 
 <Callout emoji="💡">
   Ein Integral ($\int_{a}^{b} f(x) dx$) gibt die **Fläche** zwischen x-Achse und
@@ -68,19 +81,20 @@ $$
 
 Ist das Integral $A$ gleich $0$, stimmen die Periodendauern nicht überein. Anderenfalls stimmen die beiden überein.
 **Erklärung**
-**Fläche einfügen**
 
 <WaveCheck fixed_periodendauer={4} />
-
+### Integral ohne Unendlich
 Da es häufig schwierig ist ein Integral von $-\infty$ bis $\infty$ zu berechnen, kann man zur Vereinfachung sehr große Grenzen nehmen, da dies zur Annäherung ausreicht.
 
 <Callout>
-  Der numerische Wert ist hierbei irrelevant. Die _"Größe"_ der Grenzen hängt auch von der Periodendauer der Schwingungen ab.
+  Der numerische Wert ist hierbei nicht der einzige ausschlaggegebende Wert. Die _"Größe"_ der Grenzen hängt auch von der Periodendauer der Schwingungen ab.
 
-  Beispiel:\
-  Hat man eine Schwingung mit der Periodendauer $T_1=1$ umfassen die Grenzen von $-10$ bis $10$ 20 Perioden, was meist für die Auswertung ausreicht.
-  Sollte es sich im Gegensatz dazu, um eine Schwingung mit der Periodendauer $T_2=100$ handeln, würden die Grenzen zu klein sein, da nur ein sehr geringer Ausschnitt einer einzigen Periode betrachtet werden würde.
+Beispiel:\
+ Hat man eine Schwingung mit der Periodendauer $T_1=1$ umfassen die Grenzen von $-10$ bis $10$ 20 Perioden, was meist für die Auswertung ausreicht.
+Sollte es sich im Gegensatz dazu, um eine Schwingung mit der Periodendauer $T_2=100$ handeln, würden die Grenzen zu klein sein, da nur ein sehr geringer Ausschnitt einer einzigen Periode betrachtet werden würde.
+
 </Callout>
+
 __Erklärung__
 
 **Wavecheck mit 1000**

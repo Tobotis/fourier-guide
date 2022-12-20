@@ -20,3 +20,20 @@ export function e_pow_ipi(theta: number): Vector {
 
 export const clamp = (num: number, min: number, max: number) =>
   Math.min(Math.max(num, min), max)
+
+
+
+function isCloseRelative(num: number, comparedTo: number, tolRel: number = 0.1): boolean {
+  return Math.abs((num / comparedTo) - 1) < tolRel
+} 
+const Relative = isCloseRelative;
+
+function isCloseAbsolute (num: number, comparedTo: number, tolAbs: number) : boolean {
+  return Math.abs((num - comparedTo)) < tolAbs
+} 
+const Absolute = isCloseAbsolute;
+
+export const isClose= {
+  Relative,
+  Absolute
+}

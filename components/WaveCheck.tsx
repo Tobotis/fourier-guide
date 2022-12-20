@@ -1,7 +1,7 @@
 import * as React from 'react'
 import FrameMafs from './FrameMafs'
 import * as vec from 'vec-la'
-import { sinSum } from '../utils/math_ext'
+import { sinSum, isClose } from '../utils/math_ext'
 import { Integral } from '../utils/mafs_extended/area/integral_display'
 import {
   Mafs,
@@ -9,6 +9,7 @@ import {
   CartesianCoordinates,
   useMovablePoint,
   MovablePoint,
+  Text,
   Vector2,
   Vector,
 } from '../mafs'
@@ -21,10 +22,13 @@ type props = {
 const WaveCheck: React.FC<props> = ({ children, fixed_periodendauer }) => {
   let [periodendauer, setPeriodendauer] = React.useState(2)
 
+  let [istFlächeAngezeigt, setIstFlächeAngezeigt] = React.useState(true)
+
   let [istGesuchterGraphAngezeigt, setIstGesuchterGraphAngezeigt] =
     React.useState(true)
 
   let [istProduktAngezeigt, setIstProduktAngezeigt] = React.useState(true)
+
 
   return (
     <div>
@@ -39,7 +43,7 @@ const WaveCheck: React.FC<props> = ({ children, fixed_periodendauer }) => {
           >
             <CartesianCoordinates subdivisions={2} />
             {
-              <Integral
+              istFlächeAngezeigt ? <Integral
                 y={(x: number) =>
                   Math.sin((x / fixed_periodendauer) * (2 * Math.PI)) *
                   Math.sin((x / periodendauer) * (2 * Math.PI))
@@ -47,14 +51,16 @@ const WaveCheck: React.FC<props> = ({ children, fixed_periodendauer }) => {
                 belowColor="red"
                 aboveColor="green"
                 quality="high"
-              ></Integral>
+              ></Integral> : <></>
             }
             <>
+              
               <FunctionGraph.OfX
                 quality="high"
                 y={(x) => Math.sin((x / periodendauer) * (2 * Math.PI))}
                 color="cyan"
               ></FunctionGraph.OfX>
+              
 
               {istGesuchterGraphAngezeigt ? (
                 <FunctionGraph.OfX
@@ -78,15 +84,17 @@ const WaveCheck: React.FC<props> = ({ children, fixed_periodendauer }) => {
                 <></>
               )}
             </>
+            
           </Mafs>
         </FrameMafs>
         <div className="flex justify-center">
-          <div className="flex">
-            <p className="px-2 flex">
+          <div className="flex align-middle">
+            <p className="px-2 flex text-center">
               Periodendauer von <p className="text-cyan-400 pl-1">g(t)</p>
             </p>
             <input
               type="range"
+              className='align-middle'
               min={0.1}
               max={fixed_periodendauer * 2}
               step={0.01}
@@ -112,7 +120,17 @@ const WaveCheck: React.FC<props> = ({ children, fixed_periodendauer }) => {
               onChange={(_) => setIstProduktAngezeigt(!istProduktAngezeigt)}
             />
           </div>
+          <div className="flex">
+            <p className="px-2 ">Fläche anzeigen</p>
+            <input
+              type="checkbox"
+              checked={istFlächeAngezeigt}
+              onChange={(_) => setIstFlächeAngezeigt(!istFlächeAngezeigt)}
+            />
+          </div>
+          
         </div>
+        <p>{ isClose.Relative(periodendauer, 4, 0.03) ? "$A \\to \infty$": "$A \\approx 0$"}</p>
       </>
     </div>
   )
