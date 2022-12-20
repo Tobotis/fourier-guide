@@ -15,6 +15,7 @@ export default {
     <>
       <meta name="msapplication-TileColor" content="#ffffff" />
       <meta property="og:title" content="Fourier?" />
+      <meta property="title" content="Fourier?" />
       <meta name="theme-color" content="#ffffff" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta httpEquiv="Content-Language" content="de" />

@@ -1,6 +1,6 @@
 import { Callout } from 'nextra-theme-docs'
 import InteractiveSin from '../../components/InteractiveSin.tsx'
-import Quiz, { Answer } from '../../components/MultipleChoice.tsx'
+import QuestionAnswer, { Answer } from '../../components/QuestionAnswer.tsx'
 import SampleAddition from '../../components/SampleAddition'
 import WaveSummation from '../../components/WaveSummation'
 import UnitCircle from '../../components/UnitCircle'
@@ -64,16 +64,14 @@ Im Folgenden lassen sich jene Parameter variieren:
 
 <InteractiveSin />
 
-<Quiz>
-<>
-  <p>Für welche Phasenverschiebung $\Delta \varphi$ gilt $A \cdot \sin(\omega t + \Delta \varphi) = A \cdot \cos(\omega t)$?</p>
+<QuestionAnswer>
+  <>Für welche Phasenverschiebung $\Delta \varphi$ gilt $A \cdot \sin(\omega t + \Delta \varphi) = A \cdot \cos(\omega t)$?</>
   <Answer>$\Delta \varphi = -\frac{\pi}{2}$</Answer>
   <Answer>$\Delta \varphi = \pi$</Answer>
   <Answer correct={true}>$\Delta \varphi = \frac{\pi}{2}$</Answer>
   <Answer>$\Delta \varphi = - \pi$ </Answer>
   <Answer>Es existiert kein $ \Delta \varphi$, welches die gewünschte Gleichheit erzeugt.</Answer>
-</>
-</Quiz>
+</QuestionAnswer>
 Die $\sin$ und $\cos$ Funktionen lassen sich also umfangreich modifizieren.
 
 ### Kombination von trigonometrischen Funktionen
@@ -146,16 +144,14 @@ $$
 
 umgeschrieben werden.
 
-<Quiz>
-<>
-  <p>
+<QuestionAnswer>
+  <>
     Für welche $a_k$ und $b_k$ ist sind die Ausdrücke $(1)$ und $(3)$ gleich? (Nutze $(2)$)
-  </p>
+  </>
   <Answer>$a_k = A_k \cdot \frac{\sin(\Delta \varphi_k)}{\cos(\Delta \varphi_k)}$ und $b_k = \frac{\cos(\Delta \varphi_k)}{\sin(\Delta \varphi_k)}$</Answer>
   <Answer>$a_k = A_k \cdot \sin(\Delta \varphi_k)$ und $b_k = A_k \cdot \cos(\Delta \varphi_k)$</Answer>
   <Answer correct={true}>$a_k = A_k \cdot \cos(\Delta \varphi_k)$ und $b_k = A_k \cdot \sin(\Delta \varphi_k)$</Answer>
-</>
-</Quiz>
+</QuestionAnswer>
 
 Die Darstellungen $(1)$ und $(3)$ lassen sich also problemlos ineinander überführen, ohne Information über die Phasenverschiebung zu verlieren oder Infromation hinzuzufügen. Die Frage, warum Darstellung $(3)$ nützlich ist, bleibt jedoch weiterhin offen.
 
