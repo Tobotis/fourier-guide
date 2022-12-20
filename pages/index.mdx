@@ -5,7 +5,7 @@ title: Fourier... ? Eine Einführung
 import { Callout } from 'nextra-theme-docs'
 import FrameMafs from '../components/FrameMafs.tsx'
 import VectorFieldExample from '../components/VectorFieldExample.tsx'
-import Quiz, { Answer } from '../components/MultipleChoice.tsx'
+import QuestionAnswer, { Answer } from '../components/QuestionAnswer.tsx'
 
 # Fourier... ? Eine Einführung
 
@@ -17,14 +17,12 @@ sondern ein Verständnis auf dem Fundament der Schulphysik/-mathematik aufgebaut
 Es ist wichtig, sich selbst Gedanken über den Inhalt zu machen und _aktiv_ zu lernen. Dabei ist vor allem die Intuition wichtig um sich den Inhalt plausibel zu machen.
 Aus diesem Grund werden kleine Zwischenfragen zum Nachdenken gestellt, diese sind wie folgt aufgebaut:
 
-<Quiz>
-  <>
-    <p>Was ergibt $\sin(0)$?</p>
-    <Answer correct={true}>$0$</Answer>
-    <Answer>$1$</Answer>
-    <Answer>$\pi$</Answer>
-  </>
-</Quiz>
+<QuestionAnswer>
+  <>Was ist $\sin(0)$?</>
+  <Answer correct={true}>$0$</Answer>
+  <Answer> $1$ </Answer>
+  <Answer>$\pi$</Answer>
+</QuestionAnswer>
 
 Es ist nicht schlimm, wenn man manche Fragen nicht beantworten kann.
 Wenn man eine Frage nicht richtig beantwortet, sollte man jedoch versuchen die richtige Antwort nachzuvollziehen und sich plausibel zu machen.
