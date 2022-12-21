@@ -75,18 +75,19 @@ Selbstverständlich lässt sich die Frage stellen, welche Zahlen denn wirklich e
 
 ---
 
-Die komplexen Zahlen haben tatsächlich unglaublich viele Anwendungen bei der Beschreibung von Phänomenen der **Realtiät**.
+Die komplexen Zahlen haben tatsächlich unglaublich viele Anwendungen bei der Beschreibung von Phänomenen der **Realität**, was hoffentlich im Folgenden deutlich wird.
 
 ## Die _imaginäre_ Einheit
 
-Um das Problem von $x^2 = -1$ zu lösen, gebe es also eine Zahl
+Um das Problem von $x^2 = -1$ zu lösen, gebe es also eine Zahl mit der Eigenschaft
 
 $$
 i^2 = -1
 $$
 
 Das scheint absurd, da es unserer Intuition widerspricht: Egal welche Zahl man quadriert, das Vorzeichen des Ergebnis ist immer positiv.
-Man muss annehmen, dass $i$ genau so definiert ist, dass $i^2 = -1$. Die Zahl $i$ erscheint also zunächst irgendwie nicht wie eine gewöhnliche Zahl, welche ein Vorzeichen besitzt und auf dem Zahlenstrahl eingeordnet werden kann.
+
+Man muss jedoch annehmen, dass $i$ nunmal genau so definiert ist, dass $i^2 = -1$. Die Zahl $i$ erscheint also zunächst irgendwie nicht wie eine gewöhnliche Zahl, welche ein Vorzeichen besitzt und auf dem Zahlenstrahl eingeordnet werden kann.
 Für das Erste ist es schwer, die Annahme $i^2 = -1$ zu akzeptieren. Im Verlauf erscheint dieser Schritt, des Definierens von $i$ als $\sqrt{-1}$ jedoch immer natürlicher.
 Mithilfe von $i$ lässt sich selbstverständlich auch jede andere negative Wurzel darstellen:
 
@@ -133,7 +134,7 @@ Jede Zahl kann durch einen Punkt bzw. Vektor auf dieser Ebene dargestellt werden
 
 Ähnlich zum kartesischen Koordinatensystem, gibt es eine vertikale Achse und eine horizontale Achse, welche orthogonal zueinander sind.
 
-### Real- und Imaginärteil
+## Real- und Imaginärteil
 
 Man kann eine komplexe Zahl immer in einen **Realteil**
 und in einen **Imaginärteil** zerlegen. Die Namensgebung, ist auch hierbei, wie bereits herausgestellt problematisch. Der **Realteil** von einer komplexen Zahl $a+bi \in \mathbb{C}$ wird im Folgenden mit $\Re (a+bi)$ und der Imaginärteil $\Im (a+bi)$ abgekürzt.
@@ -164,9 +165,11 @@ $$
 
 $$
 
-### Addition von komplexen Zahlen
+Man kann sich die komplexe Zahlenebene also wie ein **kartesisches Koordinatensystem** vorstellen, in welchem jede komplexe Zahl $z \in \mathbb{C}$ die Koordinaten $(\Re (z ), \Im (z))$ besitzt.
 
-Im Folgenden lässt sich die Addition von komplexen Zahlen betrachten. Sie funktioniert tatsächlich wahrscheinlich genauso wie du es erwartest.
+## Addition von komplexen Zahlen
+
+Im Folgenden lässt sich die Addition von komplexen Zahlen betrachten. Sie funktioniert genauso so wie du es wahrscheinlich erwartest.
 
 <ComplexPlaneAdder />
 <QuestionAnswer>
@@ -179,11 +182,11 @@ Im Folgenden lässt sich die Addition von komplexen Zahlen betrachten. Sie funkt
 Die Addition von komplexen Zahlen ist also analog zur Addition von reelen Zahlen, bloß im zweidimensionalen Raum. Zum Einen addiert man die horizontalen Komponenten (den **Realteil**) und zum Anderen addiert man die vertikalen Komponenten (den **Imaginärteil**).
 
 Der Zusammenhang zwischen der aufgezeigten _geometrische_ Interpretation der komplexen Zahlen und der Definition der **imaginären Einheit** $i = \sqrt{-1}$ bleibt weiterhin fraglich.
-Der Zusammenhang wird jedoch bei der Multiplikation von komplexen Zahlen sehr deutlich. Danach erscheint es logisch, warum es Sinn macht, die **imaginäre Einheit** auf einer neuen orthogonalen Achse zu platzieren.
+Der Zusammenhang wird jedoch bei der Multiplikation von komplexen Zahlen sehr deutlich. Danach erscheint es logisch, warum man **imaginäre Einheit** auf einer neuen orthogonalen Achse lokalisiert und eine neue Dimension hinzufügt.
 
-### Multiplikation von komplexen Zahlen
+## Multiplikation von komplexen Zahlen
 
-#### Rotation von Vektoren um den Urpsrung
+### Rotation von Vektoren um den Urpsrung
 
 Zunächst soll ein scheinbar bezugloses Phänomen betrachtet werden: die **Rotation** um $90°$ um den Ursprung:
 
@@ -237,7 +240,7 @@ $$
 
 ---
 
-#### Multiplikation mit der _imaginären_ Einheit
+### Multiplikation mit der _imaginären_ Einheit
 
 Nun soll betrachtet werden, was unabhängig von der **geometrischen** Intepretation einer komplexen Zahl, passiert, wenn man komplexe Zahlen multipliziert.
 
@@ -269,14 +272,16 @@ $$
 
 $(2)$ und $(1)$ sind also äquivalent.
 
-#### Einklang zwischen Rotation und Multiplikation
+### Einklang zwischen Rotation und Multiplikation
 
 Die Multiplikation mit $i$ ist also äquivalent zu einer Rotation um $90°$ gegen den Uhrzeigersinn. Es macht also Sinn, dass man $i$ genau da platziert, wo die komplexe Zahl $z = 1 +0i$ landen würde, wenn man sie um $90°$ gegen den Uhrzeigersinn rotiert. Dieser Einklang von der **geometrischen Intuition** und der **algebraischen Lösung**, lässt sich noch weiter verallgemeinern.
 
 Wie bereits gezeigt wurde, wird jede komplexe Zahl bei Multiplikation mit $i$ um $90°$ gegen den Uhrzeigersinn rotiert.
 
-### Polarkoordinaten
+## Polarkoordinaten
 
 Um im Folgenden diese Verknüpfung zwischen Multiplikation und Rotation zu verallgemeinern, lässt sich eine neue Form für die **Repräsentation** der komplexen Zahlen einführen.
 
 Jede komplexe Zahl ist eindeutig durch ihren Realteil $\Re$ und ihren Imaginärteil $\Im$ bestimmt. Man kann sich nun überlegen, durch welche Informationen man eine komplexe Zahl ebenfalls eindeutig bestimmen kann.
+
+Es lässt sich beispielsweise das Konzept der **Polarkoordinaten** anwenden, wobei jeder Punkt bzw. hier jede komplexe Zahl durch einen **Winkel** und einen **Radius** eindeutig bestimmt ist.
