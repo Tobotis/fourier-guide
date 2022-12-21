@@ -6,15 +6,17 @@ import { useScaleContext } from '../../../mafs/view/ScaleContext'
 import { Interval } from '../../../mafs/math'
 import { clamp } from '../../math_ext'
 
-export interface IntegralProps extends Stroked {
+export interface IntegralToZeroProps extends Stroked {
   y: (x: number) => number
   quality?: 'low' | 'medium' | 'high'
   svgPathProps?: React.SVGProps<SVGPathElement>
   belowColor: string
   aboveColor: string
+  leftBound: number
+  rightBound: number
 }
 
-export const Integral: React.VFC<IntegralProps> = ({
+export const ToZero: React.VFC<IntegralToZeroProps> = ({
   y,
   quality = 'low',
   opacity = 0.3,
@@ -22,6 +24,8 @@ export const Integral: React.VFC<IntegralProps> = ({
   svgPathProps = {},
   belowColor = 'red',
   aboveColor = 'green',
+  leftBound = -Infinity,
+  rightBound = Infinity,
 }) => {
   const { cssScale } = useScaleContext()
   const { xPanes: panes, yPaneRange } = usePaneContext()
@@ -61,6 +65,13 @@ export const Integral: React.VFC<IntegralProps> = ({
     [y, yLowerBound, yUpperBound, subsampling]
   )
 
+  const xyChecker = (x: number, y: number, position?: "above" | "below") => {
+    y =  position=="above" ? clamp(y, 0, Infinity) : clamp(y, -Infinity, 0)
+    let isInBounds: boolean = leftBound <= x && x <= rightBound;
+    y = isInBounds ? y : 0;
+    return [x, y]
+  }
+
   const generatePathAbove = React.useMemo(() => {
     let path: string = ''
 
@@ -80,9 +91,9 @@ export const Integral: React.VFC<IntegralProps> = ({
     )
 
     callback.forEach((arr: number[]) => {
-      let y: number = arr[1]
-      y = clamp(y, 0, Infinity)
-      path += `L ${arr[0]} ${y} `
+      let [x,y] = xyChecker(arr[0], arr[1], "above")
+
+      path += `L ${x} ${y} `
     })
 
     let returnToZero: string = `L ${lastXValue} 0`
@@ -111,8 +122,7 @@ export const Integral: React.VFC<IntegralProps> = ({
     )
 
     callback.forEach((arr: number[]) => {
-      let y: number = arr[1]
-      y = clamp(y, -Infinity, 0)
+      let [x,y] = xyChecker(arr[0], arr[1], "below")
       path += `L ${arr[0]} ${y} `
     })
 
