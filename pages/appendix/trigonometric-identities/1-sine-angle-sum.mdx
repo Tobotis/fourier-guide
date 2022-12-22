@@ -1,8 +1,14 @@
 # Sinus-Winkelsummen-Identität
 
+import TrigDef from '../../../components/TrigDef.tsx'
+import SineSumProof from '../../../components/SineSumProof.tsx'
+import { Callout } from 'nextra-theme-docs'
+
 Es gibt unglaublich viele Möglichkeiten **trigonometrische Funktionen** zu vereinfachen bzw. anders auszudrücken.
 
 ---
+
+## Definitionen
 
 Im Folgenden soll bewiesen werden, dass folgender Zusammenhang gilt:
 
@@ -10,3 +16,102 @@ $$
 \sin(\alpha + \beta) = \sin(\alpha)\cos(\beta)+\sin(\beta)\cos(\alpha) \tag{1}
 $$
 
+Die Definition von $\sin$ und $\cos$ in einem **rechtwinkligen Dreieck** sollte bekannt sein:
+
+$$
+\sin(\phi) = \frac{\text{Gegenkathete}}{\text{Hypotenuse}} \qquad \cos(\phi) = \frac{\text{Ankathete}}{\text{Hypotenuse}} \tag{2}
+$$
+
+<TrigDef />
+
+## Beweisskizze
+
+Um nun $(1)$ zu beweisen, kann man ein **rechtwinkliges Dreieck** mit dem Winkel $\alpha$ und daneben ein **rechtwinkliges Dreieck** mit dem Winkel $\beta$ zeichnen.
+Die **Dreiecke** sind in der Abbildung $\color{red}{\text{rot}}$ gekennzeichnet.
+Außerdem lassen sich einige weitere Dreiecke konstruieren, welche die Gesamtstruktur zu einem Rechteck ergänzen. Mit dem **Innenwinkelsummensatz** von Dreiecken lassen sich die Größen weiterer Winkel mithilfe von $\alpha$ und $\beta$ ausdrücken. Außerdem lassen sich die verschiedenen Seitenlängen beschriften.
+
+<Callout>
+  **Innenwinkelsummensatz**: Die Summe der Innenwinkel in einem Dreieck beträgt
+  $180°$. Wenn somit 2 Winkel bekannt sind, lässt sich immer auf den Dritten
+  schließen.{' '}
+</Callout>
+
+<SineSumProof />
+
+Wenn lege nun $G=1$ fest.
+Nun lassen sich die Seitenlängen mit der Definition gemäß $(2)$ in Abhängigkeit von $\alpha$ und $\beta$ ausdrücken.
+
+## Beweis
+
+Aus dem _unteren_ Dreieck mit den Innenwinkeln $\alpha+\beta$ und $90°$ folgt:
+
+$$
+\begin{equation*}
+\begin{split}
+\sin(\alpha + \beta) = \frac{B}{G} \Leftrightarrow B = G \cdot \sin(\alpha + \beta) = \sin(\alpha+\beta)
+\end{split}
+\end{equation*}
+$$
+
+Da in einem Rechteck, jeweils zwei gegeüberliegende Seiten gleich lang sind ($B= F+E$ und $A = D+C$) und $B= \sin(\alpha + \beta)$, müsste man nun die Seitenlängen $F$ und $E$ herausfinden, um einen identischen Ausdruck für $\sin (\alpha + \beta)$ zu erhalten.
+
+---
+
+Da in den beiden _oberen_ Dreiecken, in welchen die Seitenlängen $F$ und $E$ liegen, alle Seitenlängen unbekannt sind, lassen sich zunächst die Hypotenuse $H$ und $I$ über das _mittlere_ Dreieck mit der bekannten Seitenlänge $G=1$ ermitteln.
+
+1. Für $I$ folgt mit der $\cos$-Definition:
+
+$$
+\begin{equation*}
+\begin{split}
+\cos (\alpha) = \frac{I}{G} \Leftrightarrow I = G \cdot \cos (\alpha) = \cos (\alpha)
+\end{split}
+\end{equation*}
+$$
+
+2. Für $H$ folgt mit der $\sin$ Definition:
+
+$$
+\begin{equation*}
+\begin{split}
+\sin (\alpha) = \frac{H}{G} \Leftrightarrow H = G \cdot \sin (\alpha) = \sin (\alpha)
+\end{split}
+\end{equation*}
+$$
+
+Nun lassen sich $F$ und $E$ ermitteln.
+
+1. Für $F$ folgt mit der $\sin$ Definition und mit dem zuvor ermittelten $I=\cos (\alpha)$:
+
+$$
+\begin{equation*}
+\begin{split}
+\sin (\beta) = \frac{F}{I} \Leftrightarrow F = I \cdot \sin (\beta) =\cos (\alpha) \sin (\beta)
+\end{split}
+\end{equation*}
+$$
+
+2. Für $E$ folgt mit der $\cos$ Definition und mit dem zuvor ermittelten $H=\sin(\alpha)$:
+
+$$
+\begin{equation*}
+\begin{split}
+\sin (\beta) = \frac{E}{H} \Leftrightarrow E = H \cdot \cos (\beta) =\sin (\alpha) \cos (\beta)
+\end{split}
+\end{equation*}
+$$
+
+---
+
+Die gegenüberliegenden Seiten $B$ und $F+E$ sind gleichlang, also folgt mit den ermittelten Längen:
+
+$$
+\begin{equation*}
+\begin{split}
+B &= F+E \\
+\sin (\alpha+\beta) &= \cos (\alpha) \sin (\beta) + \sin (\alpha) \cos (\beta)
+\end{split}
+\end{equation*}
+$$
+
+Dieser Ausdruck ist äquivalent zu $(1)$. Die Aussage ist also bewiesen.
