@@ -1,10 +1,11 @@
-# Sinus-Winkelsummen-Identität
+# Kosinus-Winkelsummen-Identität
 
 import TrigDef from '../../../components/TrigDef.tsx'
 import SineSumProof from '../../../components/SineSumProof.tsx'
 import { Callout } from 'nextra-theme-docs'
 
-Es gibt unglaublich viele Möglichkeiten **trigonometrische Funktionen** zu vereinfachen bzw. anders auszudrücken.
+Dieser Beweis erfolgt **analog** zur [**Sinus-Winkelsummen-Identität**](./1-sine-angle-sum) und ist hierbei hauptsächlich der Vollständigkeit halber aufgeführt.
+Die Schrittabfolge ist jedoch identisch.
 
 ---
 
@@ -13,7 +14,7 @@ Es gibt unglaublich viele Möglichkeiten **trigonometrische Funktionen** zu vere
 Im Folgenden soll bewiesen werden, dass folgender Zusammenhang gilt:
 
 $$
-\sin(\alpha + \beta) = \sin(\alpha)\cos(\beta)+\sin(\beta)\cos(\alpha) \tag{1}
+\cos(\alpha + \beta) = \cos(\alpha)\cos(\beta)-\sin(\alpha)\sin(\beta) \tag{1}
 $$
 
 Die Definition von $\sin$ und $\cos$ in einem **rechtwinkligen Dreieck** sollte bekannt sein:
@@ -43,21 +44,21 @@ Nun lassen sich die Seitenlängen mit der Definition gemäß $(2)$ in Abhängigk
 
 ## Beweis
 
-Aus dem _unteren_ Dreieck mit den Innenwinkeln $\alpha+\beta$ und $90°$ folgt:
+Aus dem _unteren_ Dreieck mit den Innenwinkeln $\alpha + \beta$ und $90°$ folgt mit der Definition von $\cos$:
 
 $$
 \begin{equation*}
 \begin{split}
-\sin(\alpha + \beta) = \frac{B}{G} \Leftrightarrow B = G \cdot \sin(\alpha + \beta) = \sin(\alpha+\beta)
+\cos(\alpha + \beta) = \frac{C}{G} \Leftrightarrow C = G \cdot \cos(\alpha + \beta) = \cos(\alpha+\beta)
 \end{split}
 \end{equation*}
 $$
 
-Da in einem Rechteck, jeweils zwei gegeüberliegende Seiten gleich lang sind ($B= F+E$ und $A = D+C$) und $B= \sin(\alpha + \beta)$, müsste man nun die Seitenlängen $F$ und $E$ herausfinden, um einen identischen Ausdruck für $\sin (\alpha + \beta)$ zu erhalten.
+Da in einem Rechteck, jeweils zwei gegeüberliegende Seiten gleich lang sind ($B= F+E$ und $A = D+C$) und $C= \cos(\alpha + \beta)$, müsste man nun die Seitenlängen $A$ und $D$ herausfinden, um einen identischen Ausdruck für $\cos (\alpha + \beta)$ (mit $\cos (\alpha + \beta) = A-D$) zu erhalten.
 
 ---
 
-Da in den beiden _oberen_ Dreiecken, in welchen die Seitenlängen $F$ und $E$ liegen, alle Seitenlängen unbekannt sind, lassen sich zunächst die Hypotenuse $H$ und $I$ über das _mittlere_ Dreieck mit der bekannten Seitenlänge $G=1$ ermitteln.
+Da in den beiden _oberen_ Dreiecken, in welchen die Seitenlängen $A$ und $D$ liegen, alle Seitenlängen unbekannt sind, lassen sich zunächst die Hypotenuse $H$ und $I$ über das _mittlere_ Dreieck mit der bekannten Seitenlänge $G=1$ ermitteln.
 
 1. Für $I$ folgt mit der $\cos$-Definition:
 
@@ -79,44 +80,40 @@ $$
 \end{equation*}
 $$
 
-Nun lassen sich $F$ und $E$ ermitteln.
+Nun lassen sich $A$ und $D$ ermitteln.
 
-1. Für $F$ folgt mit der $\sin$ Definition und mit dem zuvor ermittelten $I=\cos (\alpha)$:
+1. Für $A$ folgt mit der $\cos$ Definition und mit dem zuvor ermittelten $I=\cos (\alpha)$:
 
 $$
 \begin{equation*}
 \begin{split}
-\sin (\beta) = \frac{F}{I} \Leftrightarrow F = I \cdot \sin (\beta) =\cos (\alpha) \sin (\beta)
+\cos (\beta) = \frac{A}{I} \Leftrightarrow A = I \cdot \cos (\beta) =\cos (\alpha) \cos (\beta)
 \end{split}
 \end{equation*}
 $$
 
-2. Für $E$ folgt mit der $\cos$ Definition und mit dem zuvor ermittelten $H=\sin(\alpha)$:
+2. Für $D$ folgt mit der $\sin$ Definition und mit dem zuvor ermittelten $H=\sin(\alpha)$:
 
 $$
 \begin{equation*}
 \begin{split}
-\cos (\beta) = \frac{E}{H} \Leftrightarrow E = H \cdot \cos (\beta) =\sin (\alpha) \cos (\beta)
+\sin (\beta) = \frac{D}{H} \Leftrightarrow D = H \cdot \sin (\beta) =\sin (\alpha) \sin (\beta)
 \end{split}
 \end{equation*}
 $$
 
 ---
 
-Die gegenüberliegenden Seiten $B$ und $F+E$ sind gleichlang, also folgt mit den ermittelten Längen:
+Die gegenüberliegenden Seiten $A$ und $C+D$ sind gleichlang, also folgt mit den ermittelten Längen:
 
 $$
 \begin{equation*}
 \begin{split}
-B &= F+E \\
-\sin (\alpha+\beta) &= \cos (\alpha) \sin (\beta) + \sin (\alpha) \cos (\beta)
+A &= C+D \\
+\cos (\alpha) \cos (\beta) &= \cos(\alpha+\beta) +\sin (\alpha) \sin (\beta)\\
+\Leftrightarrow \cos(\alpha + \beta)&= \cos (\alpha) \cos (\beta) - \sin (\alpha) \sin (\beta)
 \end{split}
 \end{equation*}
 $$
 
 Dieser Ausdruck ist äquivalent zu $(1)$. Die Aussage ist also bewiesen.
-
-<Callout type="info" emoji="📚">
-  Hier sind sind dieser und noch weitere Beweise aufgelistet: [Proofwiki: Sine
-  of Sum](https://proofwiki.org/wiki/Sine_of_Sum)
-</Callout>
