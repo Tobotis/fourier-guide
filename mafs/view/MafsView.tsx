@@ -171,12 +171,12 @@ export const MafsView: React.FC<MafsViewProps> = ({
           return false
         }
         if (element.props == undefined) {
-          return true
+          return false
         }
-        return !element?.props['nonsvg']
+        return element?.props['nonsvg']
       })
     } else {
-      SVGElements = children.type === NonSVG ? [] : [children]
+      SVGElements = children.type === NonSVG ? [children] : []
     }
     return SVGElements
   }, [children])
