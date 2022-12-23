@@ -139,9 +139,9 @@ export const MafsView: React.FC<MafsViewProps> = ({
     [scaleX, scaleY, xSpan, ySpan, pixelMatrix, inversePixelMatrix, cssScale]
   )
 
-  const SVGGenerator = React.useMemo(() => {
+  const getSVGElements = React.useMemo(() => {
     if (!children) {
-      return <></>
+      return []
     }
     let SVGElements: Array<React.ReactNode> = []
     if (children?.length) {
@@ -157,28 +157,36 @@ export const MafsView: React.FC<MafsViewProps> = ({
     } else {
       SVGElements = children.type === NonSVG ? [] : [children]
     }
-
-    return <>{SVGElements.map((element: React.ReactNode) => element)} </>
+    return SVGElements
   }, [children])
 
-  const nonSVGGenerator = React.useMemo(() => {
+  const getNonSVGElements = React.useMemo(() => {
     if (!children) {
-      return <></>
+      return []
     }
-    let nonSVGElements: Array<React.ReactNode> = []
+    let SVGElements: Array<React.ReactNode> = []
     if (children?.length) {
-      nonSVGElements = children.filter((element: React.ReactElement) => {
+      SVGElements = children.filter((element: React.ReactElement) => {
         if (element == null || element == undefined) {
           return false
         }
         if (element.props == undefined) {
-          return false
+          return true
         }
-        return element?.props['nonsvg']
+        return !element?.props['nonsvg']
       })
     } else {
-      nonSVGElements = children.type === NonSVG ? [children] : []
+      SVGElements = children.type === NonSVG ? [] : [children]
     }
+    return SVGElements
+  }, [children])
+
+  const SVGGenerator = React.useMemo(() => {
+    return <>{getSVGElements.map((element: React.ReactNode) => element)} </>
+  }, [children])
+
+  const nonSVGGenerator = React.useMemo(() => {
+    let nonSVGElements: Array<React.ReactNode> = getNonSVGElements
 
     let resultingElements: Array<React.ReactElement> = []
 
