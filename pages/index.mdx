@@ -6,10 +6,34 @@ import { Callout } from 'nextra-theme-docs'
 import FrameMafs from '../components/FrameMafs.tsx'
 import VectorFieldExample from '../components/VectorFieldExample.tsx'
 import QuestionAnswer, { Answer } from '../components/QuestionAnswer.tsx'
+import {
+  Mafs,
+  FunctionGraph,
+  CartesianCoordinates,
+  useMovablePoint,
+  MovablePoint,
+  Text,
+  Vector2,
+  Vector,
+} from '../mafs'
+import { MathText } from "../utils/mafs_extended/MathText"
+import TeX from '@matejmazur/react-katex';
+import {NonSVG} from '../mafs/view/MafsView'
 
 # Fourier... ? Eine Einführung
 
 ## Ziel
+
+<FrameMafs> 
+  <Mafs> 
+    <CartesianCoordinates />
+    <NonSVG x={1} y={0}> <p>Diese</p></NonSVG>
+    <NonSVG x={1} y={0}> <p>Die</p></NonSVG>
+  </Mafs>
+</FrameMafs>
+
+
+
 
 Nach dem Lesen dieses Artikels solltest du einen Überblick über die **Fourier-Transformation** und den Algorithmus der **Schnellen-Fourier-Transformation** haben. Es steht dabei vor allem im Vordergrund, dass keine Annahmen getätigt werden,
 sondern ein Verständnis auf dem Fundament der Schulphysik/-mathematik aufgebaut wird.

@@ -9,6 +9,9 @@ import { useGesture } from '@use-gesture/react'
 import ScaleContext, { ScaleContextShape } from './ScaleContext'
 import { round, Interval, Vector2 } from '../math'
 
+import TeX from '@matejmazur/react-katex';
+import { off } from 'process'
+
 export interface MafsViewProps {
   width?: number | string
   height?: number
@@ -18,6 +21,17 @@ export interface MafsViewProps {
   ssr?: boolean
   children?: any
 }
+
+interface NonSVGProps {
+  children: Array<React.ReactNode>
+  x: number
+  y: number
+}
+
+export const NonSVG: React.FC<NonSVGProps> = ({children, x, y}) => {
+  return <>{children}</>
+}
+
 
 export const MafsView: React.FC<MafsViewProps> = ({
   width: desiredWidth = 'auto',
@@ -117,6 +131,100 @@ export const MafsView: React.FC<MafsViewProps> = ({
     [scaleX, scaleY, xSpan, ySpan, pixelMatrix, inversePixelMatrix, cssScale]
   )
 
+  
+
+
+  const SVGGenerator = React.useMemo(
+    
+    () => {
+      if (!children) {
+        return <></>
+      }
+      let SVGElements: Array<React.ReactNode> = []
+      if (children?.length) {
+        SVGElements = children.filter(
+          (element: React.ReactElement) => {
+            if (element == null || element == undefined) {
+              return false
+            }
+            return !(element.type === NonSVG)
+          }
+        )
+      } else {
+        SVGElements = children.type === NonSVG ? [] : [children]
+      }
+       
+
+      return <>{SVGElements.map((element : React.ReactNode) => element)} </>
+    },
+    [children]
+  )
+
+  const nonSVGGenerator = React.useMemo(
+    () => {
+
+      if (!children) {
+        return <></>
+      }
+      let nonSVGElements: Array<React.ReactNode> = []
+      console.log(children)
+      if (children?.length) {
+          nonSVGElements = children.filter(
+            (element: React.ReactElement) => {
+              if (element == null || element == undefined) {
+                return false
+              }
+              return element.type === NonSVG
+            }
+          )
+      }
+      else {
+        nonSVGElements = children.type === NonSVG ? [children] : [] 
+      }
+
+      console.log(nonSVGElements)
+      
+
+      let pxPerXStep: number = width / xSpan;
+      let pxPerYStep: number = height / ySpan;
+      let style: any = { transform: `translate(${- offset[0] * pxPerXStep}px, ${offset[1] * pxPerYStep}px)`}
+      
+
+      let resultingElements: Array<React.ReactElement> = []
+      
+      nonSVGElements.forEach((elem: React.ReactNode) => {
+        if (!React.isValidElement(elem)) {
+          return;
+        }
+        let x: number | undefined = elem.props["x"]
+        let y: number | undefined = elem.props["y"]
+
+        if (x == undefined) {
+          x = 0
+        }
+        if (y == undefined) {
+          y = 0
+        }
+
+        console.log("aaa")
+        
+        let pxX: number = x * pxPerXStep
+        let pxY: number = y * pxPerYStep
+
+        console.log(pxX)
+
+        let style: object = {transform: `translate(${-pxX}, ${pxY})`}
+
+        resultingElements.push(<div style={style}>{elem}</div>)
+      })
+
+      console.log(resultingElements)
+
+      
+      return <div className='other' style={style}> <div className='wrapper'>{resultingElements.map((element : React.ReactNode) => element)} </div></div>;
+    }, [offset, xSpan, ySpan, width, height, children]
+  )
+
   return (
     <div
       className="MafsWrapper overflow-hidden w-auto"
@@ -128,19 +236,23 @@ export const MafsView: React.FC<MafsViewProps> = ({
         <ScaleContext.Provider value={scaleContext}>
           <MapContext.Provider value={{ mapX, mapY }}>
             <PaneManager>
-              <svg
-                width={width}
-                height={height}
-                viewBox={`${-mapX(0)} ${-mapY(0)} ${width} ${height}`}
-                preserveAspectRatio="xMidYMin"
-                style={{
-                  width: desiredCssWidth,
-                  touchAction: pan ? 'none' : 'auto',
-                }}
-                className="MafsView"
-              >
-                {visible && children}
-              </svg>
+              <div className='wrapper'>
+                {nonSVGGenerator}
+                <svg
+                  width={width}
+                  height={height}
+                  viewBox={`${-mapX(0)} ${-mapY(0)} ${width} ${height}`}
+                  preserveAspectRatio="xMidYMin"
+                  style={{
+                    width: desiredCssWidth,
+                    touchAction: pan ? 'none' : 'auto',
+                  }}
+                  className="MafsView"
+                >
+                  {visible && SVGGenerator}
+                </svg>
+               
+              </div>
             </PaneManager>
           </MapContext.Provider>
         </ScaleContext.Provider>
