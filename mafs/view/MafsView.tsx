@@ -8,6 +8,7 @@ import * as vec from 'vec-la'
 import { useGesture } from '@use-gesture/react'
 import ScaleContext, { ScaleContextShape } from './ScaleContext'
 import { round, Interval, Vector2 } from '../math'
+import { NonSVG } from './NonSVGElement'
 
 import TeX from '@matejmazur/react-katex'
 import { off } from 'process'
@@ -20,17 +21,6 @@ export interface MafsViewProps {
   yAxisExtent?: Interval
   ssr?: boolean
   children?: any
-}
-
-interface NonSVGProps {
-  children: Array<React.ReactNode> | React.ReactNode
-  x: number
-  y: number
-  nonsvg : boolean
-}
-
-export const NonSVG: React.FC<NonSVGProps> = ({ children, x, y }) => {
-  return <>{children}</>
 }
 
 export const MafsView: React.FC<MafsViewProps> = ({
@@ -159,7 +149,10 @@ export const MafsView: React.FC<MafsViewProps> = ({
         if (element == null || element == undefined) {
           return false
         }
-        return !(element.type === NonSVG)
+        if (element.props == undefined) {
+          return true
+        }
+        return !element?.props['nonsvg']
       })
     } else {
       SVGElements = children.type === NonSVG ? [] : [children]
@@ -172,20 +165,20 @@ export const MafsView: React.FC<MafsViewProps> = ({
     if (!children) {
       return <></>
     }
-    console.log(children)
     let nonSVGElements: Array<React.ReactNode> = []
     if (children?.length) {
       nonSVGElements = children.filter((element: React.ReactElement) => {
         if (element == null || element == undefined) {
           return false
         }
-        return element.type === NonSVG
+        if (element.props == undefined) {
+          return false
+        }
+        return element?.props['nonsvg']
       })
     } else {
       nonSVGElements = children.type === NonSVG ? [children] : []
     }
-
-    console.log(nonSVGElements)
 
     let resultingElements: Array<React.ReactElement> = []
 
