@@ -87,6 +87,7 @@ const WaveSummationInverted: React.FC<props> = ({
         <div className="">
           Anzahl Wellen:{' '}
           <input
+          className="h-2.5"
             type="range"
             min={1}
             max={10}

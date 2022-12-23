@@ -1,1 +1,78 @@
+import { Callout } from 'nextra-theme-docs'
+
+import LinkButton from '../../../components/LinkButton.tsx'
+
 # Komplexe Exponentialfunktion
+
+**Euler's Identität** wird häufig als schönste Gleichung der gesamten Mathematik bezeichnet:
+
+$$
+e^{\pi i} + 1 = 0
+$$
+
+Sie resultiert aus der **Eulerschen Formel** mit $\theta = \pi$:
+
+$$
+e^{\theta i} = \cos (\theta) + i \sin (\theta)
+$$
+
+Intuitiv macht es jedoch wenig Sinn, eine Zahl (hier die eulersche Zahl $e$) hoch eine komplexe Zahl (hier $\theta i$) zu rechnen:
+
+$$
+e^{\theta i} \overset{?}{=} \overbrace{
+    e \cdot e \cdot ... \cdot e
+}^{\sqrt{-1} \text{ mal?} }
+$$
+
+Zudem ist fraglich, was das ganze mit der zuvor herausgestellten Polardarstellung komplexer Zahlen zutun hat:
+
+<LinkButton href="./1-complex-plane" text="Komplexe Ebene" />
+
+Es gibt zahlreiche Beweise dieser Gleichung, welche aufzeigen, dass Gleichheit gilt, jedoch weiterhin das Mysterium des **"Warum?"** offen lassen.
+Im Folgenden soll geklärt werden, was diese Gleichung wirklich aussagt und nicht nur gezeigt werden, dass sie stimmt.
+
+## Beweis mithilfe von Differentialrechnung
+
+Zunächst lässt sich ein sehr _einfacher_ Beweis der Gleichheit begutachten. Dieser erfolgt über das Ableiten einer geschickt gewählten Funktion $f(\theta)$.
+
+$$
+f(\phi) = e^{- i \phi} (\cos(\phi) + i \sin(\phi))
+$$
+
+Wenn man nun $f(\phi)$ nach $\phi$ ableitet (mit der _Produktregel_), folgt:
+
+$$
+\begin{equation*}
+\begin{split}
+f'(\phi) &= e^{i \phi} (i \cos(\phi)-\sin(\phi)) - i e^{-i \phi} (\cos (\phi) + i \sin (\phi))\\
+&= e^{i \phi} i \cos(\phi) - e^{i \phi} \sin(\phi) - i e^{-i \phi} \cos (\phi) +  e^{-i \phi} \sin (\phi)\\
+&= 0
+\end{split}
+\end{equation*}
+$$
+
+<Callout>
+  *Produktregel*: $f(x) = u(x) \cdot v(x) \Rightarrow f'(x) = u(x) \cdot v'(x) +
+  u'(x) \cdot v(x)$ ([Wikipedia:
+  Produktregel](https://de.wikipedia.org/wiki/Produktregel))
+</Callout>
+
+Wenn die Ableitung $f'(\phi)$ unabhängig $0$ ist, dann muss $f(\phi)$ konstant sein (keine Steigung haben).
+
+Da $f(0) = 1$ muss $f(\phi) = 1$ für alle $\phi$ (konstant). Es gilt also:
+
+$$
+e^{-i \theta}(\cos (\theta) + i \sin (\theta)) = 1 \Leftrightarrow e^{i\theta} = \cos (\theta) + i \sin (\theta)
+$$
+
+Die Gleicheit ist somit bewiesen. Ein Verständnis für die Gleichung wurde jedoch nicht entwickelt.
+
+## Definition der Exponentialfunktion
+
+Die Betrachtung als eine Multiplikation von $e$, $\theta i$-mal mit sich selbst ist problematisch.
+
+Um ein Verständnis für diesen komplexen Exponenten zu entwickeln, muss man sich die Definition der Exponentialfunktion zur Basis $e$ vor Augen führen:
+
+$$
+e^x = \lim_{n\to \infty} \left(1+\frac{1}{n}\right)^{nx}
+$$

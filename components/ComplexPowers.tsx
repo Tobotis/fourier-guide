@@ -60,7 +60,7 @@ const ComplexPowers: React.FC<ComplexPowerProps> = ({
       <div className="text-center my-4">
         <TeX>{'z^k \\text{ mit } k = ' + iterations.toFixed(0)}</TeX>:{' '}
         <input
-          className="appearance-none h-2"
+          className="h-2.5"
           type="range"
           min={2}
           max={40}
