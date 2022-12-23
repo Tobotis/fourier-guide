@@ -80,13 +80,14 @@ const ComplexPowers: React.FC<ComplexPowerProps> = ({
               },
             }}
           />
-          {points.map((point: Vector2) => (
-            <Point x={point[0]} y={point[1]} />
+          {points.map((point: Vector2, index: number) => (
+            <Point x={point[0]} y={point[1]} key={index} />
           ))}
           {points.map((point: Vector2, index: number) => {
             if (index > 0) {
               return (
                 <Line.Segment
+                  key={index}
                   point1={points[index - 1]}
                   point2={point}
                   opacity={1}
