@@ -9,7 +9,7 @@ import { useGesture } from '@use-gesture/react'
 import ScaleContext, { ScaleContextShape } from './ScaleContext'
 import { round, Interval, Vector2 } from '../math'
 
-import TeX from '@matejmazur/react-katex';
+import TeX from '@matejmazur/react-katex'
 import { off } from 'process'
 
 export interface MafsViewProps {
@@ -23,15 +23,15 @@ export interface MafsViewProps {
 }
 
 interface NonSVGProps {
-  children: Array<React.ReactNode>
+  children: Array<React.ReactNode> | React.ReactNode
   x: number
   y: number
+  nonsvg : boolean
 }
 
-export const NonSVG: React.FC<NonSVGProps> = ({children, x, y}) => {
+export const NonSVG: React.FC<NonSVGProps> = ({ children, x, y }) => {
   return <>{children}</>
 }
-
 
 export const MafsView: React.FC<MafsViewProps> = ({
   width: desiredWidth = 'auto',
@@ -76,6 +76,24 @@ export const MafsView: React.FC<MafsViewProps> = ({
 
   const mapY = React.useCallback(
     (y: number) => round(((y - yMax) / (yMin - yMax)) * height),
+    [yMin, yMax, height]
+  )
+
+  const centeredMapX = React.useCallback(
+    (x: number) => {
+      let xMid: number = (xMax + xMin) / 2
+      let pxPerXStep: number = width / (xMax - xMin)
+      return (-xMid + x) * pxPerXStep
+    },
+    [xMin, xMax, width]
+  )
+
+  const centeredMapY = React.useCallback(
+    (y: number) => {
+      let yMid: number = (yMax + yMin) / 2
+      let pxPerYStep: number = height / (yMax - yMin)
+      return (yMid - y) * pxPerYStep
+    },
     [yMin, yMax, height]
   )
 
@@ -131,99 +149,76 @@ export const MafsView: React.FC<MafsViewProps> = ({
     [scaleX, scaleY, xSpan, ySpan, pixelMatrix, inversePixelMatrix, cssScale]
   )
 
-  
-
-
-  const SVGGenerator = React.useMemo(
-    
-    () => {
-      if (!children) {
-        return <></>
-      }
-      let SVGElements: Array<React.ReactNode> = []
-      if (children?.length) {
-        SVGElements = children.filter(
-          (element: React.ReactElement) => {
-            if (element == null || element == undefined) {
-              return false
-            }
-            return !(element.type === NonSVG)
-          }
-        )
-      } else {
-        SVGElements = children.type === NonSVG ? [] : [children]
-      }
-       
-
-      return <>{SVGElements.map((element : React.ReactNode) => element)} </>
-    },
-    [children]
-  )
-
-  const nonSVGGenerator = React.useMemo(
-    () => {
-
-      if (!children) {
-        return <></>
-      }
-      let nonSVGElements: Array<React.ReactNode> = []
-      console.log(children)
-      if (children?.length) {
-          nonSVGElements = children.filter(
-            (element: React.ReactElement) => {
-              if (element == null || element == undefined) {
-                return false
-              }
-              return element.type === NonSVG
-            }
-          )
-      }
-      else {
-        nonSVGElements = children.type === NonSVG ? [children] : [] 
-      }
-
-      console.log(nonSVGElements)
-      
-
-      let pxPerXStep: number = width / xSpan;
-      let pxPerYStep: number = height / ySpan;
-      let style: any = { transform: `translate(${- offset[0] * pxPerXStep}px, ${offset[1] * pxPerYStep}px)`}
-      
-
-      let resultingElements: Array<React.ReactElement> = []
-      
-      nonSVGElements.forEach((elem: React.ReactNode) => {
-        if (!React.isValidElement(elem)) {
-          return;
+  const SVGGenerator = React.useMemo(() => {
+    if (!children) {
+      return <></>
+    }
+    let SVGElements: Array<React.ReactNode> = []
+    if (children?.length) {
+      SVGElements = children.filter((element: React.ReactElement) => {
+        if (element == null || element == undefined) {
+          return false
         }
-        let x: number | undefined = elem.props["x"]
-        let y: number | undefined = elem.props["y"]
-
-        if (x == undefined) {
-          x = 0
-        }
-        if (y == undefined) {
-          y = 0
-        }
-
-        console.log("aaa")
-        
-        let pxX: number = x * pxPerXStep
-        let pxY: number = y * pxPerYStep
-
-        console.log(pxX)
-
-        let style: object = {transform: `translate(${-pxX}, ${pxY})`}
-
-        resultingElements.push(<div style={style}>{elem}</div>)
+        return !(element.type === NonSVG)
       })
+    } else {
+      SVGElements = children.type === NonSVG ? [] : [children]
+    }
 
-      console.log(resultingElements)
+    return <>{SVGElements.map((element: React.ReactNode) => element)} </>
+  }, [children])
 
-      
-      return <div className='other' style={style}> <div className='wrapper'>{resultingElements.map((element : React.ReactNode) => element)} </div></div>;
-    }, [offset, xSpan, ySpan, width, height, children]
-  )
+  const nonSVGGenerator = React.useMemo(() => {
+    if (!children) {
+      return <></>
+    }
+    console.log(children)
+    let nonSVGElements: Array<React.ReactNode> = []
+    if (children?.length) {
+      nonSVGElements = children.filter((element: React.ReactElement) => {
+        if (element == null || element == undefined) {
+          return false
+        }
+        return element.type === NonSVG
+      })
+    } else {
+      nonSVGElements = children.type === NonSVG ? [children] : []
+    }
+
+    console.log(nonSVGElements)
+
+    let resultingElements: Array<React.ReactElement> = []
+
+    nonSVGElements.forEach((elem: React.ReactNode) => {
+      if (!React.isValidElement(elem)) {
+        return
+      }
+      let x: number | undefined = elem.props['x']
+      let y: number | undefined = elem.props['y']
+
+      if (x == undefined) {
+        x = 0
+      }
+      if (y == undefined) {
+        y = 0
+      }
+
+      let pxX: number = centeredMapX(x)
+      let pxY: number = centeredMapY(y)
+      let style: object = { transform: `translate(${pxX}px, ${pxY}px)` }
+      // Only display the nonSVGElements if inside the viewport.
+      // The check is intentionally very generous to prevent accidental removing of elements still in the viewport
+      if (Math.abs(pxX) < width && Math.abs(pxY) < height) {
+        resultingElements.push(
+          <div className="other" style={style}>
+            {elem}
+          </div>
+        )
+      }
+    })
+
+    return <>{resultingElements[0]}</>
+  }, [offset, xSpan, ySpan, width, height, children])
 
   return (
     <div
@@ -236,7 +231,7 @@ export const MafsView: React.FC<MafsViewProps> = ({
         <ScaleContext.Provider value={scaleContext}>
           <MapContext.Provider value={{ mapX, mapY }}>
             <PaneManager>
-              <div className='wrapper'>
+              <div className="wrapper">
                 {nonSVGGenerator}
                 <svg
                   width={width}
@@ -251,7 +246,6 @@ export const MafsView: React.FC<MafsViewProps> = ({
                 >
                   {visible && SVGGenerator}
                 </svg>
-               
               </div>
             </PaneManager>
           </MapContext.Provider>

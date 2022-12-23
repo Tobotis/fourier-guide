@@ -16,24 +16,19 @@ import {
   Vector2,
   Vector,
 } from '../mafs'
-import { MathText } from "../utils/mafs_extended/MathText"
-import TeX from '@matejmazur/react-katex';
-import {NonSVG} from '../mafs/view/MafsView'
+import { MathText } from '../utils/mafs_extended/MathText'
+import { NonSVG } from '../mafs/view/MafsView'
 
 # Fourier... ? Eine Einführung
 
 ## Ziel
 
-<FrameMafs> 
-  <Mafs> 
+<FrameMafs>
+  <Mafs xAxisExtent={[-3, 9]} yAxisExtent={[-3, 3]}>
     <CartesianCoordinates />
-    <NonSVG x={1} y={0}> <p>Diese</p></NonSVG>
-    <NonSVG x={1} y={0}> <p>Die</p></NonSVG>
+    <MathText text="x^2" position={[0, 0]} color="red"></MathText>
   </Mafs>
 </FrameMafs>
-
-
-
 
 Nach dem Lesen dieses Artikels solltest du einen Überblick über die **Fourier-Transformation** und den Algorithmus der **Schnellen-Fourier-Transformation** haben. Es steht dabei vor allem im Vordergrund, dass keine Annahmen getätigt werden,
 sondern ein Verständnis auf dem Fundament der Schulphysik/-mathematik aufgebaut wird.
