@@ -13,7 +13,6 @@ import {
 } from '../mafs'
 import FrameMafs from './FrameMafs'
 import * as vec from 'vec-la'
-import { validateConfig } from 'next/dist/server/config-shared'
 
 export default function ComplexPlaneRotation() {
   const startAngle = Math.atan2(-2, 1)
@@ -35,7 +34,7 @@ export default function ComplexPlaneRotation() {
   }
   return (
     <FrameMafs>
-      <Mafs>
+      <Mafs pan={false}>
         <CartesianCoordinates
           yAxis={{
             labels: (y) => {
