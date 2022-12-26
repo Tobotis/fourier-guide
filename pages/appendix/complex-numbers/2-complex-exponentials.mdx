@@ -1,6 +1,8 @@
 import { Callout } from 'nextra-theme-docs'
 
 import LinkButton from '../../../components/LinkButton.tsx'
+import ComplexExponential from '../../../components/ComplexExponential.tsx'
+import QuestionAnswer, { Answer } from '../../../components/QuestionAnswer.tsx'
 
 # Komplexe Exponentialfunktion
 
@@ -44,8 +46,8 @@ Wenn man nun $f(\phi)$ nach $\phi$ ableitet (mit der _Produktregel_), folgt:
 $$
 \begin{equation*}
 \begin{split}
-f'(\phi) &= e^{i \phi} (i \cos(\phi)-\sin(\phi)) - i e^{-i \phi} (\cos (\phi) + i \sin (\phi))\\
-&= e^{i \phi} i \cos(\phi) - e^{i \phi} \sin(\phi) - i e^{-i \phi} \cos (\phi) +  e^{-i \phi} \sin (\phi)\\
+f'(\phi) &= e^{-i \phi} (i \cos(\phi)-\sin(\phi)) - i e^{-i \phi} (\cos (\phi) + i \sin (\phi))\\
+&= e^{-i \phi} i \cos(\phi) - e^{-i \phi} \sin(\phi) - i e^{-i \phi} \cos (\phi) +  e^{-i \phi} \sin (\phi)\\
 &= 0
 \end{split}
 \end{equation*}
@@ -57,7 +59,7 @@ $$
   Produktregel](https://de.wikipedia.org/wiki/Produktregel))
 </Callout>
 
-Wenn die Ableitung $f'(\phi)$ unabhängig $0$ ist, dann muss $f(\phi)$ konstant sein (keine Steigung haben).
+Wenn die Ableitung $f'(\phi)$ immer $0$ ist, dann muss $f(\phi)$ konstant sein (keine Steigung haben).
 
 Da $f(0) = 1$ muss $f(\phi) = 1$ für alle $\phi$ (konstant). Es gilt also:
 
@@ -71,8 +73,103 @@ Die Gleicheit ist somit bewiesen. Ein Verständnis für die Gleichung wurde jedo
 
 Die Betrachtung als eine Multiplikation von $e$, $\theta i$-mal mit sich selbst ist problematisch.
 
-Um ein Verständnis für diesen komplexen Exponenten zu entwickeln, muss man sich die Definition der Exponentialfunktion zur Basis $e$ vor Augen führen:
+Um ein Verständnis für diesen komplexen Exponenten zu entwickeln, muss man sich die Definition der Exponentialfunktion zur Basis $e$ vor Augen führen, bzw. die Entstehung der _Konstanten_ $e$ nachvollziehen.
+
+---
+
+Im folgenden gebe es eine Bank, welche zwei Möglichkeiten anbietet:
+
+1. $6 \%$ Zinsen pro Jahr
+2. $0.5 \%$ Zinsen pro Monat
+
+<QuestionAnswer>
+  <>Mit welcher Option hat man langfristig mehr Geld?</>
+  <Answer>Mit Option 1</Answer>
+  <Answer correct={true}>Mit Option 2</Answer>
+  <Answer> Es macht keinen Unterschied </Answer>
+</QuestionAnswer>
+
+---
+
+Diese Frage stellte sich auch _Jacob Bernoulli_ im Jahr 1669.
+
+Wenn man z.B. mit dem Geldbetrag $1€$ startet und ein Jahr wartet, dann würde Folgendes passieren:
+
+1. Option: $1€ \cdot (1+0.06) = \textbf{1.06}$
+2. Option: $1€ \cdot \overbrace{(1+0.005) \cdot (1+0.005) \cdot ... \cdot (1+0.005)}^{12 \text{ mal }} = 1€ \cdot (1+0.005)^{12} \approx \textbf{1.0617}$
+
+Berechtigterweise lässt sich nun fragen, was passiert, wenn man das Jahr in noch kleiner Intervalle einteilt und in jedem Zeitintervall $\frac{6}{n} \%$ Zinsen bekommt.
+Wenn mit mit wieder mit einem Betrag von $1€$ startet, dann folgt für die den Geldbetrag nach einem Jahr:
 
 $$
-e^x = \lim_{n\to \infty} \left(1+\frac{1}{n}\right)^{nx}
+B_{0.06}(n)=\left(1+\frac{0.06}{n}\right)^n
 $$
+
+Wenn man das Zeitintervall also in immer kleinere Intervalle einteilt und somit Gebrauch von Zinsenzins macht, kann man dann durch $n \to \infty$ immer mehr Geld bekommen?
+
+<br />
+<div align="center">
+
+| $n$           | $1$    | $10$             | $100$             | $1000$            | $10^4$            | $10^5$            |
+| ------------- | ------ | ---------------- | ----------------- | ----------------- | ----------------- | ----------------- |
+| $B_{0.06}(n)$ | $1.06$ | $\approx 1.0616$ | $\approx 1.06182$ | $\approx 1.06183$ | $\approx 1.06184$ | $\approx 1.06184$ |
+
+</div>
+
+Es lässt sich erkennen, dass sich der Geldbetrag $B_{0.06}(n)$ immer geringfüger ändert. Dies ist natürlich kein Beweis, jedoch ein starkes Indiz dafür, dass sich der Wert einer Konstanten annähert.
+
+Um das betrachtete Phänomen etwas zu verallgemeinern, betrachtet man nun einen beliebigen Zinssatz $x$ und lässt das Zeitintervall beliebig klein werden: $\lim_{n\rightarrow\infty}$.
+
+<Callout type="info" emoji="📚">
+  Eine formale Definition eines Grenzwertes: [Wikipedia:
+  Grenzwert](https://de.wikipedia.org/wiki/Grenzwert_(Folge)){' '}
+</Callout>
+
+Es gilt also für den Betrag in Abhängigkeit des Zinssatzes $B(x)$:
+
+$$
+\begin{equation*}
+\begin{split}
+B(x) &= \lim_{n\to \infty} \left(1+\frac{x}{n}\right)^{n} \qquad | \qquad \text{ sei } m = \frac{n}{x}\\
+ &= \lim_{n\to \infty} \left(1+\frac{1}{m}\right)^{mx} \qquad | \qquad \text{ wenn } n \to \infty \text{ dann auch } m \to \infty\\
+&= \lim_{m\to \infty} \left(1+\frac{1}{m}\right)^{mx} \qquad | \qquad \text{ mit } a^{bc} = (a^b)^c \\
+&= \lim_{m\to \infty} \left(\left(1+\frac{1}{m}\right)^{m}\right)^{x}
+\end{split}
+\end{equation*}
+$$
+
+Es scheint logisch, sich den Wert des Terms $\lim_{m\to \infty} \left(1+\frac{1}{m}\right)^{m}$ separat anzuschauen, da dieser unabhängig von $x$ und somit konstant ist.
+
+<br />
+<div align="center">
+
+| $m$                                                 | $1$ | $2$            | $8$             | $100$           | $10^4$          | $10^5$          |
+| --------------------------------------------------- | --- | -------------- | --------------- | --------------- | --------------- | --------------- |
+| $\lim_{m\to \infty} \left(1+\frac{1}{m}\right)^{m}$ | $2$ | $\approx 2.25$ | $\approx 2.566$ | $\approx 2.705$ | $\approx 2.718$ | $\approx 2.718$ |
+
+</div>
+
+Es handelt sich wiederum um keinen Beweis, jedoch scheint es so zu sein, dass sich der Term einem ganz bestimmten Wert annähert. Es könnte natürlich so sein, dass der Term plötzlich bei einem noch größeren $m$ wieder von diesem Wert abweicht.
+
+Ein rigoroser Beweis soll jedoch erspart bleiben. Genau dieser Wert wurde letztendlich als die **eulersche Zahl** $e \approx 2.718$ definiert. Somit lässt scih obiger Term umschreiben und von $B(x)$ zu dem üblichen $\exp (x)$ umbennenen:
+
+$$
+\exp (x) = e^x
+$$
+
+Die Exponentialfunktion resultiert somit nicht aus der Idee von der wiederholten Multiplikation einer ominösen Konstante $e$, welche letztendlich Probleme mit bestimmten Werten für $x$ (z.B. komplexen Zahlen) bereitet.
+Natürlich sind komplexen Zahlen als Zinsen auch unrealisitsch. Es ist jedoch bekannt, wie man komplexe Zahlen dividiert, addiert und multipliziert.
+
+## Imaginäre Zinssätze
+
+Um wieder auf die **Eulersche Formel** zurückzukommen, müsste man nun betrachten, was passiert wenn $x\in \mathbb{C}$ bzw. $x = \theta i$.
+Gemäß der obigen Definition der Exponentialfunktion folgt:
+
+$$
+\exp (\theta i) = e^{\theta i} = \lim_{m\to \infty} \left(\left(1+\frac{1}{m}\right)^{m}\right)^{\theta i} = \lim_{n\to \infty} \left(1+\frac{\theta i}{n}\right)^{n}
+$$
+
+Beim Term $z = 1+\frac{\theta i }{n}$ handelt es sich um eine komplexe Zahl mit $\Re(z) = 1$ und $\Im(z) = \frac{\theta}{n}$. Diese Zahl wird
+somit $n$ mal mit sich selbst multipliziert.
+
+<ComplexExponential />
