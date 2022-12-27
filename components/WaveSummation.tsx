@@ -30,6 +30,7 @@ const WaveSummation: React.FC = () => {
         <div className="text-center my-10">
           Anzahl Sinus-Terme:{' '}
           <input
+            className="h-2.5"
             type="range"
             min={1}
             max={10}

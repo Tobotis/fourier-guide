@@ -48,4 +48,10 @@ export default {
     title: 'Auf dieser Seite:',
   },
   faviconGlyph: '𝓕',
+  sidebar: { defaultMenuCollapseLevel: 0 },
+  useNextSeoProps() {
+    return {
+      titleTemplate: '%s – Fourier...',
+    }
+  },
 }
