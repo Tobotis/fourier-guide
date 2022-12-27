@@ -1,8 +1,8 @@
 export interface NonSVGProps {
-  children: Array<React.ReactNode> | React.ReactNode
-  x: number
-  y: number
-  nonsvg: boolean
+  children?: Array<React.ReactNode> | React.ReactNode
+  x?: number
+  y?: number
+  nonsvg?: boolean
 }
 
 export interface NonSVGWrapperProps {

@@ -4,12 +4,10 @@ import TeX from '@matejmazur/react-katex'
 import { NonSVGElement, NonSVGProps } from '../../mafs/view/NonSVGElement'
 
 export interface MathTextProps extends NonSVGProps {
-  x: number
-  y: number
-  size: number
-  text: string
-  color: string
-  opacity: number
+  size?: number
+  text?: string
+  color?: string
+  opacity?: number
 }
 
 export const MathText: React.FC<MathTextProps> = ({
