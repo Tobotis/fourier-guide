@@ -93,19 +93,19 @@ Im folgenden gebe es eine Bank, welche zwei Möglichkeiten anbietet:
 
 Diese Frage stellte sich auch _Jacob Bernoulli_ im Jahr 1669.
 
-Wenn man z.B. mit dem Geldbetrag $1€$ startet und ein Jahr wartet, dann würde Folgendes passieren:
+Wenn man z.B. mit dem Geldbetrag $1$€ startet und ein Jahr wartet, dann würde Folgendes passieren:
 
-1. Option: $1€ \cdot (1+0.06) = \textbf{1.06}$
-2. Option: $1€ \cdot \overbrace{(1+0.005) \cdot (1+0.005) \cdot ... \cdot (1+0.005)}^{12 \text{ mal }} = 1€ \cdot (1+0.005)^{12} \approx \textbf{1.0617}$
+1. Option: $1\text{€} \cdot (1+0.06) = \textbf{1.06}$
+2. Option: $1\text{€} \cdot \overbrace{(1+0.005) \cdot (1+0.005) \cdot ... \cdot (1+0.005)}^{12 \text{ mal }} = 1\text{€} \cdot (1+0.005)^{12} \approx \textbf{1.0617}$
 
 Berechtigterweise lässt sich nun fragen, was passiert, wenn man das Jahr in noch kleiner Intervalle einteilt und in jedem Zeitintervall $\frac{6}{n} \%$ Zinsen bekommt.
-Wenn mit mit wieder mit einem Betrag von $1€$ startet, dann folgt für die den Geldbetrag nach einem Jahr:
+Wenn mit mit wieder mit einem Betrag von $1$€ startet, dann folgt für die den Geldbetrag nach einem Jahr:
 
 $$
 B_{0.06}(n)=\left(1+\frac{0.06}{n}\right)^n
 $$
 
-Wenn man das Zeitintervall also in immer kleinere Intervalle einteilt und somit Gebrauch von Zinsenzins macht, kann man dann durch $n \to \infty$ immer mehr Geld bekommen?
+Wenn man das Zeitintervall also in immer kleinere Intervalle einteilt und somit noch mehr Gebrauch vom Zinseszins macht, kann man dann durch $n \to \infty$ immer mehr Geld bekommen?
 
 <br />
 <div align="center">
@@ -158,11 +158,11 @@ $$
 $$
 
 Die Exponentialfunktion resultiert somit nicht aus der Idee von der wiederholten Multiplikation einer ominösen Konstante $e$, welche letztendlich Probleme mit bestimmten Werten für $x$ (z.B. komplexen Zahlen) bereitet.
-Natürlich sind komplexen Zahlen als Zinsen auch unrealisitsch. Es ist jedoch bekannt, wie man komplexe Zahlen dividiert, addiert und multipliziert.
+Natürlich sind komplexe Zahlen als Zinsen auch unrealisitsch. Es ist jedoch bekannt, wie man komplexe Zahlen dividiert, addiert und multipliziert und somit den Term $\lim_{n\to \infty} \left(1+\frac{x}{n}\right)^{n}$ mit $x\in \mathbb{C}$ berechnen kann.
 
 ## Imaginäre Zinssätze
 
-Um wieder auf die **Eulersche Formel** zurückzukommen, müsste man nun betrachten, was passiert wenn $x\in \mathbb{C}$ bzw. $x = \theta i$.
+Um wieder auf die **Eulersche Formel** zurückzukommen, müsste man nun betrachten, was passiert wenn $x = \theta i$.
 Gemäß der obigen Definition der Exponentialfunktion folgt:
 
 $$
@@ -170,6 +170,74 @@ $$
 $$
 
 Beim Term $z = 1+\frac{\theta i }{n}$ handelt es sich um eine komplexe Zahl mit $\Re(z) = 1$ und $\Im(z) = \frac{\theta}{n}$. Diese Zahl wird
-somit $n$ mal mit sich selbst multipliziert.
+somit $n$ mal mit sich selbst multipliziert. Ein imaginärer Zinssatz macht selbstverständlich wenig Sinn. Jedoch lässt sich damit die Verbindung zwischen der Exponentialfunktion und den komplexen Zahlen illustrieren.
+Im Folgenden lässt sich ausprobieren, wie sich $\exp (\theta i)$ für verschiedene Approximationen und Winkel $\theta$ verhält.
 
 <ComplexExponential />
+
+Es lässt sich eindeutig erkennen, dass sich der Term $(1+\frac{\theta i }{n})^n$ für immer größere $n$, der komplexen Zahl mit dem Winkel $\theta$ auf dem **Einheitskreis** annähert.
+
+In Anwendung auf die **reellen Zahlen**, wurde ebenfalls deutlich, dass sich der Term $(1+\frac{x}{n})^n$ für immer größere $n$ einem bestimmten Wert annähert. Dabei liegen die Werte jedoch ausschließlich auf der Achse des $\Re$-Teils, da es keinen Imaginärteil gibt.
+Dieser Wert der Annäherung ergibt sich, wie zuvor herausgestellt, durch das kontinuirliche Hinzufügen von einem unendlich kleinen Anteil eines bestimmten Zinssatzes. _Kontinuirlich_ bedeutet hierbei, dass die Zeitintervalle ebenfalls unendlich klein werden und es somit unendlich viele Zeitintervalle gibt.
+
+### Wiederholte Multiplikation einer komplexen Zahl
+
+In Bezug auf komplexe Zahlen lässt sich der Term somit wie folgt verstehen. Eine komplexe Zahl $z$ wird unendlich oft mit sich selbst multipliziert. Dabei gilt für den Realteil und für den Imaginärteil
+
+$$
+\Re (z) = 1 \qquad \Im (z) = \lim_{n\to \infty} \left(\frac{\theta}{n} \right)
+$$
+
+Um zu verstehen, was sich beim Potenzieren der komplexen Zahl $z = \lim_{n\to\infty} (1+\frac{\theta i}{n})$ ergibt, ist es sinnvoll, wie im vorherigen Abschnitt herausgestellt wurde, die Polardarstellung zu ermitteln.
+Der Betrag wird durch das Potenzieren mit $n$ ebenfalls $n$ potenziert, der Polarwinkel jedoch mit $n$ multipliziert.
+
+#### Betrag
+
+Der Betrag der resultierenden komplexen Zahl ($\lim_{n\to\infty}z^n$) entspricht dem Abstand vom _Ursprung_ von $z$, hoch $n$:
+
+$$
+\begin{equation*}
+\begin{split}
+\lim_{n \to \infty} r_z^n &= \lim_{n \to \infty}  \sqrt{\Re(z)^2 + \Im(z)^2}^n \qquad | \text{ Satz des Pythagoras }\\
+&= \lim_{n \to \infty} \sqrt{1 + \frac{\theta^2}{n^2}}^n \qquad | \text{ mit } \sqrt{a}^b = a^{\frac{b}{2}}\\
+&= \lim_{n \to \infty} \left(1 + \frac{\theta^2}{n^2}\right)^{\frac{n}{2}} \qquad | \text{ mit } (a^b)^c = a^{bc}\\
+&= \lim_{n \to \infty} \left(\left(1 + \frac{\theta^2}{n^2}\right)^{n^2}\right)^{\frac{1}{2n}} \qquad | \text{ wenn } n \to \infty \text{ dann auch } n^2 \to \infty \\
+&= \lim_{n \to \infty} \left(\exp (\theta^2)\right)^{\frac{1}{2n}} \qquad | \text{ mit } \exp (a) = e^a\\
+&= \lim_{n \to \infty} e^{\frac{\theta^2}{2n}}\qquad | \text{ mit } \lim_{n \to \infty} \frac{\theta^2}{2n} = 0  \\
+&= e^0 = 1
+\end{split}
+\end{equation*}
+$$
+
+Die komplexe Zahl $\exp(\theta i)$ muss also auf einen Betrag von $1$ haben und somit auf dem Einheitskreis liegen.
+
+#### Polarwinkel
+
+Der Polarwinkel der komplexen Zahl $z = 1+\frac{\theta i}{n}$ extrem nah an $\frac{\theta}{n}$. Wenn man nun $z$ mit $n$ potenziert, dann folgt eine Addition der Winkel. Somit
+liegt der Polarwinkel von $z^n$ für große $n$ extrem nah bei $n \cdot \frac{\theta}{n} = \theta$. Dies soll kein mathematischer Beweis sein.
+
+Die komplexe Zahl $\exp(\theta i)$ muss also auf dem Einheitskreis liegen und den Polarwinkel von $\theta$ einschließen.
+
+### Komplexe Zahlen auf dem Einheitskreis
+
+Nun lassen sich Überlegungen anstellen, wie sich dieser Punkt auf dem Einheitskreis noch ausdrücken lässt. Hierbei kommen die **trignometrischen Funktionen** ins Spiel.
+
+Die **trignometrischen Funktionen** sind buchstäblich durch den Einheitskreis definiert. Im kartesischen Koordinatensystem lässt sich ein Punkt auf dem Einheitskreis, welcher den Winkel $\theta$ mit der $x$-Achse einschließt mit
+$(\cos (\theta), \sin (\theta))$ beschreiben.
+
+Daraus folgt unmittelbar für die **komplexe Ebene**:
+
+$$
+\exp (\theta i) = e^{\theta i} = \cos (\theta) + i \sin (\theta)
+$$
+
+Dies entspricht der **Eulerschen Formel**, welche sehr nützlich ist um **trignometrische** Zusammenhänge anders auszudrücken.
+
+---
+
+Im Gegensatz zum ersten Abschnitt auf dieser Seite, ist diese Argumentation kein _richtiger_ Beweis. Jedoch sollte damit die **Eulersche Formel** plausibel erscheinen.
+
+<Callout type="info" emoji="📚">
+  {' '}
+  weitere interessante Beweise: [StackExchange: Math](https://math.stackexchange.com/questions/3510/how-to-prove-eulers-formula-ei-varphi-cos-varphi-i-sin-varphi)
+</Callout>

@@ -344,10 +344,10 @@ Dies lässt sich mithilfe von **trignometrische Zusammenhängen** umsetzen.
     Wie lässt sich der Realteil $a$ in Abhängigkeit von $\phi$ und $r$ ausdrücken?
     (für $a+bi = z \in \mathbb{C}$)
   </>
-  <Answer>$b=\cos (r \phi)$</Answer>
-  <Answer correct={true}>$b=r\cos ( \phi)$</Answer>
-  <Answer>$b=\sin (r \phi)$</Answer>
-  <Answer>$b=r \sin (\phi)$</Answer>
+  <Answer>$a=\cos (r \phi)$</Answer>
+  <Answer correct={true}>$a=r\cos ( \phi)$</Answer>
+  <Answer>$a=\sin (r \phi)$</Answer>
+  <Answer>$a=r \sin (\phi)$</Answer>
 </QuestionAnswer>
 
 ---
@@ -362,6 +362,8 @@ ausgedrückt werden. Diese Darstellung wird auch als **Polardarstellung** bezeic
 Die **Polardarstellung** wird im Folgenden nützlich sein, um die Rotation von komplexen Zahlen nachzuvollziehen.
 Der Term $\cos (\phi) + i \sin (\phi)$ wird im folgenden auch mit $\text{cis} (\phi)$ abgekürzt.
 Somit $z= r \text{cis} (\phi)$.
+
+Im Folgenden wird $r$ als Betrag und $\phi$ als Polarwinkel der komplexen Zahl $z$ bezeichnet.
 
 ## Multiplikation von beliebigen komplexen Zahlen
 
@@ -413,7 +415,8 @@ Bei $**$ wird die Winkelsummeidentität für Sinus verwendet:
 
 ---
 
-Am Ergebnis der Multiplikation ist die Polardarstellung einer _neuen_ komplexen Zahl zu erkennen. Die komplexe Zahl $z\cdot w$ schließt somit einen Winkel von $\phi + \theta$ mit der horizontalen Achse ein und die Länge des Vektors ist das Produkt der Längen der Vektoren der Ausgangszahlen $z$ und $w$.
+Am Ergebnis der Multiplikation ist die Polardarstellung einer _neuen_ komplexen Zahl zu erkennen.
+Die komplexe Zahl $z\cdot w$ hat einen **Polarwinkel** von $\phi + \theta$ und der **Betrag** ist das Produkt der beiden Beträge von $z$ und $w$.
 
 ### Folgerungen
 
@@ -453,4 +456,4 @@ Im Folgenden lässt sich ausprobieren, wie sich die **Potenzen** einer komplexen
   <Answer>$z^k = r^k \text{cis} (\phi^k)$</Answer>
 </QuestionAnswer>
 
-Wichtig ist, dass die **Länge** bei einer Multiplikation multipliziert, und der **Winkel** addiert wird.
+Wichtig ist, dass die **Beträge** bei einer Multiplikation multipliziert, und der **Polarwinkel** addiert wird.

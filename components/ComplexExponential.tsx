@@ -39,9 +39,9 @@ const ComplexExponential = () => {
   )
   let expTerm = `\\exp(\\theta i) \\approx \\left(1 ${
     theta / n >= 0 ? '+ ' : '- '
-  } \\frac{${Math.abs(parseFloat(theta.toFixed(2)))}}{${Math.abs(
-    parseFloat(n.toFixed(2))
-  )}} i \\right)^{${n.toFixed(0)}}`
+  } \\frac{${Math.abs(
+    parseFloat((theta / Math.PI).toFixed(2))
+  )} \\pi}{${Math.abs(parseFloat(n.toFixed(2)))}} i \\right)^{${n.toFixed(0)}}`
   return (
     <>
       <p className="text-lg text-center mt-5">
