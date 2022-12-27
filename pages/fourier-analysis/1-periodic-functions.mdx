@@ -5,7 +5,7 @@ import SampleAddition from '../../components/SampleAddition'
 import WaveSummation from '../../components/WaveSummation'
 import UnitCircle from '../../components/UnitCircle'
 import FrameMafs from '../../components/FrameMafs'
-import TestFrame from '../../components/TestFrame'
+import LinkButton from '../../components/LinkButton'
 
 # Periodische Funktionen
 
@@ -23,13 +23,11 @@ $$
 \sin(t) = \sin(t+2\pi) \qquad \text{und}\qquad \cos(t) = \cos(t+2\pi)
 $$
 
-Die Periodizität der Funktionen $\sin$ und $\cos$ resultiert somit aus der räumlichen Periodizität von Kreisen.
-
 <FrameMafs>
   <UnitCircle />
 </FrameMafs>
 
-Es kann somit eine harmonische Schwingung erzeugt werden.
+Es kann somit eine sogenannte **harmonische Schwingung** erzeugt werden.
 
 Die ausführliche, trigonometrische Definition der Funktionen $\sin$ und $\cos$ soll hierbei erspart bleiben.
 
@@ -61,7 +59,7 @@ Dabei gilt:
 
 </div>
 ____
-Im Folgenden lassen sich jene Parameter variieren:
+Im Folgenden lassen sich die obigen Parameter variieren:
 
 <InteractiveSin />
 
@@ -78,7 +76,7 @@ Die $\sin$ und $\cos$ Funktionen lassen sich also umfangreich modifizieren.
 ### Kombination von trigonometrischen Funktionen
 
 Um nun kompliziertere periodische Vorgänge mithilfe von diesen periodischen Funktionen zu modellieren, erscheint es intuitiv, mehrere periodische Funktionen zu kombinieren.  
-Der erste Gedanke bei einer Kombination von mehreren Funktionswerten, könnte beispielsweise eine einfache **Addition** sein. Es lassen sich also beispielsweise mehrere $\sin$-Funktionen addieren.  
+Der erste Gedanke bei einer Kombination von mehreren Funktionswerten, könnte z.B. eine einfache **Addition** sein. Es lassen sich also beispielsweise mehrere $\sin$-Funktionen addieren.  
 Zum Beispiel:
 
 $$
@@ -89,7 +87,7 @@ $$
 Es wird komplizierter, wenn noch mehr Sinus-Funktionen addiert werden:
 <WaveSummation />
 Zusätzlich kann auch noch die Phasenverschiebung der einzelnen Terme modifiziert
-werden. Ein solche
+werden, welche hierbei erspart bleibt.
 
 ---
 
@@ -112,19 +110,21 @@ wobei $A_k$ die Amplitude, $\omega_k$ die Kreisfrequenz und $\Delta \varphi_k$ d
 
 ### Winkelsummenidentität
 
-Es gibt nun verschiedene praktischere Wege, die obige Summe zu schreiben.
+Es gibt nun verschiedene praktischere Wege, die $(1)$ zu schreiben.
 Um die Summe $\omega_k t + \Delta \varphi_k$ innerhalb des $\sin$ aufzulösen, lässt sich ein Zusammenhang für **Winkelsummen** anwenden:
 
 $$
 \sin(\alpha+ \beta) = \sin(\alpha)\cos(\beta) + \cos(\alpha)\sin(\beta)
 $$
 
-<Callout>
-  Beweis der Winkelsummenidentität für $\sin$: [PLACEHOLDER] (proof by picture:
-  [Proof 6](https://proofwiki.org/wiki/Sine_of_Sum))
-</Callout>
+Eine ausführliche Herleitung für diesen Zusammenhang ist bei
 
-Wenn man also diesen Zusammenhang auf einen der obigen Sinus-Terme anwendet und ausmultipliziert folgt:
+<LinkButton
+  href="../appendix/trigonometric-identities/1-sine-angle-sum"
+  text="Sinus-Winkelsummeindentität"
+/>
+aufgeführt. Wenn man also diesen Zusammenhang auf einen der obigen Sinus-Terme anwendet
+und ausmultipliziert folgt:
 
 $$
 \begin{equation}
@@ -154,6 +154,6 @@ umgeschrieben werden.
   <Answer correct={true}>$a_k = A_k \cdot \cos(\Delta \varphi_k)$ und $b_k = A_k \cdot \sin(\Delta \varphi_k)$</Answer>
 </QuestionAnswer>
 
-Die Darstellungen $(1)$ und $(3)$ lassen sich also problemlos ineinander überführen, ohne Information über die Phasenverschiebung zu verlieren oder Infromation hinzuzufügen. Die Frage, warum Darstellung $(3)$ nützlich ist, bleibt jedoch weiterhin offen.
+Die Darstellungen $(1)$ und $(3)$ lassen sich also problemlos ineinander überführen, ohne Information über die Phasenverschiebung zu verlieren oder Information hinzuzufügen. Die Frage, warum Darstellung $(3)$ nützlich ist, wird jedoch erst im folgenden Abschnitt klar.
 
 ### Darstellung mit komplexen Exponentialfunktionen
