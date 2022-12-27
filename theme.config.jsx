@@ -49,4 +49,9 @@ export default {
   },
   faviconGlyph: '𝓕',
   sidebar: { defaultMenuCollapseLevel: 0 },
+  useNextSeoProps() {
+    return {
+      titleTemplate: '%s – Fourier...',
+    }
+  },
 }
