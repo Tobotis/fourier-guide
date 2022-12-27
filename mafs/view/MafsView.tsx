@@ -211,7 +211,7 @@ export const MafsView: React.FC<MafsViewProps> = ({
       // The check is intentionally very generous to prevent accidental removing of elements still in the viewport
       if (Math.abs(pxX) < width && Math.abs(pxY) < height) {
         resultingElements.push(
-          <div className="other" style={style}>
+          <div className="nonsvgelement" style={style}>
             {elem}
           </div>
         )
@@ -232,7 +232,7 @@ export const MafsView: React.FC<MafsViewProps> = ({
         <ScaleContext.Provider value={scaleContext}>
           <MapContext.Provider value={{ mapX, mapY }}>
             <PaneManager>
-              <div className="wrapper">
+              <div className="viewwrapper">
                 {nonSVGGenerator}
                 <svg
                   width={width}

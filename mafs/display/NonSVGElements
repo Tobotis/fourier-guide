@@ -1,0 +1,7 @@
+import { MathText } from '../../utils/mafs_extended/MathText'
+
+
+
+const NonSVG = {
+  MathText
+}

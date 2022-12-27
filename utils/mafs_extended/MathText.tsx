@@ -3,20 +3,7 @@ import { useScaleContext } from '../../mafs/view/ScaleContext'
 import TeX from '@matejmazur/react-katex'
 import { NonSVG, NonSVGProps } from '../../mafs/view/NonSVGElement'
 
-/* Beispiel:
-  <FrameMafs>
-    <Mafs xAxisExtent={[-3, 9]} yAxisExtent={[-3, 3]}>
-      <CartesianCoordinates />
-      <MathText
-        nonsvg
-        text="x^2"
-        position={[0, 0]}
-        color="red"
-        size={24}
-      ></MathText>
-    </Mafs>
-  </FrameMafs>
-*/
+
 
 export interface MathTextProps extends NonSVGProps {
   position: number[]
@@ -33,7 +20,6 @@ export const MathText: React.FC<MathTextProps> = ({
   text = '',
   size = 24,
 }) => {
-  const { cssScale } = useScaleContext()
 
   let style: object = {
     opacity: opacity,

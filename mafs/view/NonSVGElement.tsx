@@ -1,4 +1,4 @@
-import { MathText } from '../../utils/mafs_extended/MathText'
+
 
 
 export interface NonSVGProps {
@@ -8,11 +8,17 @@ export interface NonSVGProps {
   nonsvg: boolean
 }
 
+export interface NonSVGWrapperProps {
+  children: Array<React.ReactNode> | React.ReactNode
+}
+
 export const NonSVG: React.FC<NonSVGProps> = ({ children, x, y }) => {
   return <>{children}</>
 }
 
-
-export const NonSVGElements = {
-  MathText,
+export const NonSVGWrapper: React.FC<NonSVGWrapperProps> = ({ children }) => {
+  return <>{children}</>
 }
+
+
+

@@ -65,12 +65,12 @@
   stroke-opacity: 0.75;
 }
 
-.wrapper {
+.viewwrapper {
   position: relative;
   width: 100%;
   height: 100%;
 }
-.other {
+.nonsvgelement {
   position: absolute;
   display: flex;
   align-items: center;
