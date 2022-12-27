@@ -8,10 +8,12 @@ import * as vec from 'vec-la'
 import { useGesture } from '@use-gesture/react'
 import ScaleContext, { ScaleContextShape } from './ScaleContext'
 import { round, Interval, Vector2 } from '../math'
-import { NonSVG } from './NonSVGElement'
-
-import TeX from '@matejmazur/react-katex'
-import { off } from 'process'
+import {
+  NonSVGElement,
+  NonSVGWrapper,
+  NonSVGWrapperProps,
+} from './NonSVGElement'
+import { NonSVG } from '../display/NonSVGElements'
 
 export interface MafsViewProps {
   width?: number | string
@@ -143,20 +145,15 @@ export const MafsView: React.FC<MafsViewProps> = ({
     if (!children) {
       return []
     }
-    let SVGElements: Array<React.ReactNode> = []
-    if (children?.length) {
-      SVGElements = children.filter((element: React.ReactElement) => {
-        if (element == null || element == undefined) {
-          return false
-        }
-        if (element.props == undefined) {
-          return true
-        }
-        return !element?.props['nonsvg']
-      })
-    } else {
-      SVGElements = children.type === NonSVG ? [] : [children]
+    let SVGElements: Array<React.ReactElement> = []
+    if (!children?.length) {
+      children = [children]
     }
+    children.forEach((element: React.ReactElement) => {
+      if (element.type != NonSVGWrapper) {
+        SVGElements.push(element)
+      }
+    })
     return SVGElements
   }, [children])
 
@@ -164,20 +161,15 @@ export const MafsView: React.FC<MafsViewProps> = ({
     if (!children) {
       return []
     }
-    let SVGElements: Array<React.ReactNode> = []
-    if (children?.length) {
-      SVGElements = children.filter((element: React.ReactElement) => {
-        if (element == null || element == undefined) {
-          return false
-        }
-        if (element.props == undefined) {
-          return false
-        }
-        return element?.props['nonsvg']
-      })
-    } else {
-      SVGElements = children.type === NonSVG ? [children] : []
+    let SVGElements: Array<React.ReactElement> = []
+    if (!children?.length) {
+      children = [children]
     }
+    children.forEach((element: React.ReactElement) => {
+      if (element.type === NonSVGWrapper) {
+        SVGElements.push(element.props.children)
+      }
+    })
     return SVGElements
   }, [children])
 
@@ -194,8 +186,11 @@ export const MafsView: React.FC<MafsViewProps> = ({
       if (!React.isValidElement(elem)) {
         return
       }
+
       let x: number | undefined = elem.props['x']
       let y: number | undefined = elem.props['y']
+
+      console.log(elem.props)
 
       if (x == undefined) {
         x = 0
@@ -203,6 +198,7 @@ export const MafsView: React.FC<MafsViewProps> = ({
       if (y == undefined) {
         y = 0
       }
+      console.log(x)
 
       let pxX: number = centeredMapX(x)
       let pxY: number = centeredMapY(y)

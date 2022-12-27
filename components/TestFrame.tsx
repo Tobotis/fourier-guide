@@ -1,6 +1,6 @@
 import * as React from 'react'
 import FrameMafs from './FrameMafs'
-import { sinSum } from '../utils/math_ext'
+import { NonSVGWrapper, NonSVG } from '../mafs/display/NonSVGElements'
 import {
   Mafs,
   FunctionGraph,
@@ -10,7 +10,6 @@ import {
   Vector2,
   Vector,
 } from '../mafs'
-import { MathText } from '../utils/mafs_extended/MathText'
 
 interface TestFrameProps {}
 
@@ -19,7 +18,10 @@ const TestFrame: React.FC<TestFrameProps> = () => {
     <FrameMafs>
       <Mafs>
         <CartesianCoordinates></CartesianCoordinates>
-        <MathText nonsvg text="x^2" color="white" position={[0, 0]} size={50} />
+        <FunctionGraph.OfX y={(x) => x}></FunctionGraph.OfX>
+        <NonSVGWrapper>
+          <NonSVG.MathText text="x^2" x={2} y={2} />
+        </NonSVGWrapper>
       </Mafs>
     </FrameMafs>
   )

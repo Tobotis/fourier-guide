@@ -1,12 +1,11 @@
 import * as React from 'react'
 import { useScaleContext } from '../../mafs/view/ScaleContext'
 import TeX from '@matejmazur/react-katex'
-import { NonSVG, NonSVGProps } from '../../mafs/view/NonSVGElement'
-
-
+import { NonSVGElement, NonSVGProps } from '../../mafs/view/NonSVGElement'
 
 export interface MathTextProps extends NonSVGProps {
-  position: number[]
+  x: number
+  y: number
   size: number
   text: string
   color: string
@@ -16,11 +15,11 @@ export interface MathTextProps extends NonSVGProps {
 export const MathText: React.FC<MathTextProps> = ({
   color = 'white',
   opacity = 1,
-  position = [0, 0],
+  x = 0,
+  y = 0,
   text = '',
   size = 24,
 }) => {
-
   let style: object = {
     opacity: opacity,
     color: color,
@@ -28,10 +27,10 @@ export const MathText: React.FC<MathTextProps> = ({
   }
 
   return (
-    <NonSVG nonsvg x={position[0]} y={position[1]}>
+    <NonSVGElement nonsvg x={x} y={y}>
       <TeX block style={style}>
         {text}
       </TeX>
-    </NonSVG>
+    </NonSVGElement>
   )
 }
