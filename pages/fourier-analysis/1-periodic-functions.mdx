@@ -5,11 +5,10 @@ import SampleAddition from '../../components/SampleAddition'
 import WaveSummation from '../../components/WaveSummation'
 import UnitCircle from '../../components/UnitCircle'
 import FrameMafs from '../../components/FrameMafs'
-import LinkButton from '../../components/LinkButton'
 
 # Periodische Funktionen
 
-Auf dem Weg zur **Fourier-Transformation** lassen sich zunächst einige Stationen, wie z.B. die **Fourier-Reihe**, betrachten. Grundlegend lässt sich mit den mathematischen Funktionen Sinus und Kosinus beginnen.
+Auf dem Weg zur [**Fourier-Transformation**](./3-fourier-transform) lassen sich zunächst einige Stationen, wie z.B. die [**Fourier-Reihe**](./2-fourier-series), betrachten. Grundlegend lässt sich mit den mathematischen Funktionen Sinus und Kosinus beginnen.
 
 ## Periodizität von Sinus und Kosinus
 
@@ -169,12 +168,7 @@ $$
 \sin(\alpha+ \beta) = \sin(\alpha)\cos(\beta) + \cos(\alpha)\sin(\beta)
 $$
 
-Eine ausführliche Herleitung für diesen Zusammenhang ist bei
-
-<LinkButton
-  href="../appendix/trigonometric-identities/1-sine-angle-sum"
-  text="Sinus-Winkelsummeindentität"
-/>
+Eine ausführliche Herleitung für diesen Zusammenhang ist bei [**Sinus-Winkelsummeindentität**](../appendix/trigonometric-identities/1-sine-angle-sum)
 aufgeführt. Wenn man also diesen Zusammenhang auf einen der obigen **Sinus-Terme**
 anwendet und ausmultipliziert folgt:
 
@@ -211,18 +205,7 @@ Die Frage, warum Darstellung $(3)$ nützlich ist, wird jedoch erst im folgenden 
 
 ## Darstellung mit komplexen Exponentialfunktionen
 
-Die beiden Abschnitte
-
-<LinkButton
-  href="../appendix/complex-numbers/1-complex-plane"
-  text="Komplexe Ebene"
-/>
-<LinkButton
-  href="../appendix/complex-numbers/2-complex-exponentials"
-  text="Komplexe Exponentialfunktion"
-/>
-
-sollten **komplexe Zahlen** und den Zusammenhang
+Man sollte sich [**komplexe Zahlen**](../appendix/complex-numbers/1-complex-plane) und den [**Zusammenhang**](../appendix/complex-numbers/2-complex-exponentials)
 
 $$
 \begin{equation}
@@ -357,7 +340,7 @@ Man definiere also $c_k = \frac{1}{2}(a_k-bi)$, woraus $\overline{c}_k = \frac{1
 $$
 \begin{equation}
 \begin{split}
-f(t) &=\frac{a_0}{2}+ \sum_{k=1}^n c_k e^{2 \pi i k f_0 t }+ \sum_{k=1}^n \overline{c}_k e^{-2 \pi i k f_0 t } \qquad | \text{ umschreiben der Summe}\\
+f(t) &=\frac{a_0}{2}+ \sum_{k=1}^n c_k e^{2 \pi i k f_0 t }+ \sum_{k=1}^n \overline{c}_k e^{-2 \pi i k f_0 t }\\
 &\overset{*}{=} \frac{a_0}{2}+ \sum_{k=1}^n c_k e^{2 \pi i k f_0 t }+ \sum_{k=-n}^{-1} \overline{c}_{-k} e^{2 \pi i k f_0 t }\\
 &\overset{**}{=} \sum_{k=-n}^n c_k e^{2 \pi i k f_0 t }
 \end{split}
