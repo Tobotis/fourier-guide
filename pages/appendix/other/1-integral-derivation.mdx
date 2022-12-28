@@ -1,0 +1,147 @@
+### Grundfrage
+
+import { Callout } from 'nextra-theme-docs'
+
+Bei der [Fourier-Transformation](../../fourier-analysis/3-fourier-transform) war diese Funktion aufgekommen:
+
+$$
+p(t) = f(t) \cdot g(t) = A \cdot sin(\omega_1 \cdot t) \cdot B \cdot sin(\omega_2 \cdot t)
+$$
+
+Dazu sollte folgendes Integral gebildet werden:
+
+$$
+\int p(t)\ dt = \int A \cdot sin(\omega_1 \cdot t) \cdot B \cdot sin(\omega_2 \cdot t)\ dt
+$$
+
+Die Herleitung soll hier erklärt werden:
+
+$$
+\int A \cdot sin(\omega_1 \cdot t) \cdot B \cdot sin(\omega_2 \cdot t)\ dt
+$$
+
+Aufgrund der Linearität des Integrals und der Ableitung, gilt:
+
+$$
+= AB \int sin(\omega_1 \cdot t)  \cdot sin(\omega_2 \cdot t)\ dt
+$$
+
+Für Produkte von Sinus-Funktionen gilt: $sin(x)\cdot sin(y) = \frac{cos(y-x)-cos(x+y)}{2}$\
+Somit gilt:
+
+$$
+= AB \int \frac{cos(\omega_1 \cdot t-\omega_2 \cdot t)-cos(\omega_2 \cdot t+\omega_1 \cdot t)}{2}\ dt
+$$
+
+<Callout type="info" emoji="📚">
+  Auf eine Herleitung der Sinus-Produkt-Gleichung wird hier verzichtet, du
+  kannst dir den Beweis jedoch hier anschauen:
+  [Proof-Wiki:Sine_by_Sine](https://proofwiki.org/wiki/Simpson%27s_Formulas/Sine_by_Sine)
+</Callout>
+
+Aufgrund der Linearität des Integrals und der Ableitung, gilt:
+
+$$
+= \frac{AB}{2} \int cos(\omega_1 \cdot t-\omega_2 \cdot t)-cos(\omega_2 \cdot t+\omega_1 \cdot t)\ dt
+$$
+
+Aufgrund der Summenregel, kann die Differenz getrennt werden:
+
+$$
+= \frac{AB}{2} \int cos(\omega_1 \cdot t-\omega_2 \cdot t)\ dt - \int cos(\omega_2 \cdot t+\omega_1 \cdot t)\ dt
+$$
+
+Innerhalb der Kosinus-Funktionen kann ausgeklammert werden:
+
+$$
+= \frac{AB}{2} \int cos(t\cdot(\omega_1 -\omega_2))\ dt - \int cos(t \cdot ( \omega_2 +\omega_1))\ dt
+$$
+
+$$
+= \frac{AB}{2} \int cos(t\cdot(\omega_1 + (-\omega_2)))\ dt - \int cos(t \cdot ( \omega_2 +\omega_1))\ dt
+$$
+
+<Callout>
+  Hier müssen wir kurz einen Zwischenschritt machen und folgendes Integral
+  bestimmen:
+
+$$
+\int cos(x \cdot (a+b))\ dx
+$$
+
+Hierfür substituiert (ersetzt) man $x \cdot (a+b)$ mit $u$.\
+Dementsprechend gilt:
+
+$$
+u=x\cdot (a+b)
+$$
+
+$$
+\Rightarrow \frac{d}{dx} u=\frac{d}{dx}(x\cdot (a+b)) = a+b
+$$
+
+Umgeformt nach $dx$, gilt:
+
+$$
+dx = \frac{du}{a+b}
+$$
+
+Setzt man $u$ und $dx$ nun in das Integral ein, erhält man:
+
+$$
+\int cos(u)\ \frac{du}{a+b}
+$$
+
+$$
+=\int \frac{1}{a+b} \cdot cos(u) \ du
+$$
+
+Aufgrund der Linearität von Integralen und da $a$ und $b$ unabhängig von $u$ sind, gilt:
+
+$$
+=\frac{1}{a+b} \cdot \int  cos(u) \ du
+$$
+
+Das Integral der Kosinus-Funktion ist allgemein bekannt und entspricht der Sinus-Funktion:
+
+$$
+=\frac{1}{a+b} \cdot sin(u)
+$$
+
+$$
+=\frac{sin(u)}{a+b}
+$$
+
+Resubstituiert man nun $u$, erhält man:
+
+$$
+=\frac{sin(x\cdot(a+b))}{a+b}
+$$
+
+</Callout>
+
+Setzt man nun die gelösten Integrale ein, erhält man:
+
+$$
+= \frac{AB}{2} \cdot \left(\frac{sin(t\cdot(\omega_1 + (-\omega_2)))}{\omega_1 + (-\omega_2)} - \frac{sin(t \cdot ( \omega_2 +\omega_1))}{\omega_2 +\omega_1}\right)
+$$
+
+$$
+= \frac{AB}{2} \cdot \left(\frac{sin(t\cdot(\omega_1 -\omega_2))}{\omega_1 -\omega_2} - \frac{sin(t \cdot ( \omega_2 +\omega_1))}{\omega_2 +\omega_1}\right)
+$$
+
+Da es sich um ein Integral handelt, muss eine Konstante addiert werden:
+
+$$
+= \frac{AB}{2} \cdot \left(\frac{sin(t\cdot(\omega_1 -\omega_2))}{\omega_1 -\omega_2} - \frac{sin(t \cdot ( \omega_2 +\omega_1))}{\omega_2 +\omega_1}\right) +C
+$$
+
+$$
+= \frac{AB}{2} \cdot \left(\frac{sin(t\cdot(\omega_1 -\omega_2))}{\omega_1 -\omega_2} - \frac{sin(t \cdot ( \omega_2 +\omega_1))}{\omega_2 +\omega_1}\right) +C
+$$
+
+Mit Grenzen gilt folgend:
+
+$$
+\int_a^b A \cdot sin(\omega_1 \cdot t) \cdot B \cdot sin(\omega_2 \cdot t)\ dt =\frac{AB}{2} \cdot  \left[ \frac{sin(t\cdot(\omega_1 -\omega_2))}{\omega_1 -\omega_2} - \frac{sin(t \cdot ( \omega_2 +\omega_1))}{\omega_2 +\omega_1} \right]_{t=a}^b
+$$
