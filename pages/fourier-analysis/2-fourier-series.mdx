@@ -1,2 +1,90 @@
+import SignalPlotter from '../../components/SignalPlotter.tsx'
+import Harmonics from '../../components/Harmonics.tsx'
+
 # Fourier-Reihen
-Im vorherigen Teil 
+
+In [Periodische Funktionen](./1-periodic-functions) wurde die Frage gestellt, inwiefern jede periodische Funktion $f(t)$ in der Schreibweise:
+
+$$
+f(t) = \sum_{k=-n}^n c_k e^{2 \pi i k f_0 t }
+$$
+
+ausgedrückt werden kann. Diese Frage soll in diesem Abschnitt beantwortet werden. Zudem soll ein Verfahren ermittelt werden, wie man die Koeffizienten $c_k$ bestimmen kann, wenn man eine bestimmte Funktion $f(t)$ gegeben hat.
+
+---
+
+Im Folgenden wird die Grundfrequnez mit einer Periodendauer $f_0 = \frac{1}{T}$ ausgedrückt, um den Funktionsnamen $f(t)$ und das $f$ der Frequenz nicht zu verwechseln:
+
+$$
+f(t) = \sum_{k=-n}^n c_k e^{\frac{2 \pi i k}{T} t }
+$$
+
+$T$ beschreibt dabei die Zeit, welche für eine Periode benötigt wird: $f(t) = f(t+T)$
+
+## Komplexe Funktionen
+
+Um sich der obigen Frage anzunähern, lassen sich die Koeffizienten $c_k$ nochmal etwas genauer betrachten.
+
+---
+
+Zuvor wurde herausgestellt, dass die Koeffizienten $c_k$ und $c_{-k}$ jeweils **konjugierte komplexe Zahlen** sind. Somit würden sich bei der Addition der Terme, die Imaginärteile herauskürzen und es würden **reelle** Funktionswerte $f(t)$ entstehen, welche gleichbedeutend zu einer Addition
+von mehreren $\sin$-Termen sind:
+
+<Harmonics />
+
+Dabei sind die Frequenzen der Terme Vielfache einer Grundfrequenz (in obiger Visualisierung ausgedrückt mit einer Periodendauer $T$).
+
+Was passiert jedoch wenn man diese Eigenschaft der konjugierten komplexen Zahlen verletzt?
+
+$$
+f(t) = \sum_{k=-n}^n c_k e^{\frac{2 \pi i k}{T} t }
+$$
+
+Die komplexen Anteile in der Summe würden sich nicht mehr rauskürzen. Somit würde **komplexe Funktionswerte** entstehen.
+
+### Darstellung von Funktionswerten
+
+Um mehr Intuition über die Modellierung eines periodischen Vorgangs durch die Summe
+
+$$
+f(t) = \sum_{k=-n}^n c_k e^{\frac{2 \pi i k}{T} t }
+$$
+
+zu bekommen, lassen sich die Funktionswerte auf einer [komplexen Ebene](../appendix/complex-numbers/1-complex-plane) betrachten:
+
+Betrachetet man
+
+## Relevanz der Fourier-Reihe
+
+Die Relevanz dieses Problems wird deutlich, wenn man z.B. die periodische Funktion $f
+
+<SignalPlotter f={(x) => Math.abs(Math.floor(x) % 2)} />
+
+## Ermittlung der Koeffizienten
+
+Es ist zwar noch nicht klar, ob es möglich ist jede periodische Funktion mit der obigen Summe zu modellieren.
+Im Folgenden wird jedoch betrachtet, was für die Koeffizienten $c_k$ folgen würde, wenn es so wäre.
+Wenn also gelten würde:
+
+$$
+f(t) = \sum_{k=-n}^n c_k e^{\frac{2 \pi i k}{T} t }
+$$
+
+Wie müssten dann die Koeffizienten $c_k$ in Abhängigkeit von $f(t)$ gewählt werden?
+
+### Algebraischer Ansatz
+
+Für die Ermittlung einer gesuchten Variable, lernt man, dass man diese Variable auf einer Seite der Gleichung isolieren soll.
+Wenn also beispielsweise ein Koeffizient $c_m$ ($-n\leq m\leq n$) gesucht ist, folgt mit algebraischen Umformungen:
+
+$$
+\begin{equation*}
+\begin{split}
+\sum_{k=-n}^n c_k e^{2 \pi i k\frac{1}{T} t } &= f(t) \\
+c_m e^{2 \pi i m\frac{1}{T}t}+ \sum_{\substack{k=-n \\ k\neq m}}^n c_k e^{2 \pi i k\frac{1}{T}t} &= f(t) \qquad | -\sum_{\substack{k=-n \\ k\neq m}}^n c_k e^{2 \pi i k\frac{1}{T}t}\\
+c_m e^{2 \pi i m\frac{1}{T}t} & = f(t) - \sum_{\substack{k=-n \\ k\neq m}}^n c_k e^{2 \pi i k\frac{1}{T}t} \qquad | \cdot e^{-2 \pi i m\frac{1}{T}t}\\
+c_m & = f(t) \cdot e^{-2 \pi i m\frac{1}{T}t} - \sum_{\substack{k=-n \\ k\neq m}}^n c_k e^{2 \pi i k\frac{1}{T}t} \cdot e^{-2 \pi i m\frac{1}{T}t}\\
+c_m & = f(t) \cdot e^{-2 \pi i m\frac{1}{T}t} - \sum_{\substack{k=-n \\ k\neq m}}^n c_k e^{2 \pi i (k-m)\frac{1}{T}t}\\
+\end{split}
+\end{equation*}
+$$
