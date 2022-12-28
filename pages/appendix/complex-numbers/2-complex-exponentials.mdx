@@ -1,6 +1,5 @@
 import { Callout } from 'nextra-theme-docs'
 
-import LinkButton from '../../../components/LinkButton.tsx'
 import ComplexExponential from '../../../components/ComplexExponential.tsx'
 import QuestionAnswer, { Answer } from '../../../components/QuestionAnswer.tsx'
 
@@ -26,9 +25,7 @@ e^{\theta i} \overset{?}{=} \overbrace{
 }^{\sqrt{-1} \text{ mal?} }
 $$
 
-Zudem ist fraglich, was das ganze mit der zuvor herausgestellten Polardarstellung komplexer Zahlen zutun hat:
-
-<LinkButton href="./1-complex-plane" text="Komplexe Ebene" />
+Zudem ist fraglich, was das ganze mit der zuvor herausgestellten Polardarstellung [komplexer Zahlen](./1-complex-plane) zutun hat:
 
 Es gibt zahlreiche Beweise dieser Gleichung, welche aufzeigen, dass Gleichheit gilt, jedoch weiterhin das Mysterium des **"Warum?"** offen lassen.
 Im Folgenden soll geklärt werden, was diese Gleichung wirklich aussagt und nicht nur gezeigt werden, dass sie stimmt.
@@ -188,7 +185,7 @@ $$
 \Re (z) = 1 \qquad \Im (z) = \lim_{n\to \infty} \left(\frac{\theta}{n} \right)
 $$
 
-Um zu verstehen, was sich beim Potenzieren der komplexen Zahl $z = \lim_{n\to\infty} (1+\frac{\theta i}{n})$ ergibt, ist es sinnvoll, wie im vorherigen Abschnitt herausgestellt wurde, die Polardarstellung zu ermitteln.
+Um zu verstehen, was sich beim Potenzieren der komplexen Zahl $z = \lim_{n\to\infty} (1+\frac{\theta i}{n})$ ergibt, ist es sinnvoll die Polardarstellung zu ermitteln.
 Der Betrag wird durch das Potenzieren mit $n$ ebenfalls $n$ potenziert, der Polarwinkel jedoch mit $n$ multipliziert.
 
 #### Betrag
@@ -235,7 +232,7 @@ Dies entspricht der **Eulerschen Formel**, welche sehr nützlich ist um **trigno
 
 ---
 
-Im Gegensatz zum ersten Abschnitt auf dieser Seite, ist diese Argumentation kein _richtiger_ Beweis. Jedoch sollte damit die **Eulersche Formel** plausibel erscheinen.
+Im Gegensatz zum [ersten Abschnitt](#beweis-mithilfe-von-differentialrechnung) auf dieser Seite, ist diese Argumentation kein _richtiger_ Beweis. Jedoch sollte damit die **Eulersche Formel** plausibel erscheinen.
 
 <Callout type="info" emoji="📚">
   {' '}

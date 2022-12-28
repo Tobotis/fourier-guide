@@ -2,7 +2,7 @@ import * as React from 'react'
 import Link from 'next/link'
 
 /*
-USAGE:
+DONT USE THIS... JUST USE NORMAL LINKS
 
 <LinkButton
   href={'../trigonometric-identities/1-sine-angle-sum'}
