@@ -17,9 +17,16 @@ import {
 type props = {
   children: any
   fixed_periodendauer: any
+  leftBound?: number
+  rightBound?: number
 }
 
-const WaveCheck: React.FC<props> = ({ children, fixed_periodendauer }) => {
+const WaveCheck: React.FC<props> = ({
+  children,
+  fixed_periodendauer,
+  leftBound = -Infinity,
+  rightBound = Infinity,
+}) => {
   let [periodendauer, setPeriodendauer] = React.useState(2)
 
   let [istFlächeAngezeigt, setIstFlächeAngezeigt] = React.useState(true)
@@ -28,7 +35,6 @@ const WaveCheck: React.FC<props> = ({ children, fixed_periodendauer }) => {
     React.useState(true)
 
   let [istProduktAngezeigt, setIstProduktAngezeigt] = React.useState(true)
-
 
   return (
     <div>
@@ -42,8 +48,8 @@ const WaveCheck: React.FC<props> = ({ children, fixed_periodendauer }) => {
             ]}
           >
             <CartesianCoordinates subdivisions={2} />
-            {
-              istFlächeAngezeigt ? <Integral.ToZero
+            {istFlächeAngezeigt ? (
+              <Integral.ToZero
                 y={(x: number) =>
                   Math.sin((x / fixed_periodendauer) * (2 * Math.PI)) *
                   Math.sin((x / periodendauer) * (2 * Math.PI))
@@ -51,18 +57,18 @@ const WaveCheck: React.FC<props> = ({ children, fixed_periodendauer }) => {
                 belowColor="red"
                 aboveColor="green"
                 quality="high"
-                leftBound={-Infinity}
-                rightBound={Infinity}
-              ></Integral.ToZero> : <></>
-            }
+                leftBound={leftBound}
+                rightBound={rightBound}
+              ></Integral.ToZero>
+            ) : (
+              <></>
+            )}
             <>
-              
               <FunctionGraph.OfX
                 quality="high"
                 y={(x) => Math.sin((x / periodendauer) * (2 * Math.PI))}
                 color="cyan"
               ></FunctionGraph.OfX>
-              
 
               {istGesuchterGraphAngezeigt ? (
                 <FunctionGraph.OfX
@@ -86,7 +92,6 @@ const WaveCheck: React.FC<props> = ({ children, fixed_periodendauer }) => {
                 <></>
               )}
             </>
-            
           </Mafs>
         </FrameMafs>
         <div className="flex justify-center">
@@ -96,7 +101,7 @@ const WaveCheck: React.FC<props> = ({ children, fixed_periodendauer }) => {
             </p>
             <input
               type="range"
-              className='align-middle'
+              className="align-middle"
               min={0.1}
               max={fixed_periodendauer * 2}
               step={0.01}
@@ -130,9 +135,12 @@ const WaveCheck: React.FC<props> = ({ children, fixed_periodendauer }) => {
               onChange={(_) => setIstFlächeAngezeigt(!istFlächeAngezeigt)}
             />
           </div>
-          
         </div>
-        <p>{ isClose.Relative(periodendauer, 4, 0.03) ? "$A \\to \infty$": "$A \\approx 0$"}</p>
+        <p>
+          {isClose.Relative(periodendauer, 4, 0.03)
+            ? '$A \\to infty$'
+            : '$A \\approx 0$'}
+        </p>
       </>
     </div>
   )
