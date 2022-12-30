@@ -1,19 +1,48 @@
 import SignalPlotter from '../../components/SignalPlotter.tsx'
 import Harmonics from '../../components/Harmonics.tsx'
+import ComplexExpoentialsSum from '../../components/ComplexExponentialsSum.tsx'
+import QuestionAnswer, { Answer } from '../../components/QuestionAnswer.tsx'
+import { Callout } from 'nextra-theme-docs'
+import ComplexConjugates from '../../components/ComplexConjugates.tsx'
 
 # Fourier-Reihen
 
-In [Periodische Funktionen](./1-periodic-functions) wurde die Frage gestellt, inwiefern jede periodische Funktion $f(t)$ in der Schreibweise:
+## Motivation der Fourier-Reihen
+
+Im Abschnitt [_Periodische Funktionen_](./1-periodic-functions) wurde die Frage gestellt, inwiefern jede periodische Funktion $f(t)$ in der Schreibweise:
 
 $$
-f(t) = \sum_{k=-n}^n c_k e^{2 \pi i k f_0 t }
+f(t) = \sum_{k=-n}^n c_k e^{2 \pi i k f_0 t } \qquad \text{ (dies ist noch keine Fourier-Reihe)}
 $$
 
-ausgedrückt werden kann. Diese Frage soll in diesem Abschnitt beantwortet werden. Zudem soll ein Verfahren ermittelt werden, wie man die Koeffizienten $c_k$ bestimmen kann, wenn man eine bestimmte Funktion $f(t)$ gegeben hat.
+ausgedrückt werden kann. Diese Frage soll in diesem Abschnitt beantwortet werden. Zudem soll ein Verfahren ermittelt werden, mit welchem man die Koeffizienten $c_k$ bestimmen kann, wenn eine bestimmte periodische Funktion $f(t)$ bekannt ist.
+
+Warum sollte man jedoch überhaupt versuchen eine bekannte periodische Funktion $f(t)$ mithilfe einer Summe der obigen Form darzustellen?
+
+### Rechteckssignal
+
+Man kann zum Beispiel das Signal, welches der Funktion $f(t) = \begin{cases} 1 \text{ wenn } \lfloor t \rfloor \text{ gerade} \\ 0 \text{ wenn } \lfloor t \rfloor \text{ ungerade} \end{cases}$ entspricht, betrachten:
+
+<Callout>
+  $\lfloor x \rfloor$ bedeutet, dass $x$ abgerundet wird. Also z.B. $\lfloor 0.8
+  \rfloor = 0$ oder $\lfloor 5.99 \rfloor = 5$
+</Callout>
+
+<SignalPlotter f={(x) => 1 - Math.abs(Math.floor(x) % 2)} />
+
+<Callout type="info" emoji="📚">
+  Nachlesen zur Rechtecksschwingung: [Wikipedia:
+  Rechtecksschwingung](https://de.wikipedia.org/wiki/Rechteckschwingung)
+</Callout>
+
+Dieses Signal ist beispielsweise relevant in der Informationsübertragung (Kodierung von $1$ und $0$ mit verschiedenen Spannungen).
+
+Da es jedoch nicht möglich einen Spannungsanstieg innerhalb von $0s$ hervorzurufen, ist es relevant, eine andere Annäherung für diese Funktion zu finden, was z.B. durch die **Fourier-Reihe** erreicht werden kann.
+Bis jetzt ist jedoch noch nicht klar, ob es überhaupt möglich ist eine solche Funktion mit einer Summe von komplexen Exponentialfunktionen zu modellieren.
 
 ---
 
-Im Folgenden wird die Grundfrequnez mit einer Periodendauer $f_0 = \frac{1}{T}$ ausgedrückt, um den Funktionsnamen $f(t)$ und das $f$ der Frequenz nicht zu verwechseln:
+Im Folgenden wird die **Grundfrequenz** mit einer Periodendauer $f_0 = \frac{1}{T}$ ausgedrückt, um den Funktionsnamen $f(t)$ und das $f$ der Frequenz nicht zu verwechseln:
 
 $$
 f(t) = \sum_{k=-n}^n c_k e^{\frac{2 \pi i k}{T} t }
@@ -25,23 +54,6 @@ $T$ beschreibt dabei die Zeit, welche für eine Periode benötigt wird: $f(t) = 
 
 Um sich der obigen Frage anzunähern, lassen sich die Koeffizienten $c_k$ nochmal etwas genauer betrachten.
 
----
-
-Zuvor wurde herausgestellt, dass die Koeffizienten $c_k$ und $c_{-k}$ jeweils **konjugierte komplexe Zahlen** sind. Somit würden sich bei der Addition der Terme, die Imaginärteile herauskürzen und es würden **reelle** Funktionswerte $f(t)$ entstehen, welche gleichbedeutend zu einer Addition
-von mehreren $\sin$-Termen sind:
-
-<Harmonics />
-
-Dabei sind die Frequenzen der Terme Vielfache einer Grundfrequenz (in obiger Visualisierung ausgedrückt mit einer Periodendauer $T$).
-
-Was passiert jedoch wenn man diese Eigenschaft der konjugierten komplexen Zahlen verletzt?
-
-$$
-f(t) = \sum_{k=-n}^n c_k e^{\frac{2 \pi i k}{T} t }
-$$
-
-Die komplexen Anteile in der Summe würden sich nicht mehr rauskürzen. Somit würde **komplexe Funktionswerte** entstehen.
-
 ### Darstellung von Funktionswerten
 
 Um mehr Intuition über die Modellierung eines periodischen Vorgangs durch die Summe
@@ -50,15 +62,92 @@ $$
 f(t) = \sum_{k=-n}^n c_k e^{\frac{2 \pi i k}{T} t }
 $$
 
-zu bekommen, lassen sich die Funktionswerte auf einer [komplexen Ebene](../appendix/complex-numbers/1-complex-plane) betrachten:
+zu bekommen, lassen sich die Funktionswerte auf einer [komplexen Ebene](../appendix/complex-numbers/1-complex-plane) betrachten.
 
-Betrachetet man
+<QuestionAnswer>
+  <>
+    Was würde für $f(t)$ gelten, wenn nur $c_1 = 0.5$ gesetzt wird und die
+    Eigenschaft der **konjugierten komplexen Koeffizienten** beachtet wird ?
+  </>
+  <Answer correct={true}>$f(t) = 0.5  e^{\frac{2 \pi i }{T} t } + 0.5 e^{\frac{-2 \pi i}{T} t }$</Answer>
+  <Answer>$f(t) = 0.5 e^{\frac{2 \pi i }{T} t }$</Answer>
+  <Answer>$f(t) =  e^{\frac{2 \pi i }{T} t }$</Answer>
+</QuestionAnswer>
 
-## Relevanz der Fourier-Reihe
+Wenn man die Ergebnisse von $f(t)$ auf der komplexen Ebene betrachtet, wird deutlich, dass sich die Ergebnisse lediglich auf der _Realteil-Achse_ befinden:
 
-Die Relevanz dieses Problems wird deutlich, wenn man z.B. die periodische Funktion $f
+<ComplexExpoentialsSum
+  ak={[
+    [0.5, 0, 1],
+    [0.5, 0, -1],
+  ]}
+  xExtent={[-2.75, 2.75]}
+  yExtent={[-1.75, 1.75]}
+/>
 
-<SignalPlotter f={(x) => Math.abs(Math.floor(x) % 2)} />
+Warum sich die komplexen Exponentialfunktionen als Rotationen verstehen lassen, sollte aus dem Abschnitt [_komplexe Exponentialfunktion_](../appendix/complex-numbers/2-complex-exponentials) bekannt sein.
+Zudem sollte die Addition als Vektoraddition bekannt sein. Die Vektoren der einzelnen komplexen Zahlen bzw. komplexen Exponentialfunktionen, werden im Folgenden auch als **Zeiger** bezeichnet.
+
+Die obige Darstellungsweise ist womöglich etwas ungewohnt, da die Funktionswerte alleine dargestellt werden und nicht etwa in Abhängigkeit der Funktionseingaben ($t$). Aus diesem Grund bewegen sich **reelle Funktionswerten** lediglich in einer Dimension.
+
+Wenn man die Werte der **Realteil** Achse jedoch gegen die Zeit auftragen würde, würde man eine harmonische Schwingung erkennen. Es handelt sich um $f(t) = \sin (\frac{2 \pi}{T} t)$, da für die Koeffizientenübersetzung $c_k = \frac{1}{2}(a_k-b_k i)$ gilt und somit mit $c_1 = 0.5$
+
+$$
+1 = a_1-b_1 i \Leftrightarrow a_1 = 1
+$$
+
+Mit $a_1 = 1$ und
+
+$$
+f(t) = \frac{a_0}{2} + \sum_{k=1}^n a_k \sin \left(\frac{2 \pi k}{T} t\right)+ b_k \cos \left(\frac{2 \pi k}{T} t \right)
+$$
+
+folgt also $f(t) = \sin(\frac{2 \pi}{T} t)$.
+
+### Begründung reeller Funktionswerte
+
+Durch die Eigenschaft der **komplexen konjugierten Koeffizienten** wird garantiert, dass es nur **reelle Funktionswerte** gibt. Dies wurde bereits im Abschnitt [_Periodische Funktionen_](./1-periodic-functions) durch das Umformen der Summe
+
+$$
+\begin{equation}
+f(t) = \frac{a_0}{2} + \sum_{k=1}^n a_k \sin \left(\frac{2 \pi k}{T} t\right)+ b_k \cos \left(\frac{2 \pi k}{T} t \right)
+\end{equation}
+$$
+
+welche ausschließlich **reele Funktionswerte** erzeugt, in die Summe
+
+$$
+\begin{equation}
+f(t) = \sum_{k=-n}^n c_k e^{\frac{2 \pi i k}{T} t }
+\end{equation}
+$$
+
+mit der Koeffizientenübersetzung
+
+$$
+c_k =
+\begin{cases}
+\frac{1}{2}(a_k - b_k i) &  \text{ wenn } k > 0 \\
+\frac{a_0}{2} & \text{ wenn } k = 0 \\
+\overline{c}_{-k} & \text{ wenn } k < 0\\
+\end{cases}
+$$
+
+gezeigt. Es wurde gezeigt, dass die beiden Summenausdrücke ($(1)$ und $(2)$) äquivalent sind, insofern die Koeffizienten richtig übersetzt werden.
+Somit muss immer wenn die Eigenschaft gilt, dass $c_k = \overline{c}_{-k}$ für $k <0$ folgen, dass es ausschließlich **reelle Funktionswerte** gibt, da sich $(2)$ in
+$(1)$ übersetzen ließe.
+
+Berechtigterweise kann man sich die Frage stellen, was passiert, wenn die Bedingung: $c_k = \overline{c}_{-k}$ für $k <0$, nicht erfüllt ist.
+Um folgende Formulierungen und Folgerungen allgemeiner gestalten zu können und somit auch komplexe Funktionswerte zuzulassen, wird der Ausdruck $(2)$ ohne die Bedingung betrachet.
+Somit befinden sich die Ausgaben nicht unbedigt ausschließlich auf der _Realteil-Achse_.
+
+Die Eigenschaft der **konjugierten komplexen Zahlen** lässt sich auch visuell darstellen und verstehen. In der folgenden Darstellung lässt sich die Summe der Terme $c_{-1} \cdot e^{- \frac{2 \pi }{T} t}$ und $c_{1} \cdot e^{- \frac{2 \pi }{T} t}$ mit der Eigenschaft von **konjugierten komplexen Zahlen** betrachten.
+
+<ComplexConjugates />
+
+Dadurch, jeweils die Koeffizienten $c_k$ und $c_{-k}$ in der obigen Summe $(2)$, jeweils **konjugierte komplexe Zahlen sind** rotieren die beiden Zeiger, welche sich mit der gleichen Frequenz ($\frac{k}{T}$) jedoch durch das negative Vorzeichen in unterschiedliche Richtungen drehen, **achsensymmetrisch** zur _Realteil-Achse_. Dies wird dadurch verursacht, dass die Startposition der Zeiger durch die **konjugierten komplexen Zahlen** $c_k$ und $c_{-k}$ festgelegt werden (**konjugierte komplexe Zahlen** sind liegen immer achsensymmetrisch zur _Realteil-Achse_).
+
+Dadurch kommt es also zustande, dass nur **reelle Zahlen** entstehen, wenn die Eigenschaft $c_{-k} = \overline{c_k}$ gegeben ist.
 
 ## Ermittlung der Koeffizienten
 
@@ -71,6 +160,99 @@ f(t) = \sum_{k=-n}^n c_k e^{\frac{2 \pi i k}{T} t }
 $$
 
 Wie müssten dann die Koeffizienten $c_k$ in Abhängigkeit von $f(t)$ gewählt werden?
+
+Dabei wird jedoch auch zugelassen, dass $f(t) \in \mathbb{C}$ und somit die Eigenschaft $c_{-k} = \overline{c_k}$ nicht gegeben ist.
+Man bestimme also die Koeffizienten $c_k$ mit $k<0$ unabhängig von $c_k$ mit $k>0$.
+
+Das Einzige, was bekannt ist, ist die Funktion $f(t)$ (in welcher Form das genau der Fall ist wird später relevant), und die Periodendauer der Funktion $f$. Also $T$ mit $f(t) = f(t+T)$ für alle $t \in \mathbb{R}$.
+
+### Überlegung mithilfe von durchschnittlichen Funktionswerten
+
+Zunächst lässt sich zum Beispiel überlegen, wie der _einfachste_ Koeffizient $c_0$ gewählt werden müsste.
+Dieser entspricht wie zuvor herausgestellt, einer Verschiebung.
+Das liegt daran, dass $c_0$ mit $e^{\frac{2 \pi i \cdot 0}{T} t} = 1$ multipliziert wird. Wenn man also die Ergebnisse der Summe auf der komplexen Ebene betrachtet, entspricht der $c_0$ Koeffizient einer konstanten Verschiebung vom Ursprung.
+
+Im Folgenden ist das Ergebnis der Summe $(1)$ mit $c_0 = 2+i$, $c_1 = 2$ und $c_2 = i$ dargestellt. Der Rest der Koeffizienten ist $0$.
+
+<ComplexExpoentialsSum
+  ak={[
+    [2, 1, 0],
+    [2, 0, 1],
+    [0, 1, 2],
+  ]}
+/>
+
+<QuestionAnswer>
+  <>
+    Wo liegt der durchschnittliche Wert der obigen Funktion, wenn man eine
+    Periode der gesamten Schwingung betrachet?
+  </>
+  <Answer>Bei $0$</Answer>
+  <Answer>Bei $1+i$</Answer>
+  <Answer correct={true}>Bei $2+i$</Answer>
+  <Answer>Man kann keine Aussage darüber treffen</Answer>
+</QuestionAnswer>
+
+Eine Herangehensweise zu obiger Frage könnte über die durchschnittlichen Werte der einzelnen Schwingungsbeiträge sein.
+Da alle Schwingungsbeiträge per Definition der Summe, eine Frequenz haben, welche einem ganzzahliges Vielfachen der **Grundfrequenz** (Frequenz der gesamten Schwingung) entspricht, muss jeder **rotierende Zeiger** eine ganzzahlige Anzahl an Rotationen vollführen.
+
+Wenn man nun einen Zeiger separat betrachtet und dieser eine ganzzahlige Anzahl an Malen um den Urpsrung rotiert, dann muss dieser Zeiger logischerweise einen durchschnittlichen Wert von $0$ haben.
+
+Da dies für jeden Zeiger gilt, welcher eine ganzzahlige Anzahl an Malen in der Zeit einer Periode rotiert, hängt der durchschnittliche Funktionswert nur von jenen Zeigern ab, welche nicht rotieren.
+Da nur der Zeiger, welcher aus dem Term $c_0 \cdot e^{0} = c_0$ resultiert, nicht rotiert, ist somit der durchschnittliche Funktionswert nur von $c_0$ abhängig. Der durchschnittliche Funktionswert entspricht also dadurch, dass $c_0$ konstant ist, $c_0$.
+
+**Was bringt das nun?** Wenn der durchschnittliche Funktionswert in einer Periode genau $c_0$ entspricht, dann ließe sich $c_0$ bestimmen, wenn $f(t)$ un die Periodendauer $T$ bekannt sind. Man berechne also mithilfe den durchschnittlichen Funktionswert einer bekannten Funktion $f(t)$ innerhalb einer Zeitspanne von $T$.
+
+Somit ließe sich schonmal der Koeffizient $c_0$ bestimmen. Man ist also dem Ziel, alle Koeffizienten der Summendarstellung zu bestimmen, um $f(t)$ anders auszudrücken, etwas näher.
+
+### Bestimmung von durchschnittlichen Funktionswerten
+
+Um den durchschnittlichen Funktionswert einer Funktion über eine Periode zu bestimmen folgt:
+
+$$
+c_0 = \frac{1}{T} \int_0^{T} f(t) dt
+$$
+
+<Callout>
+  Für den durchschnittlichen Funktionswert $\overline{y}$ einer Funktion $f(x)$
+  in einem Intervall $[a,b]$ gilt: 
+  $$
+  \begin{equation*}
+  \overline{y} = \frac{1}{b - a} \int_a^{b} f(x) dx 
+  \end{equation*}
+  $$
+  Das Integral kann hierbei als eine Art Summierung aller Funktionswerte verstanden werden.
+  Wenn man den Durchschnitt (bzw. arithmetischen Mittelwert) $\overline{a}$ einer diskreten (d.h. abzählbaren Größe) berechnet, gilt der Zusammenhang:
+  $$
+  \overline{a} = \frac{1}{n} \sum_{k=1}^n a_k
+  $$
+  wobei $n$ der Anzahl an Werten entspricht.
+  Wenn es sich nun um Funktionswerte handelt, welche nicht diskret, sondern kontinuierlich vorliegen, wird die diskrete Summe zu einem kontinuierlichen Integral.
+</Callout>
+
+### Verallgemeinerung des Verfahrens auf alle Koeffizienten
+
+Die obige [Idee](#überlegung-mithilfe-von-durchschnittlichen-funktionswerten), den durchschnittlichen Funktionswert auszunutzen, um den Wert eines Koeffizienten zu bestimmen, welcher zur konstanten Verschiebung gehört, lässt sich tatsächlich für alle Koeffizienten anwenden.
+
+Man könnte versuchen jeweils einen spezifischen rotierenden Zeiger, zu einem Zeiger zu verändern, welcher für eine konstante Verschiebung sorgt. Dabei müssen jedoch alle anderen Zeiger eine ganzzahlige Anzahl an Malen um den Urpsrung rotieren.
+
+Um einen spezifischen Koeffizienten $c_m$ herauszufinden, probiert man also die Funktion $f(t)$ und die Summe $(2)$ so zu manipulieren, dass genau der Zeiger $m$ _stehen bleibt_
+und somit _alleinig_ den durchschnittlichen Funktionswert der manipulierten Funktion beeinflusst. Folgend könnte man $c_m$ analog zu $c_0$ ermitteln.
+
+Hier nochmal der Summenausdruck:
+
+$$
+f(t) = \sum_{k=-n}^n c_k e^{\frac{2 \pi i k}{T} t }
+$$
+
+<QuestionAnswer>
+  <>Wie könnte man die oben beschriebene *Manipulation* erreichen (für $c_m$)?</>
+  <Answer>Multiplikation mit $e^{\frac{2 \pi i m}{T}t}$</Answer>
+  <Answer correct={true}>Multiplikation mit $e^{-\frac{2 \pi i m}{T}t}$</Answer>
+  <Answer>Multiplikation mit $c_k$</Answer>
+  <Answer>Multiplikation mit $-c_k$</Answer>
+  <Answer>Es ist nicht möglich</Answer>
+</QuestionAnswer>
 
 ### Algebraischer Ansatz
 

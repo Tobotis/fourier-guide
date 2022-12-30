@@ -2,6 +2,7 @@ import { Callout } from 'nextra-theme-docs'
 
 import ComplexExponential from '../../../components/ComplexExponential.tsx'
 import QuestionAnswer, { Answer } from '../../../components/QuestionAnswer.tsx'
+import ComplexExpoentialsSum from '../../../components/ComplexExponentialsSum.tsx'
 
 # Komplexe Exponentialfunktion
 
@@ -238,3 +239,59 @@ Im Gegensatz zum [ersten Abschnitt](#beweis-mithilfe-von-differentialrechnung) a
   {' '}
   weitere interessante Beweise: [StackExchange: Math](https://math.stackexchange.com/questions/3510/how-to-prove-eulers-formula-ei-varphi-cos-varphi-i-sin-varphi)
 </Callout>
+
+## Folgerungen
+
+In Bezug auf das Thema dieses Artikels wird die **komplexe Exponentialfunktion** häufig mit einem veränderlichen Parameter (wie z.B. Zeit $t$) vorkommen.
+
+$$
+e^{2 \pi t i} = \cos(2 \pi t)+i \sin(2 \pi t)
+$$
+
+Dies lässt sich dann als eine Rotation verstehen, welche häufig mit einem Vektor bzw. **Zeiger** visualisiert wird:
+
+<ComplexExpoentialsSum ak={[[1, 0, 1]]} omega={(2 * Math.PI) / 5} />
+
+(Mit dem Faktor $\frac{1}{5}$ verlangsamt)
+
+Wenn der Zeiger bei $1$ startet lässt sich erkennen, dass es sich beim **Realteil** um $\cos (2 \pi t)$ und beim **Imaginärteil** um $\sin (2 \pi t)$ handelt.
+
+<QuestionAnswer>
+  <>Wie würde sich der Zeiger $e^{-2 \pi t i}$ verhalten (negatives Vorzeichen im Exponenten)?</>
+  <Answer> Die Startposition (bei $t=0$) wäre bei $-1$</Answer>
+  <Answer correct={true}>Der Zeiger würde im Uhrzeigersinn rotieren</Answer>
+  <Answer>Der Zeiger würde ausschließlich im negativen Bereich rotieren</Answer>
+</QuestionAnswer>
+
+### Addition von verschiedenen komplexen Exponentialfunktionen
+
+Gemäß der [Addition von komplexen Zahlen](./1-complex-plane#addition-von-komplexen-zahlen) lassen sich auf mehrere von $t$ abhängige Exponentialfunktionen addieren.
+Dabei lässt sich mit einem zusätzlichen Faktor die Frequenz anpassen:
+
+$$
+e^{2 \pi f t i} = \cos(2 \pi  ft)+i \sin(2 \pi f t)
+$$
+
+z.B. mit $f_1 = \frac{1}{4}$, $f_2 = \frac{1}{2}$ und $f_3 = 1$
+
+<ComplexExpoentialsSum
+  ak={[
+    [1, 0, 1],
+    [1, 0, 2],
+    [1, 0, 4],
+  ]}
+  omega={(2 * Math.PI) / 4}
+/>
+
+### Multiplikation mit Koeffizienten
+
+Interessant wird es, wenn man den Zeiger mit einer konstanten komplexen Zahl $c$ multipliziert.
+Dieser bestimmt die **Länge** des Zeigers, sowie die **Phasenverschiebung** bei $t=0$, da $e^{2 \pi \cdot 0 \cdot i} = 1$.
+
+<QuestionAnswer>
+<>Mit welcher komplexen Zahl müsste man $e^{2 \pi  t i}$ multiplizieren um eine Phasenverschiebung von $\frac{\pi}{2}$ hervorzurufen?</>
+<Answer>$\frac{\pi}{2} + i$</Answer>
+<Answer correct={true}>$i$</Answer>
+<Answer>$\frac{\pi}{2}$</Answer>
+<Answer>$-1$</Answer>
+</QuestionAnswer>

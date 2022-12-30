@@ -5,6 +5,7 @@ import SampleAddition from '../../components/SampleAddition'
 import WaveSummation from '../../components/WaveSummation'
 import UnitCircle from '../../components/UnitCircle'
 import FrameMafs from '../../components/FrameMafs'
+import ComplexExponentialsSum from '../../components/ComplexExponentialsSum.tsx'
 
 # Periodische Funktionen
 
@@ -119,7 +120,7 @@ werden, welche jedoch in obigem Beispiel erspart bleibt.
 
 ---
 
-Die verschiedene Schwingungsbeiträge haben somit Frequenzen, welche Vielfache einer bestimmten **Grundfrequenz** $f_0$ sind.
+Die verschiedenen Schwingungsbeiträge haben somit Frequenzen, welche Vielfache einer bestimmten **Grundfrequenz** $f_0$ sind.
 Diese **Grundfrequenz** ist die Frequenz des komplizierteren periodischen Phänomens, welches aus der additiven Verknüpfung der verschiedenen
 Schwingungsbeiträge resultiert.
 
@@ -135,29 +136,30 @@ $$
 
 wobei $A_k$ die Amplitude und $\Delta \varphi_k$ die Phasenverschiebung für den $k$-ten Sinus-Term beschreibt.
 
-Wichtig dabei ist, dass die verschiedenen Frequenzen $k \cdot f_0$ ganzzahlige Vielfache einer **Grundfrequenz** $f_0$ sind. Die Namesgebung der Funktion ist möglicherweise etwas ungünstig, wenn es um Frequenzen geht, welche ebenfalls mit $f$ ausgedrückt werden.
-
-Zusätzlich wird häufig der Term $\frac{A_0}{2}$ dazu addiert. Durch diesen kann eine Verschiebung entlang der $y$-Achse hervorgerufen werden.
-Dies ist relevant, wenn beispielsweise ein periodisches Phänomen modelliert werden soll, dessen Werte oberhalb der $x$-Achse liegen.
-
-<QuestionAnswer>
-  <>
-    Wie müssten die Parameter $A_k$ der Summendarstellung gewählt werden, um die
-    oben dargestellte periodische Funktion darzustellen?
-  </>
-  <Answer>$A_k = 0$, außer $A_1 = 1, A_2 = 1,A_9 = 1$</Answer>
-  <Answer correct={true}>$A_k = 0$, außer $A_1 = 1, A_2 = 2,A_9 = 1$</Answer>
-  <Answer>alle $A_k = 1$</Answer>
-</QuestionAnswer>
-
-Überzeuge dich davon, dass jede beliebige Summe von $sin$-Termen durch $(1)$ ausgedrückt werden kann.
-
 <Callout>
   Das Summenzeichen $\sum_{(k = 1)}^n g(k)$ bedeutet, dass der folgende Term
   $g(k)$, mit allen Werten für $k$ von $1$ bis $n$ aufsummiert wird. Somit gilt
   beispielsweise (mit $g(k) = k$): $$ \sum_
   {(k = 1)}^n k = 1 + 2 + ... + n $$
 </Callout>
+
+Wichtig dabei ist, dass die verschiedenen Frequenzen $k \cdot f_0$ ganzzahlige Vielfache einer **Grundfrequenz** $f_0$ sind. Die Namesgebung der Funktion ist möglicherweise etwas ungünstig, wenn es um Frequenzen geht, welche ebenfalls mit $f$ ausgedrückt werden.
+
+Zusätzlich wird häufig der Term $\frac{A_0}{2}$ dazu addiert. Durch diesen kann eine Verschiebung entlang der $y$-Achse hervorgerufen werden.
+Dies ist relevant, wenn beispielsweise ein periodisches Phänomen modelliert werden soll, dessen durchschnittliche Werte oberhalb der $x$-Achse liegen.
+
+<QuestionAnswer>
+  <>
+    Wie müssten die Parameter $A_k$ der Summendarstellung gewählt werden, um die
+    oben dargestellte periodische Funktion ( $g(t) = \sin(2 \pi \cdot t) + 2
+    \sin (2 \pi \cdot 2t)+ \sin(2 \pi \cdot 9t)$ ) darzustellen?
+  </>
+  <Answer>$A_k = 0$, außer $A_1 = 1, A_2 = 1,A_9 = 1$</Answer>
+  <Answer correct={true}>$A_k = 0$, außer $A_1 = 1, A_2 = 2,A_9 = 1$</Answer>
+  <Answer>alle $A_k = 1$</Answer>
+</QuestionAnswer>
+
+Überzeuge dich davon, dass jede beliebige Summe von $\sin$-Termen durch $(1)$ ausgedrückt werden kann.
 
 ### Winkelsummenidentität
 
@@ -319,8 +321,9 @@ f(t) &= \frac{a_0}{2}+\sum_{k=1}^n a_k \cdot \cos(2 \pi k f_0 t ) + b_k \cdot \s
 $$
 
 <Callout>
-  Eine Summe $\sum_{(k = 1)}^n a+b$ lässt sich aufgrund der Kommutativität der
-  Addition in $\sum_{(k = 1)}^n a + \sum_{(k = 1)}^n b$ aufspalten
+  Eine Summe $\sum_{(k = 1)}^n a+b$ lässt sich aufgrund der Kommutativität und
+  Assoziativität der Addition in $\sum_{(k = 1)}^n a + \sum_{(k = 1)}^n b$
+  aufspalten
 </Callout>
 
 Bei den Koeffizienten $\frac{1}{2}(a_k-bi)$ und $\frac{1}{2}(a_k+b_ki)$ handelt es sich also um komplexe Zahlen. Diese haben jedoch eine interessante Eigenschaft. Die Zahlen sind gleich, bis auf das Vorzeichen des **Imaginärteils**.
@@ -370,16 +373,16 @@ f(t) = \sum_{k=-n}^n c_k e^{2 \pi i k f_0 t }
 $$
 
 schreiben. Warum diese Schreibweise praktischer ist, wird beispielsweise durch die Anzahl der Parameter deutlich. Es gibt lediglich die verschiedenen Koeffizienten $c_k$, welche die gesamte Information über die verschiedenen Schwingungsbeiträge beinhalten.
-Das liegt daran, dass es sich um komplexe Zahlen handelt.
+Das liegt daran, dass es sich um komplexe Zahlen handelt, und somit die Information über die **Phasenverschiebung** und über die **Amplitude** der Schwingung mit im Koeffizienten $c_k$ enthalten ist.
 
 ## Ausblick: Fourier-Reihen
 
 Die Schreibweise $f(t) = ...$, welche in den obigen Abschnitten benutzt wurde ist fraglich.
-Kann denn jedes periodische Signal einer **Grundfrequenz** $f_0$ überhaupt mit den grundlegenden _Baublöcken_ (trigonometrischen Funktoinen) ausgedrückt werden?
+Kann denn jedes periodische Signal einer **Grundfrequenz** $f_0$ überhaupt mit den grundlegenden _Baublöcken_ (trigonometrischen Funktionen) ausgedrückt werden?
 Gilt für alle Funktionen $f(t)$, welche periodisches Verhalten aufweisen, also $f(t) = f(t + \frac{1}{f_0})$, dass man:
 
 $$
 f(t) = \sum_{k=-n}^n c_k e^{2 \pi i k f_0 t }
 $$
 
-schreiben kann? Und wie könnte man dann auf die Koeffizienten $c_k$ schließen?
+schreiben kann? Und wie könnte man dann auf die Koeffizienten $c_k$ schließen, wenn $f(t)$ und die Periodendauer bekannt sind?
