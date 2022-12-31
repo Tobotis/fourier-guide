@@ -40,7 +40,7 @@ const ComplexConjugates = ({ omega = (2 * Math.PI) / 5 }) => {
               Stop
             </button>
           </div>
-          <p className="text-lg text-center">
+          <p className="text-lg text-center text-slate-50">
             <TeX>{imNumber + '\\qquad ' + imNumberConj}</TeX>
           </p>
         </div>

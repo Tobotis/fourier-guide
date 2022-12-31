@@ -1,9 +1,11 @@
 import SignalPlotter from '../../components/SignalPlotter.tsx'
 import Harmonics from '../../components/Harmonics.tsx'
 import ComplexExpoentialsSum from '../../components/ComplexExponentialsSum.tsx'
+import ScrollingFunction from '../../components/ScrollingFunction.tsx'
 import QuestionAnswer, { Answer } from '../../components/QuestionAnswer.tsx'
 import { Callout } from 'nextra-theme-docs'
 import ComplexConjugates from '../../components/ComplexConjugates.tsx'
+import FrameText from '../../components/FrameText.tsx'
 
 # Fourier-Reihen
 
@@ -21,14 +23,14 @@ Warum sollte man jedoch überhaupt versuchen eine bekannte periodische Funktion 
 
 ### Rechteckssignal
 
-Man kann zum Beispiel das Signal, welches der Funktion $f(t) = \begin{cases} 1 \text{ wenn } \lfloor t \rfloor \text{ gerade} \\ 0 \text{ wenn } \lfloor t \rfloor \text{ ungerade} \end{cases}$ entspricht, betrachten:
+Man kann zum Beispiel das Signal, welches der Funktion $f(t) = \begin{cases} 1 \text{ wenn } \lfloor t \rfloor \text{ gerade} \\ -1 \text{ wenn } \lfloor t \rfloor \text{ ungerade} \end{cases}$ entspricht, betrachten:
 
 <Callout>
   $\lfloor x \rfloor$ bedeutet, dass $x$ abgerundet wird. Also z.B. $\lfloor 0.8
   \rfloor = 0$ oder $\lfloor 5.99 \rfloor = 5$
 </Callout>
 
-<SignalPlotter f={(x) => 1 - Math.abs(Math.floor(x) % 2)} />
+<SignalPlotter f={(x) => 2 * (1 - Math.abs(Math.floor(x) % 2) - 0.5)} />
 
 <Callout type="info" emoji="📚">
   Nachlesen zur Rechtecksschwingung: [Wikipedia:
@@ -145,7 +147,7 @@ Die Eigenschaft der **konjugierten komplexen Zahlen** lässt sich auch visuell d
 
 <ComplexConjugates />
 
-Dadurch, jeweils die Koeffizienten $c_k$ und $c_{-k}$ in der obigen Summe $(2)$, jeweils **konjugierte komplexe Zahlen sind** rotieren die beiden Zeiger, welche sich mit der gleichen Frequenz ($\frac{k}{T}$) jedoch durch das negative Vorzeichen in unterschiedliche Richtungen drehen, **achsensymmetrisch** zur _Realteil-Achse_. Dies wird dadurch verursacht, dass die Startposition der Zeiger durch die **konjugierten komplexen Zahlen** $c_k$ und $c_{-k}$ festgelegt werden (**konjugierte komplexe Zahlen** sind liegen immer achsensymmetrisch zur _Realteil-Achse_).
+Dadurch, dass die Koeffizienten $c_k$ und $c_{-k}$ in der obigen Summe $(2)$ jeweils **konjugierte komplexe Zahlen sind**, sind die beiden Zeiger, welche sich mit der gleichen Frequenz ($\frac{k}{T}$) jedoch durch das negative Vorzeichen in unterschiedliche Richtungen drehen, **achsensymmetrisch** zur _Realteil-Achse_. Dies wird dadurch verursacht, dass die Startposition der Zeiger durch die **konjugierten komplexen Zahlen** $c_k$ und $c_{-k}$ festgelegt werden (**konjugierte komplexe Zahlen** sind liegen immer achsensymmetrisch zur _Realteil-Achse_).
 
 Dadurch kommt es also zustande, dass nur **reelle Zahlen** entstehen, wenn die Eigenschaft $c_{-k} = \overline{c_k}$ gegeben ist.
 
@@ -236,7 +238,7 @@ Die obige [Idee](#überlegung-mithilfe-von-durchschnittlichen-funktionswerten), 
 
 Man könnte versuchen jeweils einen spezifischen rotierenden Zeiger, zu einem Zeiger zu verändern, welcher für eine konstante Verschiebung sorgt. Dabei müssen jedoch alle anderen Zeiger eine ganzzahlige Anzahl an Malen um den Urpsrung rotieren.
 
-Um einen spezifischen Koeffizienten $c_m$ herauszufinden, probiert man also die Funktion $f(t)$ und die Summe $(2)$ so zu manipulieren, dass genau der Zeiger $m$ _stehen bleibt_
+Um einen spezifischen Koeffizienten $c_m$ herauszufinden, probiert man also die Funktion $f(t)$ so zu manipulieren, dass genau der Zeiger $m$ _stehen bleibt_
 und somit _alleinig_ den durchschnittlichen Funktionswert der manipulierten Funktion beeinflusst. Folgend könnte man $c_m$ analog zu $c_0$ ermitteln.
 
 Hier nochmal der Summenausdruck:
@@ -246,7 +248,7 @@ f(t) = \sum_{k=-n}^n c_k e^{\frac{2 \pi i k}{T} t }
 $$
 
 <QuestionAnswer>
-  <>Wie könnte man die oben beschriebene *Manipulation* erreichen (für $c_m$)?</>
+  <>Wie könnte man die oben beschriebene *Manipulation* für $c_m$ erreichen?</>
   <Answer>Multiplikation mit $e^{\frac{2 \pi i m}{T}t}$</Answer>
   <Answer correct={true}>Multiplikation mit $e^{-\frac{2 \pi i m}{T}t}$</Answer>
   <Answer>Multiplikation mit $c_k$</Answer>
@@ -254,7 +256,74 @@ $$
   <Answer>Es ist nicht möglich</Answer>
 </QuestionAnswer>
 
+Es besteht weiterhin die Annahme, dass $f(t)$ mit der Summendarstellung von komplexen Exponentialfunktionen angenähert werden kann.
+Wenn die Funktion $f(t)$ mit $e^{-\frac{2 \pi i m}{T}t}$ multipliziert würde für die Summendarstellung von $f(t)$ folgen, dass alle Zeiger, außer der Zeiger mit dem Term $e^{\frac{2 \pi i m}{T}t}$ rotieren, da gilt:
+
+$$
+c_m \cdot e^{\frac{2 \pi i m}{T}t} \cdot e^{-\frac{2 \pi i m}{T}t} = c_m
+$$
+
+Die Multiplikation mit $e^{-\frac{2 \pi i m}{T}t}$ kann man als Rotation der gesamten Funktion $f(t)$ sehen, welche die Rotation $e^{\frac{2 \pi i m}{T}t}$ _rauskürzt_. Somit erscheint der Koeffizient $c_m$ wie eine konstante Verschiebung.
+
+Da es nur genau diesen einen Term mit $k=m$ gibt, wird auch nur genau dieser Zeiger $m$ die konstante Verschiebung von Urpsrung beeinflussen.
+
+<FrameText
+  display={
+    <ComplexExpoentialsSum
+      ak={[
+        [2, 1, 0],
+        [2, 0, 1],
+        [0, 1, 2],
+      ]}
+      width={400}
+      height={300}
+      xExtent={[-6, 6]}
+      yExtent={[-4, 4]}
+    />
+  }
+  text={
+    'Links sieht man eine mögliche Funktion. Der Verlauf dieser Funktion auf der komplexen Ebene ist also bekannt. Wenn es nun so wäre, dass man die Funktion mit einer Summe aus komplexen Exponentialfunktionen modellieren kann, dann ließe sich die Schwingung mit einer Aneinanderkettung von rotierenden Zeigern visualisieren (wie links). Selbstverständlich ist jedoch unbekannt, welche Koeffizienten für die verschiedenen Schwingungsbeiträge gewählt werden müssen. In der Darstellung wird die Funktion aus Demonstrationszwecken bereits mit Zeigern modelliert, um das oben erklärte Verfahren zu zeigen.'
+  }
+/>
+
+<FrameText
+  display={
+    <ComplexExpoentialsSum
+      ak={[
+        [2, 1, -1],
+        [2, 0, 0],
+        [0, 1, 1],
+      ]}
+      width={400}
+      height={300}
+      xExtent={[-6, 6]}
+      yExtent={[-4, 4]}
+    />
+  }
+  text={
+    'Wenn man nun die gesamte Funktion durch den ersten Exponentialfunktionsterm teil (bzw. Multiplikation mit negativen Exponenten), dann ändert sich offensichtlich der Verlauf der Funktion. In der Zeigermodellierung würden nun alle Zeiger außer der Erste rotieren. Man hat die Rotation des ersten Zeigers rausgekürzt und die Rotation aller anderen Zeiger um das negative der Rotation des ersten Zeigers verändert. Dies ist z.B. beim "nullten" Zeiger zu sehen. Man könnte sich also nun den durchschnittlichen Funktionswert über eine Periode anschauen, um die konstante Verschiebung von Ursprung berechnen. Diese würde dann dem Koeffizienten des ersten Terms entsprechen.'
+  }
+/>
+
+Verwirrend erscheint womöglich, dass man die Funktion $f(t)$ die ganze Zeit
+bereits im Zeigermodell betrachet, obwohl man die Koeffizienten der
+Summendarstellung und somit die Zeiger noch gar nicht kennt. Die obigen
+Darstellungen sollen jedoch nur illustrieren, wie eine Funktion $f(t)$ in der Summendarstellung aussähe.
+
+Wenn nur die Funktion $f(t)$ bekannt ist, kennt man nur den resultierenden Funktionswert zu einem gegebenen Zeitpunkt. Dieser entspricht der Spitze des letzten Zeigers in obiger Darstellung.
+Wenn man jedoch diesen Punkt für ein Zeitintervall $[t,t+T]$ kennt und weiß, dass die Funktion $f(t)$ mit dem Summenausdruck modelliert werden kann, dann weiß man, dass dieser Punkt das Ergebnis einer Addition mehrerer rotierender Zeiger ist.
+Manche Koeffizienten könnten selbstverständlich auch $0$ sein, was dazu zu erkennen wäre, dass $0$ der durchschnittliche Funktionswert von $f(t) \cdot e^{\frac{-2 \pi i m}{T} t}$ ist.
+
+Mit der Idee von durchschnittlichen Funktionswerten über die Periodendauer und einer geschickten _Manipulation_ der Funktion lassen sich somit alle Koeffizienten $c_m$ bestimmen:
+
+$$
+c_m = \frac{1}{T}\int_0^{T} f(t) e^{\frac{-2 \pi i m}{T} t} dt
+$$
+
 ### Algebraischer Ansatz
+
+Wenn der [obige Ansatz](#%C3%BCberlegung-mithilfe-von-durchschnittlichen-funktionswerten) nicht überzeugend genug war, lässt sich der Zusammenhang auch algebraisch herleiten.
+Man will also den Wert eines bestimmten Koeffizienten bestimmen.
 
 Für die Ermittlung einer gesuchten Variable, lernt man, dass man diese Variable auf einer Seite der Gleichung isolieren soll.
 Wenn also beispielsweise ein Koeffizient $c_m$ ($-n\leq m\leq n$) gesucht ist, folgt mit algebraischen Umformungen:
@@ -270,3 +339,139 @@ c_m & = f(t) \cdot e^{-2 \pi i m\frac{1}{T}t} - \sum_{\substack{k=-n \\ k\neq m}
 \end{split}
 \end{equation*}
 $$
+
+Nun lassen sich beide Seiten nach $t$ über das Intervall $[0,T]$ integrieren:
+
+$$
+\begin{equation*}
+\begin{split}
+\int_{0}^{T} c_m dt & = \int_{0}^{T} f(t) e^{-2 \pi i m\frac{1}{T}t} dt - \sum_{\substack{k=-n \\ k\neq m}}^n \int_{0}^{T} c_k e^{2 \pi i (k-m)\frac{1}{T}t} dt\\
+\left[c_m t\right]^T_0 &= \int_{0}^{T} f(t) e^{-2 \pi i m\frac{1}{T}t} dt - \sum_{\substack{k=-n \\ k\neq m}}^n c_k \left[ \frac{1}{2 \pi i (k-m)\frac{1}{T}} e^{2 \pi i (k-m)\frac{1}{T}t}\right]^T_0\\
+c_m \cdot T &= \int_{0}^{T} f(t) e^{-2 \pi i m\frac{1}{T}t} dt - \sum_{\substack{k=-n \\ k\neq m}}^n \frac{c_k}{2 \pi i (k-m)\frac{1}{T}} \left(  e^{2 \pi i (k-m)} - 1\right) \qquad | \quad * \\
+c_m \cdot T &= \int_{0}^{T} f(t) e^{-2 \pi i m\frac{1}{T}t} dt - \sum_{\substack{k=-n \\ k\neq m}}^n \frac{c_k}{2 \pi i (k-m)\frac{1}{T}} \left( 1 - 1\right)\\
+c_m \cdot T &= \int_{0}^{T} f(t) e^{-2 \pi i m\frac{1}{T}t} dt \qquad | : T\\
+c_m &= \frac{1}{T} \int_{0}^{T} f(t) e^{-2 \pi i m\frac{1}{T}t} dt\
+\end{split}
+\end{equation*}
+$$
+
+$*$ hierbei ist relevant, dass $e^{2 \pi i a} = 1$ mit $a \in \mathbb{Z}$ (a ist eine ganze Zahl). Dies wird in [_Komplexe Exponentialfunktion_](../appendix/complex-numbers/2-complex-exponentials) deutlich.
+Dadurch, dass es sich bei $k-m$ um eine ganze Zahl handelt, folgt also $e^{2 \pi i (k-m)} = 1$
+
+Es sind einige Argumentationspunkte aus [der Verallgemeinerung von durchschnittlichen Funktionswerten](#verallgemeinerung-des-verfahrens-auf-alle-koeffizienten) in der algebraischen Herleitung wiederzuerkennen.
+Zum Beispiel, dass das Integral über eine Periode für alle Terme mit $k\neq m$, $0$ ergibt. Dies wurde zuvor mit der Idee begründet, dass jeder Zeiger mit $k\neq m$ eine ganzzahlige Anzahl an Rotation um den Urpsrung vollführt.
+
+Es ist jedoch schön zu sehen, wie die mehr oder weniger geometrische Intuition und algebraische Umformungen zur gleichen Lösung führen:
+
+$$
+\begin{equation}
+c_m = \frac{1}{T}\int_0^{T} f(t) e^{\frac{-2 \pi i m}{T} t} dt
+\end{equation}
+$$
+
+Wenn $f(t)$ bekannt ist ließen sich also die Koeffizienten $c_m$ bestimmen.
+
+## Von Summe zu Reihe
+
+Es wurde herausgefunden, wie man die Koeffizienten $c_k$ bestimmen könnte, insofern:
+
+$$
+f(t) = \sum_{k=-n}^n c_k e^{2 \pi i k f_0 t }
+$$
+
+gilt. Ein Parameter, welcher jedoch bis jetzt unbeachtet geblieben ist, ist die Anzahl an Summanden $n$.
+
+Zudem ist weiterhin die Frage offen, inwiefern jede beliebige periodische Funktion $f(t)$ mit dieser Summe dargestellt werden kann.
+Um diese Frage zu beantworten, muss man zunächst $n$ betrachten. Wenn beispielsweise $n=1$ und es sich somit lediglich um zwei Summanden handelt, kann offensichtlicherweise nicht jede periodische Funktion angenähert werden.
+
+### Rechtecksschwingung
+
+Wenn man z.B. die bereits gezeigte Rechteckschwingung
+
+$$
+f(t) = \begin{cases} 1 \text{ wenn } \lfloor t \rfloor \text{ gerade} \\ -1 \text{ wenn } \lfloor t \rfloor \text{ ungerade} \end{cases}
+$$
+
+(mit $T=2$) in Summenschreibweise ausdrücken will, könnte man versuchen sich die Koeffizienten $c_m$ mit dem ermittelten Verfahren herzuleiten:
+
+$$
+c_m = \frac{1}{2} \int_0^2 f(t) e^{\frac{-2 \pi i m}{2} t} dt
+$$
+
+Dadurch, dass $f(t)$ abschnittsweise definiert ist, lässt sich das Integral in zwei Teile aufspalten:
+
+$$
+\begin{equation*}
+\begin{split}
+c_m &= \frac{1}{2} \left(\int_0^1 1 \cdot e^{-\pi i m t} dt + \int_1^2 -1 \cdot e^{-\pi i m t} dt \right) \\
+c_m &= \frac{1}{2}  \left(\left[-\frac{1}{ \pi i m } e^{- \pi i m t}\right]_0^1 - \left[-\frac{1}{ \pi i m } e^{- \pi i m t}\right]_1^2 \right)\\
+c_m &= -\frac{1}{2 \pi m i}  \left(\left[e^{- \pi i m t}\right]_0^1 - \left[e^{- \pi i m t}\right]_1^2 \right)\\
+c_m & = -\frac{1}{2 \pi m i} \left((e^{-\pi i m} - 1) - (e^{- 2 \pi i m } - e^{-  \pi i m })\right) \qquad | \text{ mit } e^{2 \pi i a} = 1 \text{ für } a \in \mathbb{Z}\\
+c_m & = -\frac{1}{\pi m i} \left((-1)^{m} - 1\right) \qquad | \text{ mit } e^{- \pi i} = -1 \\
+\end{split}
+\end{equation*}
+$$
+
+Nun kann eine Fallunterscheidung getroffen werden, da der Term $\left((-1)^{m} - 1\right)$ nur zwei verschiedene Werte in Abhängigkeit von $m$ annimmt:
+
+$$
+c_k =
+\begin{cases}
+\frac{2}{\pi i m} & \text{wenn } m \text{ ungerade}\\
+0 & \text{wenn } m \text{ gerade}\\
+\end{cases}
+$$
+
+Probehalber wird nun $n=10$ gewählt:
+
+<div className="flex justify-between">
+  <ComplexExpoentialsSum
+    width={350}
+    height={350}
+    xExtent={[-1.5, 1.5]}
+    yExtent={[-1.5, 1.5]}
+    ak={[
+      [0, -2 / Math.PI, 1],
+      [0, -2 / (Math.PI * 3), 3],
+      [0, -2 / (Math.PI * 5), 5],
+      [0, -2 / (Math.PI * 7), 7],
+      [0, -2 / (Math.PI * 9), 9],
+      [0, 2 / Math.PI, -1],
+      [0, 2 / (Math.PI * 3), -3],
+      [0, 2 / (Math.PI * 5), -5],
+      [0, 2 / (Math.PI * 7), -7],
+      [0, 2 / (Math.PI * 9), -9],
+    ]}
+    vectorSize={1}
+    omega={Math.PI * 0.2}
+  />
+  <ScrollingFunction
+    width={350}
+    height={350}
+    slow={0.2}
+    xExtent={[-1, 3]}
+    yExtent={[-2, 2]}
+    omega={Math.PI}
+    f={(x) => 2 * (1 - Math.abs(Math.floor(x) % 2) - 0.5)}
+    ak={[
+      [0, -2 / Math.PI, 1],
+      [0, -2 / (Math.PI * 3), 3],
+      [0, -2 / (Math.PI * 5), 5],
+      [0, -2 / (Math.PI * 7), 7],
+      [0, -2 / (Math.PI * 9), 9],
+      [0, 2 / Math.PI, -1],
+      [0, 2 / (Math.PI * 3), -3],
+      [0, 2 / (Math.PI * 5), -5],
+      [0, 2 / (Math.PI * 7), -7],
+      [0, 2 / (Math.PI * 9), -9],
+    ]}
+  />
+</div>
+
+Es lässt sich erkennen, dass die Summe zwar ungefähr auf der gewünschten Funktion $f(t)$ liegt, jedoch gibt es eine bestimmte Abweichung.
+
+Im Folgenden lässt sich $n$ variieren:
+
+
+
+

@@ -18,6 +18,10 @@ interface ComplexExponentialsSumProps {
   omega?: number
   xExtent?: Vector2
   yExtent?: Vector2
+  width?: number
+  height?: number
+  vectorSize?: number
+  slow?: number
 }
 
 const ComplexExponentialsSum: React.FC<ComplexExponentialsSumProps> = ({
@@ -25,6 +29,10 @@ const ComplexExponentialsSum: React.FC<ComplexExponentialsSumProps> = ({
   omega = (2 * Math.PI) / 5,
   xExtent = [-5.5, 5.5],
   yExtent = [-3.5, 3.5],
+  width,
+  height,
+  slow = 1,
+  vectorSize = 2,
 }: ComplexExponentialsSumProps) => {
   function getTailFunctions(curr: number) {
     let tail = (t: number) => {
@@ -50,7 +58,12 @@ const ComplexExponentialsSum: React.FC<ComplexExponentialsSumProps> = ({
   React.useEffect(() => start(), [start])
   return (
     <FrameMafs>
-      <Mafs pan={false} yAxisExtent={yExtent} xAxisExtent={xExtent}>
+      <Mafs
+        yAxisExtent={yExtent}
+        xAxisExtent={xExtent}
+        width={width}
+        height={height}
+      >
         <CartesianCoordinates
           yAxis={{
             labels: (y) => {
@@ -59,10 +72,11 @@ const ComplexExponentialsSum: React.FC<ComplexExponentialsSumProps> = ({
           }}
         />
         {ak.map((val) => {
+          let tail = getTailFunctions(val[2])
           return (
             <>
               <Circle
-                center={getTailFunctions(val[2])(time)}
+                center={tail(time * slow)}
                 radius={Math.sqrt(Math.pow(val[0], 2) + Math.pow(val[1], 2))}
                 strokeStyle="dashed"
                 strokeOpacity={0.3}
@@ -70,14 +84,15 @@ const ComplexExponentialsSum: React.FC<ComplexExponentialsSumProps> = ({
               />
               <Vector
                 tip={[
-                  getTailFunctions(val[2])(time)[0] +
+                  tail(time * slow)[0] +
                     val[0] * Math.cos(val[2] * time * omega) -
                     val[1] * Math.sin(val[2] * time * omega),
-                  getTailFunctions(val[2])(time)[1] +
+                  tail(time * slow)[1] +
                     val[0] * Math.sin(val[2] * time * omega) +
                     val[1] * Math.cos(val[2] * time * omega),
                 ]}
-                tail={getTailFunctions(val[2])(time)}
+                tail={tail(time * slow)}
+                weight={vectorSize}
               />
             </>
           )

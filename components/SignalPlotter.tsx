@@ -12,7 +12,7 @@ const SignalPlotter: React.FC<SignalPlotterProps> = ({
 }: SignalPlotterProps) => {
   return (
     <FrameMafs>
-      <Mafs xAxisExtent={[-5, 5]} yAxisExtent={[-0.2, 1.5]} height={200}>
+      <Mafs xAxisExtent={[-5, 5]} yAxisExtent={[-1.5, 1.5]} height={200}>
         <FunctionGraph.OfX y={(x) => f(x)} quality="high" />
         <CartesianCoordinates />
       </Mafs>
