@@ -7,14 +7,16 @@ interface FourierSeriesProps {
   ithC: (x: number) => [number, number]
   f: (x: number) => number
   omega: number
-  yExtent?: [number, number]
+  yBExtent?: [number, number]
+  xAExtent?: [number, number]
 }
 
 const FourierSeries = ({
   ithC,
   f,
   omega,
-  yExtent = [-2, 2],
+  yBExtent = [-2, 2],
+  xAExtent = [-1.5, 1.5],
 }: FourierSeriesProps) => {
   let [n, setN] = React.useState<number>(20)
   let [ak, setAk] = React.useState<Array<[number, number, number]>>(
@@ -48,7 +50,7 @@ const FourierSeries = ({
         <ComplexExponentialsSum
           width={350}
           height={350}
-          xExtent={[-1.5, 1.5]}
+          xExtent={xAExtent}
           yExtent={[-1.5, 1.5]}
           ak={ak ?? []}
           vectorSize={1}
@@ -59,7 +61,7 @@ const FourierSeries = ({
           height={350}
           slow={0.2}
           xExtent={[-1, 3]}
-          yExtent={yExtent}
+          yExtent={yBExtent}
           omega={omega}
           f={f}
           ak={ak ?? []}
