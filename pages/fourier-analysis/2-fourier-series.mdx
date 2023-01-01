@@ -1,7 +1,7 @@
 import SignalPlotter from '../../components/SignalPlotter.tsx'
 import Harmonics from '../../components/Harmonics.tsx'
 import ComplexExpoentialsSum from '../../components/ComplexExponentialsSum.tsx'
-import ScrollingFunction from '../../components/ScrollingFunction.tsx'
+import FourierSeries from '../../components/FourierSeries.tsx'
 import QuestionAnswer, { Answer } from '../../components/QuestionAnswer.tsx'
 import { Callout } from 'nextra-theme-docs'
 import ComplexConjugates from '../../components/ComplexConjugates.tsx'
@@ -376,7 +376,7 @@ Wenn $f(t)$ bekannt ist ließen sich also die Koeffizienten $c_m$ bestimmen.
 Es wurde herausgefunden, wie man die Koeffizienten $c_k$ bestimmen könnte, insofern:
 
 $$
-f(t) = \sum_{k=-n}^n c_k e^{2 \pi i k f_0 t }
+f(t) = \sum_{k=-n}^n c_k e^{\frac{2 \pi i}{T} k t }
 $$
 
 gilt. Ein Parameter, welcher jedoch bis jetzt unbeachtet geblieben ist, ist die Anzahl an Summanden $n$.
@@ -415,63 +415,110 @@ $$
 Nun kann eine Fallunterscheidung getroffen werden, da der Term $\left((-1)^{m} - 1\right)$ nur zwei verschiedene Werte in Abhängigkeit von $m$ annimmt:
 
 $$
-c_k =
+c_m =
 \begin{cases}
 \frac{2}{\pi i m} & \text{wenn } m \text{ ungerade}\\
 0 & \text{wenn } m \text{ gerade}\\
 \end{cases}
 $$
 
-Probehalber wird nun $n=10$ gewählt:
+Im Folgenden lässt sich $n$ variieren:
 
-<div className="flex justify-between">
-  <ComplexExpoentialsSum
-    width={350}
-    height={350}
-    xExtent={[-1.5, 1.5]}
-    yExtent={[-1.5, 1.5]}
-    ak={[
-      [0, -2 / Math.PI, 1],
-      [0, -2 / (Math.PI * 3), 3],
-      [0, -2 / (Math.PI * 5), 5],
-      [0, -2 / (Math.PI * 7), 7],
-      [0, -2 / (Math.PI * 9), 9],
-      [0, 2 / Math.PI, -1],
-      [0, 2 / (Math.PI * 3), -3],
-      [0, 2 / (Math.PI * 5), -5],
-      [0, 2 / (Math.PI * 7), -7],
-      [0, 2 / (Math.PI * 9), -9],
-    ]}
-    vectorSize={1}
-    omega={Math.PI * 0.2}
-  />
-  <ScrollingFunction
-    width={350}
-    height={350}
-    slow={0.2}
-    xExtent={[-1, 3]}
-    yExtent={[-2, 2]}
-    omega={Math.PI}
-    f={(x) => 2 * (1 - Math.abs(Math.floor(x) % 2) - 0.5)}
-    ak={[
-      [0, -2 / Math.PI, 1],
-      [0, -2 / (Math.PI * 3), 3],
-      [0, -2 / (Math.PI * 5), 5],
-      [0, -2 / (Math.PI * 7), 7],
-      [0, -2 / (Math.PI * 9), 9],
-      [0, 2 / Math.PI, -1],
-      [0, 2 / (Math.PI * 3), -3],
-      [0, 2 / (Math.PI * 5), -5],
-      [0, 2 / (Math.PI * 7), -7],
-      [0, 2 / (Math.PI * 9), -9],
-    ]}
-  />
-</div>
+<FourierSeries
+  ithC={(x) => [0, x % 2 ? -2 / (Math.PI * x) : 0]}
+  f={(x) => 2 * (1 - Math.abs(Math.floor(x) % 2) - 0.5)}
+  omega={Math.PI}
+/>
 
 Es lässt sich erkennen, dass die Summe zwar ungefähr auf der gewünschten Funktion $f(t)$ liegt, jedoch gibt es eine bestimmte Abweichung.
 
-Im Folgenden lässt sich $n$ variieren:
+<QuestionAnswer>
+  <>Was passiert vermutlich wenn $n \to \infty$?</>
+  <Answer correct={true}>Die Abweichung geht gegen $0$</Answer>
+  <Answer> Es gibt keine Veränderung der Abweichung</Answer>
+  <Answer> Die Abweichung geht gegen $\infty$</Answer>
+</QuestionAnswer>
 
+Dies ist kein mathematischer Beweis, jedoch lässt sich intuitiv sagen, dass eine größere Anzahl an Termen, für eine geringere Abweichung und eine bessere Annäherung sorgt.
 
+### Unendliche Anzahl von Termen
 
+Durch [Jospeh Fourier's](https://de.wikipedia.org/wiki/Joseph_Fourier) Überlegungen, wurde später deutlich, dass jede periodische Funktion $f(t)$ mit der Periodendauer $T$, welche bestimmte Eigenschaften erfüllt, mit
 
+$$
+f(t) = \sum_{k=-\infty}^{\infty} c_k e^{\frac{2 \pi i}{T} k t }
+$$
+
+beschrieben werden kann.
+Dabei handelt es sich um eine **unendliche** Summe und somit eine **Reihe**, die **Fourier-Reihe**.
+Die Frage warum _unendlich_ viele Terme benötigt werden lässt sich intuitiv damit beantworten, dass es sich in manchen Fällen um nicht **stetige** Funktionen handelt, welche mit der Summendarstellung repräsentiert werden sollen.
+Es ist unmöglich mit einer endlichen Summe an **stetigen** Funktionen ($\sin$ und $\cos$) darzustellen.
+Aus diesem Grund werden, wie im obigen Beispiel illustriert, unendlich viele **Koeffizienten** auch **Fourier-Koeffizienten** $c_k$ benötigt.
+
+<Callout type="info" emoji="📚">
+  Die *Eigenschaften* welche eine Funktion $f(t)$ erfüllen muss, werden unter
+  [Wikipedia:
+  Dirichlet-Bedingung](https://de.wikipedia.org/wiki/Dirichlet-Bedingung)
+  präzisiert. Es ist jedoch so, dass sich *"almost any well behaved periodic
+  function"* mit der **Fourier-Reihe** darstellen lässt. Dies ist möglicherweise
+  etwas unbefriedigend, da diese Antwort auf die Ausgangsfrage etwas schwammig
+  ist. Die Mathematik hinter einer eindeutigen Antwort ist jedoch ziemlich
+  kompliziert.
+</Callout>
+
+In der Realität lassen sich häufig nur eine endliche Anzahl an Termen summieren. Aus diesem Grund stellt man sich berechtigterweise die Frage, wie viele Terme man braucht um eine zuverlässige Annäherung zu erhalten.
+
+## Beispiele
+
+Im Folgenden sind einige Beispiele für Annäherungen durch **Fourier-Reihen** dargestellt. Die Koeffizientenbestimmung erfolgt wie hergeleitet, durch das Integrieren der gegeben Funktion $f(t)$
+
+### Sägezahnsignal
+
+$$
+c_0 = \frac{1}{2} \qquad \text { und } \qquad  c_m = \frac{1}{2  m  \pi}
+$$
+
+<FourierSeries
+  ithC={(x) => (x == 0 ? [1 / 2, 0] : [0, 1 / (2 * x * Math.PI)])}
+  f={(x) => x / 2 - Math.floor(x / 2)}
+  omega={Math.PI}
+  yExtent={[-1, 2]}
+/>
+
+### Periodische Parabeln
+
+$$
+c_0 = \frac{1}{3} \qquad \text { und } \qquad  c_m = \frac{2}{m^2\pi^2  }
+$$
+
+<FourierSeries
+  ithC={(x) => (x == 0 ? [1 / 3, 0] : [2 / Math.pow(Math.PI * x, 2), 0])}
+  f={(x) => Math.pow(x - Math.floor(x / 2) * 2 - 1, 2)}
+  omega={Math.PI}
+  yExtent={[-1, 2]}
+/>
+
+### Abgeschnittene Sinusschwingung
+
+$$
+c_0 = \frac{1}{\pi} \qquad \text { und } \qquad  c_m =
+\begin{cases}
+\frac{1}{4}& \text{ wenn } m = 1 \text{ oder } m=-1 \\
+-\frac{1}{\pi m^2 - \pi}& \text{ wenn $m$ gerade}\\
+0 & \text{ sonst }
+\end{cases}
+$$
+
+<FourierSeries
+  ithC={(x) =>
+    x == 0
+      ? [1 / Math.PI, 0]
+      : [
+          x % 2 ? 0 : -1 / (Math.PI * Math.pow(x, 2) - Math.PI),
+          x == 1 || x == -1 ? -x / 4 : 0,
+        ]
+  }
+  f={(x) => (Math.floor(x) % 2 ? 0 : Math.sin(Math.PI * x))}
+  omega={Math.PI}
+  yExtent={[-1, 2]}
+/>
