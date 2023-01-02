@@ -1,0 +1,55 @@
+## Beispiele für Fourier-Reihen
+
+Im Folgenden sind einige Beispiele für Annäherungen durch **Fourier-Reihen** dargestellt. Die Koeffizientenbestimmung erfolgt wie hergeleitet, durch das Integrieren der gegeben Funktion $f(t)$
+
+### Sägezahnsignal
+
+$$
+c_0 = \frac{1}{2} \qquad \text { und } \qquad  c_m = \frac{1}{2  m  \pi}
+$$
+
+<FourierSeries
+  ithC={(x) => (x == 0 ? [1 / 2, 0] : [0, 1 / (2 * x * Math.PI)])}
+  f={(x) => x / 2 - Math.floor(x / 2)}
+  omega={Math.PI}
+  yBExtent={[-1, 2]}
+/>
+
+### Periodische Parabeln
+
+$$
+c_0 = \frac{2}{3} \qquad \text { und } \qquad  c_m = \frac{4}{m^2\pi^2  }
+$$
+
+<FourierSeries
+  ithC={(x) => (x == 0 ? [2 / 3, 0] : [4 / Math.pow(Math.PI * x, 2), 0])}
+  f={(x) => 2 * Math.pow(x - Math.floor(x / 2) * 2 - 1, 2)}
+  omega={Math.PI}
+  yBExtent={[-1, 3]}
+  xAExtent={[-0.5, 2.5]}
+/>
+
+### Abgeschnittene Sinusschwingung
+
+$$
+c_0 = \frac{1}{\pi} \qquad \text { und } \qquad  c_m =
+\begin{cases}
+\frac{1}{4}& \text{ wenn } m = 1 \text{ oder } m=-1 \\
+-\frac{1}{\pi m^2 - \pi}& \text{ wenn $m$ gerade}\\
+0 & \text{ sonst }
+\end{cases}
+$$
+
+<FourierSeries
+  ithC={(x) =>
+    x == 0
+      ? [1 / Math.PI, 0]
+      : [
+          x % 2 ? 0 : -1 / (Math.PI * Math.pow(x, 2) - Math.PI),
+          x == 1 || x == -1 ? -x / 4 : 0,
+        ]
+  }
+  f={(x) => (Math.floor(x) % 2 ? 0 : Math.sin(Math.PI * x))}
+  omega={Math.PI}
+  yBExtent={[-1, 2]}
+/>

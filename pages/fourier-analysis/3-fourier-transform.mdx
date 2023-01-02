@@ -1,5 +1,3 @@
-# Überlagerung umkehren
-
 import FrameMafs from '../../components/FrameMafs.tsx'
 import WaveSummationInverted from '../../components/WaveSummationInverted.tsx'
 import FixedWaveSummation from '../../components/FixedWaveSummation.tsx'
@@ -7,6 +5,36 @@ import WaveCheck from '../../components/WaveCheck.tsx'
 import ProductIntegral from '../../components/FixedProductIntegral.tsx'
 import DynamicProductIntegral from '../../components/DynamicProductIntegral.tsx'
 import { Callout } from 'nextra-theme-docs'
+
+# Fourier-Transformation
+
+## Verallgemeinerung der Fourier-Reihe
+
+Im Abschnitt über die [Fourier-Reihe](./2-fourier-series), wurde die **Fourier-Reihe** hergeleitet.
+
+Dabei lässt sich zwischen der **Fourier-Reihe** zur **Synthese** einer Funktion $f(t)$, wenn die **Koeffizienten** $c_k$ bekannt sind,
+
+$$
+f(t) = \sum_{k=-\infty}^{\infty} c_k e^{\frac{2 \pi i}{T} k t }
+$$
+
+und der **Analyse** einer Funktion $f(t)$, bzw. das _Herausfinden_ der **Fourier-Koeffizienten** unterscheiden:
+
+$$
+c_k = \frac{1}{T}\int_0^{T} f(t) e^{\frac{-2 \pi i k}{T} t} dt
+$$
+
+---
+
+Es gibt also zwei Vorgehensweisen, welche bis jetzt bekannt sind:
+
+- **Fourier-Analyse** einer Funktion $f(t)$ (das _Zerlegen_ in die Koeffizienten)
+- **Fourier-Synthese** einer Funktion $f(t)$ (das _Wiederherstellen_ über bekannte Koeffizienten)
+
+Beide Vorgehensweisen lassen sich auch für nicht-periodische Funktionen verallgemeinern.
+Die Verallgemeinerung der **Fourier-Analyse** ist dabei die **Fourier-Transformation** und die Verallgemeinerung der **Fourier-Synthese** die **Inverse-Fourier-Transformation**.
+
+### Frequenz
 
 ## Probleme beim Umkehren
 
@@ -129,7 +157,7 @@ Die Lücke bei $T=4$ entsteht dadurch, dass dort eine Division durch $0$ stattfi
 <Callout type="info" emoji="📚">
   Falls du wissen möchtest, wie dieser Graph entstanden ist, kannst du dies im
   Anhang nachlesen: [Herleitung Integral für
-  Fourier-Transformation](../appendix/other/1-integral-derivation) an.
+  Fourier-Transformation](../appendix/other/integral-derivation) an.
 </Callout>
 
 ### Anwendung

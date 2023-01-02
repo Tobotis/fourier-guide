@@ -32,7 +32,7 @@ const FourierSeries = ({
   }
   return (
     <>
-      <div className="text-center my-4">
+      <div className="text-center mt-4">
         <TeX>{'n = ' + n.toFixed(0)}</TeX>:{' '}
         <input
           className="h-2.5"
