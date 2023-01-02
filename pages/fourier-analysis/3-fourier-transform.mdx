@@ -2,7 +2,10 @@
 
 import FrameMafs from '../../components/FrameMafs.tsx'
 import WaveSummationInverted from '../../components/WaveSummationInverted.tsx'
+import FixedWaveSummation from '../../components/FixedWaveSummation.tsx'
 import WaveCheck from '../../components/WaveCheck.tsx'
+import ProductIntegral from '../../components/FixedProductIntegral.tsx'
+import DynamicProductIntegral from '../../components/DynamicProductIntegral.tsx'
 import { Callout } from 'nextra-theme-docs'
 
 ## Probleme beim Umkehren
@@ -57,7 +60,6 @@ $$
 A = \int_{-\infty}^{\infty} p(t) dt
 $$
 
-
 <Callout emoji="💡">
   Genaugenommen notiert man hier nicht direkt die $\infty$-Symbole, sondern notiert diese wiefolgt als Grenzwert:
   $$
@@ -83,8 +85,10 @@ Ist das Integral $A$ gleich $0$, stimmen die Periodendauern nicht überein. Ande
 **Erklärung**
 
 <WaveCheck fixed_periodendauer={4} />
-### Integral ohne Unendlich
-Da es häufig schwierig ist ein Integral von $-\infty$ bis $\infty$ zu berechnen, kann man zur Vereinfachung sehr große Grenzen nehmen, da dies zur Annäherung ausreicht.
+### Integral ohne Unendlich{' '}
+
+Da es häufig schwierig ist ein Integral von $-\infty$ bis $\infty$ zu berechnen, kann man zur Vereinfachung sehr große Grenzen nehmen,
+da dies zur Annäherung ausreicht.
 
 <Callout>
   Der numerische Wert ist hierbei nicht der einzige ausschlaggegebende Wert. Die _"Größe"_ der Grenzen hängt auch von der Periodendauer der Schwingungen ab.
@@ -95,7 +99,7 @@ Sollte es sich im Gegensatz dazu, um eine Schwingung mit der Periodendauer $T_2=
 
 </Callout>
 
-__Erklärung__
+**Erklärung**
 
 **Wavecheck mit 1000**
 
@@ -104,3 +108,69 @@ In diesem Beispiel nehmen wir als Grenzen mal $-1000$ und $1000$ an.
 $$
 A = \int_{-1000}^{1000} p(t) dt
 $$
+
+<WaveCheck fixed_periodendauer={4} leftBound={-1000} rightBound={1000} />
+
+Führt man diese Auswertung nun für alle Periodendauern durch und stellt diese in einem Diagramm dar, erhält man einen Graphen, der einem die "Richtigkeit" der Periodendauer angibt.
+
+<ProductIntegral
+  lowerBound={-1000}
+  upperBound={1000}
+  maxX={10}
+  omegaA={4}
+  amplitudeA={1}
+  amplitudeB={1}
+/>
+
+Dieser Graph ist allerdings nur sehr schwer zu bestimmen, da man das Integral für jeden Wert neu bestimmen muss und der Ausdruck sehr rechenaufwändig ist. Dies ist dir vielleicht bereits beim Laden der Seite aufgefallen, da das Erstellen des Graphens bei langsameren Geräten sehr viel Zeit in Anspruch nimmt.
+
+Die Lücke bei $T=4$ entsteht dadurch, dass dort eine Division durch $0$ stattfindet, wodurch der Wert Unendlich groß wird und eine Definitionslücke entsteht. Zur Verdeutlichung ist hier eine Näherung der Einhüllenden in lila angezeigt.
+
+<Callout type="info" emoji="📚">
+  Falls du wissen möchtest, wie dieser Graph entstanden ist, kannst du dies im
+  Anhang nachlesen: [Herleitung Integral für
+  Fourier-Transformation](../appendix/other/1-integral-derivation) an.
+</Callout>
+
+### Anwendung
+
+Mit einer einzigen Welle, ist die Periodendauer noch sehr einfach mit dem Auge abzulesen, weshalb sich der Aufwand nicht lohnt. Das wahre Potenzial der Fourier-Transformation entfaltet sich erst, wenn man komplexe Funktionen mit vielen Anteilen zerlegen möchte.
+
+Zum Beispiel die Funktion ganz zu Anfang dieses Eintrages.
+
+Nochmal zu Erinnerung:
+
+<FixedWaveSummation
+  fixedCoordinates={[
+    [2, 3],
+    [0.5, 0.2],
+    [1, 1],
+    [5, 2],
+    [7, 1],
+    [0.1, 0.05],
+  ]}
+/>
+
+<DynamicProductIntegral waveCoordinates={[
+    [2, 3],
+    [0.5, 0.2],
+    [1, 1],
+    [5, 2],
+    [7, 1],
+    [0.1, 0.05],
+    
+  ]}
+
+lowerBound={-100}
+upperBound={100}
+step={0.5}
+maxX={8.2}
+minX={-0.2}
+
+/>
+
+Mithilfe dieser Kurve kann man nun die Einzelnen Periodendauern bestimmen. Diese sind in lila eingezeichnet.
+
+### Bestimmung der Amplituden
+
+Das war jetzt allerdings nur die halbe Miete, da man die Amplituden ebenfalls bestimmen möchte.

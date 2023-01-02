@@ -1,8 +1,8 @@
 import { Callout } from 'nextra-theme-docs'
 
-import LinkButton from '../../../components/LinkButton.tsx'
 import ComplexExponential from '../../../components/ComplexExponential.tsx'
 import QuestionAnswer, { Answer } from '../../../components/QuestionAnswer.tsx'
+import ComplexExpoentialsSum from '../../../components/ComplexExponentialsSum.tsx'
 
 # Komplexe Exponentialfunktion
 
@@ -26,9 +26,7 @@ e^{\theta i} \overset{?}{=} \overbrace{
 }^{\sqrt{-1} \text{ mal?} }
 $$
 
-Zudem ist fraglich, was das ganze mit der zuvor herausgestellten Polardarstellung komplexer Zahlen zutun hat:
-
-<LinkButton href="./1-complex-plane" text="Komplexe Ebene" />
+Zudem ist fraglich, was das ganze mit der zuvor herausgestellten Polardarstellung [komplexer Zahlen](./1-complex-plane) zutun hat:
 
 Es gibt zahlreiche Beweise dieser Gleichung, welche aufzeigen, dass Gleichheit gilt, jedoch weiterhin das Mysterium des **"Warum?"** offen lassen.
 Im Folgenden soll geklärt werden, was diese Gleichung wirklich aussagt und nicht nur gezeigt werden, dass sie stimmt.
@@ -188,7 +186,7 @@ $$
 \Re (z) = 1 \qquad \Im (z) = \lim_{n\to \infty} \left(\frac{\theta}{n} \right)
 $$
 
-Um zu verstehen, was sich beim Potenzieren der komplexen Zahl $z = \lim_{n\to\infty} (1+\frac{\theta i}{n})$ ergibt, ist es sinnvoll, wie im vorherigen Abschnitt herausgestellt wurde, die Polardarstellung zu ermitteln.
+Um zu verstehen, was sich beim Potenzieren der komplexen Zahl $z = \lim_{n\to\infty} (1+\frac{\theta i}{n})$ ergibt, ist es sinnvoll die Polardarstellung zu ermitteln.
 Der Betrag wird durch das Potenzieren mit $n$ ebenfalls $n$ potenziert, der Polarwinkel jedoch mit $n$ multipliziert.
 
 #### Betrag
@@ -235,9 +233,65 @@ Dies entspricht der **Eulerschen Formel**, welche sehr nützlich ist um **trigno
 
 ---
 
-Im Gegensatz zum ersten Abschnitt auf dieser Seite, ist diese Argumentation kein _richtiger_ Beweis. Jedoch sollte damit die **Eulersche Formel** plausibel erscheinen.
+Im Gegensatz zum [ersten Abschnitt](#beweis-mithilfe-von-differentialrechnung) auf dieser Seite, ist diese Argumentation kein _richtiger_ Beweis. Jedoch sollte damit die **Eulersche Formel** plausibel erscheinen.
 
 <Callout type="info" emoji="📚">
   {' '}
   weitere interessante Beweise: [StackExchange: Math](https://math.stackexchange.com/questions/3510/how-to-prove-eulers-formula-ei-varphi-cos-varphi-i-sin-varphi)
 </Callout>
+
+## Folgerungen
+
+In Bezug auf das Thema dieses Artikels wird die **komplexe Exponentialfunktion** häufig mit einem veränderlichen Parameter (wie z.B. Zeit $t$) vorkommen.
+
+$$
+e^{2 \pi t i} = \cos(2 \pi t)+i \sin(2 \pi t)
+$$
+
+Dies lässt sich dann als eine Rotation verstehen, welche häufig mit einem Vektor bzw. **Zeiger** visualisiert wird:
+
+<ComplexExpoentialsSum ak={[[1, 0, 1]]} omega={(2 * Math.PI) / 5} />
+
+(Mit dem Faktor $\frac{1}{5}$ verlangsamt)
+
+Wenn der Zeiger bei $1$ startet lässt sich erkennen, dass es sich beim **Realteil** um $\cos (2 \pi t)$ und beim **Imaginärteil** um $\sin (2 \pi t)$ handelt.
+
+<QuestionAnswer>
+  <>Wie würde sich der Zeiger $e^{-2 \pi t i}$ verhalten (negatives Vorzeichen im Exponenten)?</>
+  <Answer> Die Startposition (bei $t=0$) wäre bei $-1$</Answer>
+  <Answer correct={true}>Der Zeiger würde im Uhrzeigersinn rotieren</Answer>
+  <Answer>Der Zeiger würde ausschließlich im negativen Bereich rotieren</Answer>
+</QuestionAnswer>
+
+### Addition von verschiedenen komplexen Exponentialfunktionen
+
+Gemäß der [Addition von komplexen Zahlen](./1-complex-plane#addition-von-komplexen-zahlen) lassen sich auf mehrere von $t$ abhängige Exponentialfunktionen addieren.
+Dabei lässt sich mit einem zusätzlichen Faktor die Frequenz anpassen:
+
+$$
+e^{2 \pi f t i} = \cos(2 \pi  ft)+i \sin(2 \pi f t)
+$$
+
+z.B. mit $f_1 = \frac{1}{4}$, $f_2 = \frac{1}{2}$ und $f_3 = 1$
+
+<ComplexExpoentialsSum
+  ak={[
+    [1, 0, 1],
+    [1, 0, 2],
+    [1, 0, 4],
+  ]}
+  omega={(2 * Math.PI) / 4}
+/>
+
+### Multiplikation mit Koeffizienten
+
+Interessant wird es, wenn man den Zeiger mit einer konstanten komplexen Zahl $c$ multipliziert.
+Dieser bestimmt die **Länge** des Zeigers, sowie die **Phasenverschiebung** bei $t=0$, da $e^{2 \pi \cdot 0 \cdot i} = 1$.
+
+<QuestionAnswer>
+<>Mit welcher komplexen Zahl müsste man $e^{2 \pi  t i}$ multiplizieren um eine Phasenverschiebung von $\frac{\pi}{2}$ hervorzurufen?</>
+<Answer>$\frac{\pi}{2} + i$</Answer>
+<Answer correct={true}>$i$</Answer>
+<Answer>$\frac{\pi}{2}$</Answer>
+<Answer>$-1$</Answer>
+</QuestionAnswer>

@@ -15,7 +15,6 @@ import {
   Vector,
 } from '../../../mafs/'
 
-import LinkButton from '../../../components/LinkButton.tsx'
 import PolarCoordinates from '../../../components/PolarCoordinates.tsx'
 
 ## Neue Zahlensysteme
@@ -53,8 +52,8 @@ Warum besitzt die Gleichung $x + 5 = 4$ aber ein Lösung?
   display={
     <Mafs
       height={200}
-      yAxisExtent={[-2, 5]}
-      xAxisExtent={[0, 5]}
+      yAxisExtent={[-5, 5]}
+      xAxisExtent={[-0.5, 10]}
       width={400}
       pan={false}
     >
@@ -63,7 +62,7 @@ Warum besitzt die Gleichung $x + 5 = 4$ aber ein Lösung?
     </Mafs>
   }
   text={
-    'Wenn man nur die positiven Zahlen betrachtet, ist kein Schnittpunkt sichtbar. Es scheint uns dennoch logisch, dass es eine bei -1 Lösung gibt. Die Bedeutung dieser Lösung ist in der Realität jedoch auch fraglich: Wie viele Äpfel bleiben übrig, wenn man 4 Äpfel hat und 5 weggenommen werden?'
+    'Wenn man nur die positiven Zahlen betrachtet, ist kein Schnittpunkt sichtbar. Es scheint uns dennoch logisch, dass es eine Lösung bei -1 gibt. Die Bedeutung dieser Lösung ist in der Realität jedoch auch fraglich: Wie viele Äpfel bleiben übrig, wenn man 4 Äpfel hat und 5 weggenommen werden?'
   }
 />
 
@@ -74,18 +73,14 @@ $$
 $$
 
 Um eine Lösung für die obige Gleichung zu finden, lässt sich somit ein weiteres Zahlensystem einführen: $\mathbb{C}$ (die **komplexen Zahlen**).
-Diese werden auch als _imaginäre Zahlen_ bezeichnet, was jedoch ein problematischer Name ist.
-
----
-
-Die komplexen Zahlen haben tatsächlich unglaublich viele Anwendungen bei der Beschreibung von Phänomenen der **Realität**, was hoffentlich im Folgenden deutlich wird.
+Diese werden auch als _imaginäre Zahlen_ bezeichnet, was jedoch ein problematischer Name ist. Die komplexen Zahlen haben tatsächlich unglaublich viele Anwendungen bei der Beschreibung von Phänomenen der **Realität**, was hoffentlich im Folgenden deutlich wird.
 
 ## Die _imaginäre_ Einheit
 
 Um das Problem von $x^2 = -1$ zu lösen, gebe es also eine Zahl mit der Eigenschaft
 
 $$
-i^2 = -1
+i = \sqrt{-1}
 $$
 
 Das scheint absurd, da es unserer Intuition widerspricht: Egal welche Zahl man quadriert, das Vorzeichen des Ergebnis ist immer positiv.
@@ -131,7 +126,7 @@ Jede Zahl kann durch einen Punkt bzw. Vektor auf dieser Ebene dargestellt werden
     </Mafs>
   }
   text={
-    'Es ist weiterhin fraglich, was diese Zahlenebene mit der Definition der imaginären Einheit zutun hat. Wichtig ist, dass man auf dieser Zahleneben jede komplexe Zahl darstellen kann. Selbstverständlich existieren weiterhin die reelen Zahlen ohne Einschränkungen. Drei Zahlen sind links durch Vektoren mit ihren Koordinaten gekennzeichnet.'
+    'Es ist weiterhin fraglich, was diese Zahlenebene mit der Definition der imaginären Einheit zutun hat. Wichtig ist, dass man auf dieser Zahlenebene jede komplexe Zahl darstellen kann. Selbstverständlich existieren weiterhin die reelen Zahlen ohne Einschränkungen. Drei Zahlen sind links durch Vektoren mit ihren Koordinaten gekennzeichnet.'
   }
 />
 
@@ -140,10 +135,11 @@ Jede Zahl kann durch einen Punkt bzw. Vektor auf dieser Ebene dargestellt werden
 ## Real- und Imaginärteil
 
 Man kann eine komplexe Zahl immer in einen **Realteil**
-und in einen **Imaginärteil** zerlegen. Die Namensgebung, ist auch hierbei, wie bereits herausgestellt problematisch. Der **Realteil** von einer komplexen Zahl $z \in \mathbb{C}$ ($z=a+bi$) wird im Folgenden mit $\Re (a+bi)$ und der Imaginärteil $\Im (a+bi)$ abgekürzt.
+und in einen **Imaginärteil** zerlegen. Die Namensgebung, ist auch hierbei, wie bereits herausgestellt, problematisch.
+Der **Realteil** von einer komplexen Zahl $z \in \mathbb{C}$ ($z=a+bi$) wird im Folgenden mit $\Re (a+bi)$ und der Imaginärteil $\Im (a+bi)$ abgekürzt.
 
 <QuestionAnswer>
-  <>Was könnte deiner Meinung nach $\Re (5+2i)$ sein?</>
+  <>Was könnte $\Re (5+2i)$ sein?</>
   <Answer correct={true}>$\Re (5+2i) = 5$</Answer>
   <Answer>$\Re (5+2i) = 7$</Answer>
   <Answer>$\Re (5+2i) = 2i$</Answer>
@@ -172,7 +168,7 @@ Man kann sich die komplexe Zahlenebene also wie ein **kartesisches Koordinatensy
 
 ## Addition von komplexen Zahlen
 
-Im Folgenden lässt sich die Addition von komplexen Zahlen betrachten. Sie funktioniert genauso so wie du es wahrscheinlich erwartest.
+Im Folgenden lässt sich die Addition von komplexen Zahlen betrachten. Sie funktioniert genauso so wie man es wahrscheinlich erwartet.
 
 <ComplexPlaneAdder />
 <QuestionAnswer>
@@ -185,7 +181,7 @@ Im Folgenden lässt sich die Addition von komplexen Zahlen betrachten. Sie funkt
 Die Addition von komplexen Zahlen ist also analog zur Addition von reelen Zahlen, bloß im zweidimensionalen Raum. Zum Einen addiert man die horizontalen Komponenten (den **Realteil**) und zum Anderen addiert man die vertikalen Komponenten (den **Imaginärteil**).
 
 Der Zusammenhang zwischen der aufgezeigten _geometrische_ Interpretation der komplexen Zahlen und der Definition der **imaginären Einheit** $i = \sqrt{-1}$ bleibt weiterhin fraglich.
-Der Zusammenhang wird jedoch bei der Multiplikation von komplexen Zahlen sehr deutlich. Danach erscheint es logisch, warum man **imaginäre Einheit** auf einer neuen orthogonalen Achse lokalisiert und eine neue Dimension hinzufügt.
+Der Zusammenhang wird jedoch bei der Multiplikation von komplexen Zahlen sehr deutlich. Danach erscheint es logisch, warum man **imaginäre Einheit** auf einer neuen orthogonalen Achse platziert und eine neue Dimension hinzufügt.
 
 ## Multiplikation von komplexen Zahlen
 
@@ -399,26 +395,16 @@ z \cdot w &= (r \cos(\phi) + ri \sin (\phi)) \cdot (s \cos (\theta) + si \sin (\
 \end{equation*}
 $$
 
-Bei $*$ wird die Winkelsummenidentität für Kosinus verwendet:
+Bei $*$ wird die [Winkelsummenidentität für Kosinus](../trigonometric-identities/2-cosine-angle-sum) verwendet:
 
-<LinkButton
-  href="../trigonometric-identities/2-cosine-angle-sum"
-  text="Kosinus-Winkelsummenidentität"
-/>
-
-Bei $**$ wird die Winkelsummeidentität für Sinus verwendet:
-
-<LinkButton
-  href="../trigonometric-identities/1-sine-angle-sum"
-  text="Sinus-Winkelsummenidentität"
-/>
+Bei $**$ wird die [Winkelsummeidentität für Sinus](../trigonometric-identities/1-sine-angle-sum) verwendet:
 
 ---
 
 Am Ergebnis der Multiplikation ist die Polardarstellung einer _neuen_ komplexen Zahl zu erkennen.
 Die komplexe Zahl $z\cdot w$ hat einen **Polarwinkel** von $\phi + \theta$ und der **Betrag** ist das Produkt der beiden Beträge von $z$ und $w$.
 
-### Folgerungen
+## Folgerungen
 
 Aus der obigen Herleitung ist also zu erkennen, dass für die Multiplikation zweier komplexer Zahlen der Zusammenhang
 
@@ -456,4 +442,4 @@ Im Folgenden lässt sich ausprobieren, wie sich die **Potenzen** einer komplexen
   <Answer>$z^k = r^k \text{cis} (\phi^k)$</Answer>
 </QuestionAnswer>
 
-Wichtig ist, dass die **Beträge** bei einer Multiplikation multipliziert, und der **Polarwinkel** addiert wird.
+Wichtig ist, dass die **Beträge** bei einer Multiplikation multipliziert, und die **Polarwinkel** addiert werden.
