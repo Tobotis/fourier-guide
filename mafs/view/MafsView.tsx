@@ -144,9 +144,6 @@ export const MafsView: React.FC<MafsViewProps> = ({
   )
 
   const getElements = React.useMemo(() => {
-    if (noNonSvg) {
-      return [children, []]
-    }
     if (!children) {
       return [[], []]
     }
@@ -166,10 +163,16 @@ export const MafsView: React.FC<MafsViewProps> = ({
   }, [children, noNonSvg])
 
   const SVGGenerator = React.useMemo(() => {
+    if (noNonSvg) {
+      return <>{children.map((element: React.ReactNode) => element)} </>
+    }
     return <>{getElements[0].map((element: React.ReactNode) => element)} </>
   }, [children])
 
   const nonSVGGenerator = React.useMemo(() => {
+    if (!noNonSvg) {
+      return []
+    }
     let nonSVGElements: Array<React.ReactNode> = getElements[1]
 
     let resultingElements: Array<React.ReactElement> = []
