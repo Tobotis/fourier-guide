@@ -23,6 +23,7 @@ export interface MafsViewProps {
   yAxisExtent?: Interval
   ssr?: boolean
   children?: any
+  noNonSvg?: boolean
 }
 
 export const MafsView: React.FC<MafsViewProps> = ({
@@ -33,6 +34,7 @@ export const MafsView: React.FC<MafsViewProps> = ({
   yAxisExtent = [-3.5, 3.5],
   children,
   ssr = false,
+  noNonSvg = false,
 }) => {
   const [visible, setVisible] = React.useState(ssr ? true : false)
   const desiredCssWidth = desiredWidth === 'auto' ? '100%' : `${desiredWidth}px`
@@ -141,44 +143,34 @@ export const MafsView: React.FC<MafsViewProps> = ({
     [scaleX, scaleY, xSpan, ySpan, pixelMatrix, inversePixelMatrix, cssScale]
   )
 
-  const getSVGElements = React.useMemo(() => {
+  const getElements = React.useMemo(() => {
+    if (noNonSvg) {
+      return [children, []]
+    }
     if (!children) {
-      return []
+      return [[], []]
     }
     let SVGElements: Array<React.ReactElement> = []
-    if (!children?.length) {
-      children = [children]
-    }
-    children.forEach((element: React.ReactElement) => {
-      if (element.type != NonSVGWrapper) {
-        SVGElements.push(element)
-      }
-    })
-    return SVGElements
-  }, [children])
-
-  const getNonSVGElements = React.useMemo(() => {
-    if (!children) {
-      return []
-    }
-    let SVGElements: Array<React.ReactElement> = []
+    let NonSVGElements: Array<React.ReactElement> = []
     if (!children?.length) {
       children = [children]
     }
     children.forEach((element: React.ReactElement) => {
       if (element.type === NonSVGWrapper) {
-        SVGElements.push(element.props.children)
+        NonSVGElements.push(element.props.children)
+      } else {
+        SVGElements.push(element)
       }
     })
-    return SVGElements
-  }, [children])
+    return [SVGElements, NonSVGElements]
+  }, [children, noNonSvg])
 
   const SVGGenerator = React.useMemo(() => {
-    return <>{getSVGElements.map((element: React.ReactNode) => element)} </>
+    return <>{getElements[0].map((element: React.ReactNode) => element)} </>
   }, [children])
 
   const nonSVGGenerator = React.useMemo(() => {
-    let nonSVGElements: Array<React.ReactNode> = getNonSVGElements
+    let nonSVGElements: Array<React.ReactNode> = getElements[1]
 
     let resultingElements: Array<React.ReactElement> = []
 
