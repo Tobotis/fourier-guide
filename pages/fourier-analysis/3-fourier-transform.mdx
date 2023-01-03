@@ -4,7 +4,17 @@ import FixedWaveSummation from '../../components/FixedWaveSummation.tsx'
 import WaveCheck from '../../components/WaveCheck.tsx'
 import ProductIntegral from '../../components/FixedProductIntegral.tsx'
 import DynamicProductIntegral from '../../components/DynamicProductIntegral.tsx'
+import QuestionAnswer, { Answer } from '../../components/QuestionAnswer.tsx'
 import { Callout } from 'nextra-theme-docs'
+import {
+  CartesianCoordinates,
+  Mafs,
+  FunctionGraph,
+  Text,
+  Point,
+  Line,
+} from '../../mafs/'
+import { NonSVGWrapper, NonSVG } from '../../mafs/display/NonSVGElements'
 
 # Fourier-Transformation
 
@@ -34,7 +44,111 @@ Es gibt also zwei Vorgehensweisen, welche bis jetzt bekannt sind:
 Beide Vorgehensweisen lassen sich auch für nicht-periodische Funktionen verallgemeinern.
 Die Verallgemeinerung der **Fourier-Analyse** ist dabei die **Fourier-Transformation** und die Verallgemeinerung der **Fourier-Synthese** die **Inverse-Fourier-Transformation**.
 
-### Frequenz
+### Frequenzraum vs. Zeitraum
+
+Die verschiedenen **Fourier-Koeffizienten** lassen sich darstellen. Im sogenannte **Frequenzraum** werden die **Beträge** der Koeffizienten gegen die zugehörigen Frequenzen aufgetragen. Es ist relevant, den Betrag zu nehmen, da es sich bei den Koeffizienten um [komplexe Zahlen](../appendix/complex-numbers/1-complex-plane) handelt.
+
+Dies könnte z.B. so aussehen:
+
+<FrameMafs>
+  <Mafs pan={false} yAxisExtent={[-1, 4]}>
+    <CartesianCoordinates xAxis={{ labels: false }} />
+    <Point x={2} y={2} />
+    <Line.Segment style="dashed" point1={[2, 0]} point2={[2, 2]} />
+    <Point x={-2} y={2} />
+    <Line.Segment style="dashed" point1={[-2, 0]} point2={[-2, 2]} />
+    <Point x={0} y={0.2} />
+    <Line.Segment style="dashed" point1={[0, 0]} point2={[0, 0.2]} />
+    <Point x={1} y={1.2} />
+    <Line.Segment style="dashed" point1={[1, 0]} point2={[1, 1.2]} />
+    <Point x={-1} y={1.2} />
+    <Line.Segment style="dashed" point1={[-1, 0]} point2={[-1, 1.2]} />
+    <Point x={3} y={0} />
+    <Point x={-3} y={0} />
+    <Point x={4} y={3} />
+    <Line.Segment style="dashed" point1={[4, 0]} point2={[4, 3]} />
+    <Point x={-4} y={3} />
+    <Line.Segment style="dashed" point1={[-4, 0]} point2={[-4, 3]} />
+    <Point x={5} y={1} />
+    <Line.Segment style="dashed" point1={[5, 0]} point2={[5, 1]} />
+    <Point x={-5} y={1} />
+    <Line.Segment style="dashed" point1={[-5, 0]} point2={[-5, 1]} />
+  </Mafs>
+</FrameMafs>
+
+Diese Darstellung wird auch **Frequenzspektrum** genannt.
+
+<QuestionAnswer>
+  <>Welche Eigenschaft ist bei obiger **Fourier-Reihe** erfüllt?</>
+  <Answer correct={true}>Für $c_k$ mit $k<0$ gilt $c_k = \overline{c}_{-k}$</Answer>
+  <Answer> Es gilt $n=4$  </Answer>
+</QuestionAnswer>
+
+Im **Frequenzraum** lassen sich also die Beiträge der verschiedenen Frequenzen betrachten. Wichtig ist, dass der Abstand auf der horizontalen Achse jeweils $\frac{1}{T}$ entspricht.
+Im **Zeitraum**, was der Darstellung des Signals in Abhängigkeit der Zeit bedeutet, folgt:
+
+<FrameMafs>
+  <Mafs pan={false} xAxisExtent={[-3, 3]}>
+    <FunctionGraph.OfX
+      y={(x) =>
+        0.2 +
+        0.6 * Math.sin(Math.PI * x) +
+        Math.sin(Math.PI * 2 * x) +
+        1.5 * Math.sin(Math.PI * 4 * x) +
+        0.5 * Math.sin(Math.PI * 5 * x)
+      }
+      quality="high"
+    />
+    <CartesianCoordinates xAxis={{ labels: (x) => 0.5 * x + 'T' }} />
+  </Mafs>
+</FrameMafs>
+
+Dabei ist relevant, dass die Funktion nur **reelle** Funktionswerte, aufgrund der Eigenschaft der **kojugierten Komplexen Zahlen** $c_k$ und $c_{-k}$, annimmt.
+
+Die dargestellte Funktion im **Zeit-** und **Frequnzraum** entspricht:
+
+$$
+ f(t) = 0.2+0.6\sin \left(2 \pi \frac{1}{T} t\right) + \sin \left(2 \pi \frac{2}{T} t\right) + 1.5 \sin \left(2 \pi \frac{4}{T} t\right) + 0.5 \sin \left(2 \pi \frac{5}{T} t\right)
+$$
+
+<QuestionAnswer>
+  <>
+    Was folgt für die Darstellung der Funktion im Frequenzraum, wenn $T$ größer
+    wird?
+  </>
+  <Answer>Die Breite Frequenzspektrum ändert sich nicht</Answer>
+  <Answer correct={true}>Das Frequenzspektrum wird schmaler</Answer>
+  <Answer>Das Frequenzspektrum wird breiter</Answer>
+</QuestionAnswer>
+
+---
+
+Dadurch, dass die Frequenz invers zur Periodendauer $T$ ist, folgt, dass wenn $T$ größer wird, die Frequenzen kleiner werden. Wenn man von der Idee einer _unendlichen_ Periodendauer ausgeht, rücken die Frequenzen also _unendlich_ nah zusammen, da der Unterschied zwischen zwei Frequenzen im Frequenzspekturm wie beschrieben $\frac{1}{T}$ beträgt.
+Das Verständis dieses **inversen** Zusammenhangs wird in Bezug auf eine _unendliche_ Periodendauer relevant: Je länger die länger die Periodendauer und somit _breiter_ der Zeitraum, desto _enger_ wird das Frequenzspektrum.
+
+## Unendliche Periodendauer
+
+Das Ziel ist es also, den Zusammenhang
+
+$$
+c_k = \frac{1}{T}\int_0^{T} f(t) e^{\frac{-2 \pi i k}{T} t} dt
+$$
+
+für $T\to \infty$ zu verallgemeinern um das Ganze auch auf nicht-periodische Funktionen anzuwenden.
+
+Für spätere Zwecke wird das Integral mit den Grenzen $0$ und $T$ zu einem Integral mit den Grenzen $-\frac{T}{2}$ und $\frac{T}{2}$ geändert.
+Da man lediglich den durchschnittlichen Wert innerhalb einer ganzen Periode berechnet, macht es keinen Unterschied, _wann_ diese Periode _stattfindet_.
+
+Für das Verständis ist es womöglich nützlich nochmal auf die Interpretation dieses Integrals zurückzublicken:
+
+- Durch die Multiplikation mit $e^{\frac{-2 \pi i k}{T} t}$ wird die Rotation mit einer Frequenz von $\frac{k}{T}$ sozusagen von allen Zeigern _subtrahiert_.
+- Dadurch ist es sicher, dass alle Zeiger rotieren, außer jener, welcher zuvor mit einer Frequenz von $\frac{k}{T}$ rotierte.
+- Der durchschnittliche Wert der Funktion multipliziert mit $e^{\frac{-2 \pi i k}{T} t}$ entspricht also dem Wert $c_k$
+
+
+### Problem mit den Koeffizienten
+
+Es ergibt sich jedoch ein Problem. Wenn man den Durchschnitt der Funktion $f(t) \cdot e^{\frac{-2 \pi i k}{T} t}$ berechnet, 
 
 ## Probleme beim Umkehren
 
@@ -113,7 +227,7 @@ Ist das Integral $A$ gleich $0$, stimmen die Periodendauern nicht überein. Ande
 **Erklärung**
 
 <WaveCheck fixed_periodendauer={4} />
-### Integral ohne Unendlich{' '}
+### Integral ohne Unendlich
 
 Da es häufig schwierig ist ein Integral von $-\infty$ bis $\infty$ zu berechnen, kann man zur Vereinfachung sehr große Grenzen nehmen,
 da dies zur Annäherung ausreicht.
