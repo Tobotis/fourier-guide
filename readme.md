@@ -4,4 +4,4 @@
 2. `yarn dev`
 ## References
 - Layout (Documentation Theme): [Nextra](https://nextra.vercel.app/)
-- Interactive Math Components: [Mafs](https://mafs.dev/)
+- Interactive Math Components: [Mafs](https://mafs.dev/) © 2023 Steven Petryk.
