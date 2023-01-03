@@ -10,10 +10,16 @@ import ScaleContext, { ScaleContextShape } from './ScaleContext'
 import { round, Interval, Vector2 } from '../math'
 import {
   NonSVGElement,
+  NonSVGProps,
   NonSVGWrapper,
   NonSVGWrapperProps,
 } from './NonSVGElement'
 import { NonSVG } from '../display/NonSVGElements'
+import {
+  Alignment,
+  alignmentToRelativeDeviationFromCenter,
+  HTMLStyleObject,
+} from '../../utils/general'
 
 export interface MafsViewProps {
   width?: number | string
@@ -160,7 +166,7 @@ export const MafsView: React.FC<MafsViewProps> = ({
       }
     })
     return [SVGElements, NonSVGElements]
-  }, [children, noNonSvg])
+  }, [children])
 
   const SVGGenerator = React.useMemo(() => {
     if (noNonSvg) {
@@ -170,22 +176,26 @@ export const MafsView: React.FC<MafsViewProps> = ({
   }, [children])
 
   const nonSVGGenerator = React.useMemo(() => {
-    if (!noNonSvg) {
+    if (noNonSvg) {
       return []
     }
-    let nonSVGElements: Array<React.ReactNode> = getElements[1]
+    let nonSVGElements: Array<any> = getElements[1]
 
     let resultingElements: Array<React.ReactElement> = []
 
-    nonSVGElements.forEach((elem: React.ReactNode) => {
-      if (!React.isValidElement(elem)) {
-        return
-      }
+    if (nonSVGElements[0] == undefined || nonSVGElements == null) {
+      return
+    }
 
-      let x: number | undefined = elem.props['x']
-      let y: number | undefined = elem.props['y']
+    for (let i: number = 0; i < nonSVGElements[0].length; i++) {
+      let elem: any = nonSVGElements[0][i]
 
-      console.log(elem.props)
+      let x: number | undefined = elem!.props['x']
+      let y: number | undefined = elem!.props['y']
+
+      let align: Alignment | undefined = elem!.props['align']
+      let elem_width: number | undefined = elem!.props['width']
+      let elem_height: number | undefined = elem!.props['height']
 
       if (x == undefined) {
         x = 0
@@ -193,11 +203,33 @@ export const MafsView: React.FC<MafsViewProps> = ({
       if (y == undefined) {
         y = 0
       }
-      console.log(x)
+      if (align == undefined) {
+        align = 'c'
+      }
+      if (elem_width == undefined) {
+        elem_width = 1
+      }
+      if (elem_height == undefined) {
+        elem_height = 1
+      }
 
-      let pxX: number = centeredMapX(x)
-      let pxY: number = centeredMapY(y)
-      let style: object = { transform: `translate(${pxX}px, ${pxY}px)` }
+      let relativeOffsetFromCenter: Array<number> =
+        alignmentToRelativeDeviationFromCenter(align)
+      let pxX: number = centeredMapX(
+        x + relativeOffsetFromCenter[0] * elem_width
+      )
+      let pxY: number = centeredMapY(
+        y + relativeOffsetFromCenter[1] * elem_height
+      )
+
+      let style: HTMLStyleObject = {
+        transform: `translate(${pxX}px, ${pxY}px) `,
+      }
+
+      let new_props: NonSVGProps = Object.create(elem.props)
+
+      new_props.getScale = () => scaleContext
+      elem = React.cloneElement(elem, new_props)
       // Only display the nonSVGElements if inside the viewport.
       // The check is intentionally very generous to prevent accidental removing of elements still in the viewport
       if (Math.abs(pxX) < width && Math.abs(pxY) < height) {
@@ -207,9 +239,9 @@ export const MafsView: React.FC<MafsViewProps> = ({
           </div>
         )
       }
-    })
+    }
 
-    return <>{resultingElements[0]}</>
+    return <>{resultingElements}</>
   }, [offset, xSpan, ySpan, width, height, children])
 
   return (
