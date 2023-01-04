@@ -5,6 +5,7 @@ import WaveCheck from '../../components/WaveCheck.tsx'
 import ProductIntegral from '../../components/FixedProductIntegral.tsx'
 import DynamicProductIntegral from '../../components/DynamicProductIntegral.tsx'
 import QuestionAnswer, { Answer } from '../../components/QuestionAnswer.tsx'
+import ExpandableCallout from '../../components/ExpandableCallout.tsx'
 import { Callout } from 'nextra-theme-docs'
 import {
   CartesianCoordinates,
@@ -145,10 +146,9 @@ Für das Verständis ist es womöglich nützlich nochmal auf die Interpretation 
 - Dadurch ist es sicher, dass alle Zeiger rotieren, außer jener, welcher zuvor mit einer Frequenz von $\frac{k}{T}$ rotierte.
 - Der durchschnittliche Wert der Funktion multipliziert mit $e^{\frac{-2 \pi i k}{T} t}$ entspricht also dem Wert $c_k$
 
-
 ### Problem mit den Koeffizienten
 
-Es ergibt sich jedoch ein Problem. Wenn man den Durchschnitt der Funktion $f(t) \cdot e^{\frac{-2 \pi i k}{T} t}$ berechnet, 
+Es ergibt sich jedoch ein Problem. Wenn man den Durchschnitt der Funktion $f(t) \cdot e^{\frac{-2 \pi i k}{T} t}$ berechnet,
 
 ## Probleme beim Umkehren
 
@@ -224,7 +224,125 @@ $$
 </Callout>
 
 Ist das Integral $A$ gleich $0$, stimmen die Periodendauern nicht überein. Anderenfalls stimmen die beiden überein.
-**Erklärung**
+
+
+
+<ExpandableCallout title="Warum ist das so?">
+  Stimmen die Periodendauern der einzelnen Schwingungen nicht über ein, gibt es Zeitpunkte, bei denen sie phasengleich sind und Zeitpunkte bei denen sie nicht phasengleich sind. Über einen sehr großen Zeitraum treten alle Phasenkombinationen gleich häufig auf und annulieren sich.
+
+Stimmen die Periodendauern jedoch überein, ist $p(t)$ immer positiv:
+
+Es soll gezeigt werden:
+
+$$
+p(t) \geq 0
+$$
+
+$$
+f(t) \cdot g(t) \geq 0
+$$
+
+$$
+A \cdot sin(\omega_1 \cdot t) \cdot B \cdot sin(\omega_2 \cdot t) \geq 0
+$$
+
+Aufgrund der Kommutativität der Multiplikation, gilt:
+
+$$
+AB \cdot sin(\omega_1 \cdot t) \cdot sin(\omega_2 \cdot t) \geq 0
+$$
+
+Die Sinus-Funktion kann mithilfe von [komplexen Zahlen](../appendix/complex-numbers/1-complex-plane) als $sin(x) = \frac{e^{ix}-e^{-ix}}{2i}$ geschrieben werden:
+
+$$
+AB \cdot \frac{e^{i \cdot \omega_1 \cdot t}-e^{-i \cdot \omega_1 \cdot t}}{2i} \cdot \frac{e^{i \cdot \omega_2 \cdot t}-e^{-i \cdot \omega_2 \cdot t}}{2i}\geq 0
+$$
+
+Aufgrund der Kommutativität der Multiplikation, gilt:
+
+$$
+\frac{AB}{(2i)^2} \cdot (e^{i \cdot \omega_1 \cdot t}-e^{-i \cdot \omega_1 \cdot t}) \cdot (e^{i \cdot \omega_2 \cdot t}-e^{-i \cdot \omega_2 \cdot t} )\geq 0
+$$
+
+Für das Quadrat der [komplexen Zahl](../appendix/complex-numbers/1-complex-plane) $i$ gilt: $i^2=-1$:
+
+$$
+-\frac{AB}{4} \cdot (e^{i \cdot \omega_1 \cdot t}-e^{-i \cdot \omega_1 \cdot t}) \cdot (e^{i \cdot \omega_2 \cdot t}-e^{-i \cdot \omega_2 \cdot t} )\geq 0
+$$
+
+Den Faktor $\frac{AB}{4}$ ignorieren wir ab hier erstmal.
+
+Aufgrund des Distributivgesetzes gilt:
+
+$$
+- (e^{i \cdot \omega_1 \cdot t} \cdot (e^{i \cdot \omega_2 \cdot t}-e^{-i \cdot \omega_2 \cdot t} )-e^{-i \cdot \omega_1 \cdot t} \cdot (e^{i \cdot \omega_2 \cdot t}-e^{-i \cdot \omega_2 \cdot t} ))\geq 0
+$$
+
+$$
+- (e^{i \cdot \omega_1 \cdot t} \cdot e^{i \cdot \omega_2 \cdot t}- e^{i \cdot \omega_1 \cdot t} \cdot e^{-i \cdot \omega_2 \cdot t} -e^{-i \cdot \omega_1 \cdot t} \cdot e^{i \cdot \omega_2 \cdot t}+e^{-i \cdot \omega_1 \cdot t}  \cdot e^{-i \cdot \omega_2 \cdot t} )\geq 0
+$$
+
+Eines der Exponetengesetze besagt, $a^b \cdot a^c = a^{(b+c)}$:
+
+$$
+- (e^{i \cdot (\omega_1+\omega_2) \cdot t}- e^{i \cdot (\omega_1 - \omega_2) \cdot t}  -e^{i \cdot (\omega_2 -\omega_1) \cdot t}+e^{-i \cdot (\omega_1 + \omega_2) \cdot t})\geq 0
+$$
+
+Da hier die Periodendauern gleich sind, gilt: $\omega_1 = \omega_2 \Rightarrow \omega_1 - \omega_2 = 0$
+
+$$
+- (e^{i \cdot (\omega_1+\omega_2) \cdot t}- e^{0}  -e^{0}+e^{-i \cdot (\omega_1 + \omega_2) \cdot t})\geq 0
+$$
+
+Für $\forall a \in \mathbb{C}$ gilt: $a^0 = 1$
+
+$$
+- (e^{i \cdot (\omega_1+\omega_2) \cdot t}- 1  -1+e^{-i \cdot (\omega_1 + \omega_2) \cdot t})\geq 0
+$$
+
+Aufgrund des Distributivgesetzes, kann man das Minus auf alle Terme innerhalb der Klammer anwenden:
+
+$$
+ (-e^{i \cdot (\omega_1+\omega_2) \cdot t} + 1  +1-e^{-i \cdot (\omega_1 + \omega_2) \cdot t})\geq 0
+$$
+
+Aufgrund der Kommutativität der Addition, gilt:
+
+$$
+ (1 -e^{i \cdot (\omega_1+\omega_2) \cdot t} +1-e^{-i \cdot (\omega_1 + \omega_2) \cdot t})\geq 0
+$$
+
+$\omega_1$ und $\omega_2$ sind beide Element der reelen Zahlen $\mathbb{R}$, somit ist auch die Summe $\omega_1 + \omega_2$ Element der reelen Zahlen $\mathbb{R}$.\
+Der reele Teil von $e^{-a}$ liegt im Interval $[-1;1]$, wenn $a$ eine reele Zahl $\mathbb{R}$ ist ($a \in \mathbb{R}$).
+
+Also definiert man $k$ als eine beliebige reele Zahle im Interval $[-1;1]$:
+
+$$
+ (1 -k +1-k)\geq 0
+$$
+
+$(1-k)$ ist größer-gleich $0$, da $k$ maximal $1$ sein kann.
+Also ist der Term $(1 -k +1-k) \geq 0$.
+
+Somit haben wir herausgefunden, das das Vorzeichen von $p(t)$ dem Vorzeichen von $\frac{AB}{4}$ entspricht (es existieren auch Zeitpunkte, wo $p(t) = 0$ ist).
+
+Da $A$ und $B$ ungleich $0$ sein müssen, kann man folgende Tabelle aufstellen:
+
+$$
+\begin{array}{c|c|c}
+\text{Vorzeichen } A & \text{Vorzeichen } B & \text{Vorzeichen } p(t) \\ \hline
++ & + & +\\
++ & - & -\\
+- & + & - \\
+- & - & +\\
+
+\end{array}
+$$
+
+**Was sagt uns das jetzt über das Integral?**\
+Da unzählbar unendlich viele Stellen $(\aleph_1)$existieren, bei denen $p(t)$ ungleich $0$ ist (Auf einen Beweis wird hier verzichte.) und alle jene Stellen das selbe Vorzeichen haben, muss der Betrag des Integrals $\infty$ sein. Das Vorzeichen entspricht dabei dem Vorzeichen von $A\cdot B$.
+
+</ExpandableCallout>
 
 <WaveCheck fixed_periodendauer={4} />
 ### Integral ohne Unendlich
@@ -240,10 +358,6 @@ Beispiel:\
 Sollte es sich im Gegensatz dazu, um eine Schwingung mit der Periodendauer $T_2=100$ handeln, würden die Grenzen zu klein sein, da nur ein sehr geringer Ausschnitt einer einzigen Periode betrachtet werden würde.
 
 </Callout>
-
-**Erklärung**
-
-**Wavecheck mit 1000**
 
 In diesem Beispiel nehmen wir als Grenzen mal $-1000$ und $1000$ an.
 
