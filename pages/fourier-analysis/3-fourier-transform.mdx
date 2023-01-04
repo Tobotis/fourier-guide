@@ -75,7 +75,6 @@ Der Frequenzraum könnte beispielsweise so aussehen:
     <Line.Segment style="dashed" point1={[5, 0]} point2={[5, 1]} />
     <Point x={-5} y={1} />
     <Line.Segment style="dashed" point1={[-5, 0]} point2={[-5, 1]} />
-    <Text></Text>
   </Mafs>
 </FrameMafs>
 
@@ -154,18 +153,19 @@ Für das Verständis ist es womöglich nützlich nochmal auf die Interpretation 
 Es ergibt sich jedoch ein Problem. Wenn man den Durchschnitt der Funktion $f(t) \cdot e^{\frac{-2 \pi i k}{T} t}$ berechnet, da man mit dem Vorfaktor $\frac{1}{T}$ multipliziert und $T \to \infty$ gelten soll, folgt, dass $c_k \to 0$.
 
 <Callout>
-Dadurch, dass 
+Dadurch, dass $f(t)$ auf einem endlichen Intervall $[a,b]$ definiert ist, folgt mit der [**Dirichlet-Bedingung**](https://en.wikipedia.org/wiki/Dirichlet%E2%80%93Jordan_test):
 $$
-|\int_{-\infty}^{\infty} f(t) e^{\frac{-2 \pi i k}{T}t} dt | < \int_{-\infty}^{\infty} |f(t)| dt < \infty
+|\int_{a}^{b} f(t) e^{\frac{-2 \pi i k}{T}t} dt | < \int_{a}^{b} |f(t)| dt < \infty
 $$
-gilt ([**Dirichlet-Bedingung**](https://en.wikipedia.org/wiki/Dirichlet%E2%80%93Jordan_test)), würde $c_k$ aufgrund von $\frac{1}{T}$ gegen $0$ gehen, wenn $T \to \infty$. Auf diese Bedingung wurde bereits in [*Fourier-Reihen*](./2-fourier-series#unendliche-anzahl-von-termen) hingewiesen.
+Der Koeffizient $c_k$ würde aufgrund von $\frac{1}{T}$ somit gegen $0$ gehen, wenn $T \to \infty$. 
+Auf diese Bedingung wurde bereits in [*Fourier-Reihen*](./2-fourier-series#unendliche-anzahl-von-termen) hingewiesen.
 </Callout>
 
 Es funktioniert also nicht, wenn man einfach $T \to \infty$ und die **Fourier-Reihe** benutzt.
 
 ### Herleitung der Fourier Transfomation
 
-Um die obige [Problematik](#problem-mit-den-koeffizienten) zu umgehen, lässt sich der Term.
+Um die obige [Problematik](#problem-mit-den-koeffizienten) zu umgehen, lässt sich der Term
 
 $$
 c_k = \frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) e^{\frac{-2 \pi i k}{T} t} dt
@@ -222,17 +222,15 @@ $$
 Die Unterschiede zwischen zwei Frequenzen $\frac{1}{T}$ werden unendlich klein. Aus diesem Grund wird lässt sich die _diskrete_ Summe, zu einem _kontinuirlichen_ Integral. Die Unterschiede in $\xi$ sind unendlich klein ($d \xi$).
 Dieser Zusammenhang wird auch als **inverse Fourier-Transfomation** bezeichnet.
 
-Wie du wahrscheinlich merkst, ist es ganz schön schwierig eine passende Zusammensetzung von Sinuskurven zu finden. Selbst wenn du weißt, dass sich die Funktion aus 6 Sinuskurven zusammensetzt ist es praktisch unmöglich Sinuskurven zu finden, die summiert die Funktion ergeben.
+Im Folgenden soll jedoch vor allem die **Fourier-Transfomation** betrachtet werden:
+
+$$
+\hat{f}(\xi) = \int_{-\infty}^{\infty} e^{- 2 \pi i \xi t} f(t)  dt
+$$
+
+Es ist womöglich noch nicht ganz klar, was
 
 ## Übereinstimmung prüfen
-
-Lass uns das Beispiel erstmal etwas vereinfachen. Im folgenden Beispiel ist es sehr einfach passende Sinus-Anteile zu finden, die die gesuchte Funktion ausmachen:
-
-<WaveSummationInverted fixedCoordinates={[[2, 3]]} />
-
-Mit dem bloßen Auge kann man in beiden Beispielen gut erkennen, ob die Funktionen übereinstimmen.
-
-Wie kann man dies jedoch mathematisch feststellen, um sich sicher zu sein, dass die Funktionen wirklich übereinstimmen?
 
 Für die beiden Funktionen gilt:
 
@@ -281,7 +279,7 @@ $$
 
 Ist das Integral $A$ gleich $0$, stimmen die Periodendauern nicht überein. Anderenfalls stimmen die beiden überein.
 
-
+<WaveCheck fixed_periodendauer={4} />
 
 <ExpandableCallout title="Warum ist das so?">
   Stimmen die Periodendauern der einzelnen Schwingungen nicht über ein, gibt es Zeitpunkte, bei denen sie phasengleich sind und Zeitpunkte bei denen sie nicht phasengleich sind. Über einen sehr großen Zeitraum treten alle Phasenkombinationen gleich häufig auf und annulieren sich.
@@ -400,7 +398,6 @@ Da unzählbar unendlich viele Stellen $(\aleph_1)$existieren, bei denen $p(t)$ u
 
 </ExpandableCallout>
 
-<WaveCheck fixed_periodendauer={4} />
 ### Integral ohne Unendlich
 
 Da es häufig schwierig ist ein Integral von $-\infty$ bis $\infty$ zu berechnen, kann man zur Vereinfachung sehr große Grenzen nehmen,
