@@ -1,5 +1,4 @@
 import FrameMafs from '../../components/FrameMafs.tsx'
-import WaveSummationInverted from '../../components/WaveSummationInverted.tsx'
 import FixedWaveSummation from '../../components/FixedWaveSummation.tsx'
 import WaveCheck from '../../components/WaveCheck.tsx'
 import ProductIntegral from '../../components/FixedProductIntegral.tsx'
@@ -16,6 +15,7 @@ import {
   Line,
 } from '../../mafs/'
 import { NonSVGWrapper, NonSVG } from '../../mafs/display/NonSVGElements'
+import WaveSummationInverted from '../../components/WaveSummationInverted.tsx'
 
 # Fourier-Transformation
 
@@ -47,9 +47,10 @@ Die Verallgemeinerung der **Fourier-Analyse** ist dabei die **Fourier-Transforma
 
 ### Frequenzraum vs. Zeitraum
 
-Die verschiedenen **Fourier-Koeffizienten** lassen sich darstellen. Im sogenannte **Frequenzraum** werden die **Beträge** der Koeffizienten gegen die zugehörigen Frequenzen aufgetragen. Es ist relevant, den Betrag zu nehmen, da es sich bei den Koeffizienten um [komplexe Zahlen](../appendix/complex-numbers/1-complex-plane) handelt.
+Die verschiedenen **Fourier-Koeffizienten** lassen sich darstellen. Im sogenannte **Frequenzraum** werden die **Beträge** der Koeffizienten in Abhängigkeit der zugehörigen Frequenzen aufgetragen.
+Es ist relevant, den Betrag zu nehmen, da es sich bei den Koeffizienten um [komplexe Zahlen](../appendix/complex-numbers/1-complex-plane) handelt.
 
-Dies könnte z.B. so aussehen:
+Der Frequenzraum könnte beispielsweise so aussehen:
 
 <FrameMafs>
   <Mafs pan={false} yAxisExtent={[-1, 4]}>
@@ -74,6 +75,7 @@ Dies könnte z.B. so aussehen:
     <Line.Segment style="dashed" point1={[5, 0]} point2={[5, 1]} />
     <Point x={-5} y={1} />
     <Line.Segment style="dashed" point1={[-5, 0]} point2={[-5, 1]} />
+    <Text></Text>
   </Mafs>
 </FrameMafs>
 
@@ -125,7 +127,8 @@ $$
 ---
 
 Dadurch, dass die Frequenz invers zur Periodendauer $T$ ist, folgt, dass wenn $T$ größer wird, die Frequenzen kleiner werden. Wenn man von der Idee einer _unendlichen_ Periodendauer ausgeht, rücken die Frequenzen also _unendlich_ nah zusammen, da der Unterschied zwischen zwei Frequenzen im Frequenzspekturm wie beschrieben $\frac{1}{T}$ beträgt.
-Das Verständis dieses **inversen** Zusammenhangs wird in Bezug auf eine _unendliche_ Periodendauer relevant: Je länger die länger die Periodendauer und somit _breiter_ der Zeitraum, desto _enger_ wird das Frequenzspektrum.
+
+Das Verständis dieses **inversen** Zusammenhangs zwischen den beiden _Räumen_ wird in Bezug auf eine _unendliche_ Periodendauer relevant: Je länger die länger die Periodendauer und somit _breiter_ der Zeitraum, desto _enger_ wird das Frequenzspektrum.
 
 ## Unendliche Periodendauer
 
@@ -135,7 +138,7 @@ $$
 c_k = \frac{1}{T}\int_0^{T} f(t) e^{\frac{-2 \pi i k}{T} t} dt
 $$
 
-für $T\to \infty$ zu verallgemeinern um das Ganze auch auf nicht-periodische Funktionen anzuwenden.
+für $T\to \infty$ zu verallgemeinern um die bekannten Techniken auch auf nicht-periodische Phänomene anzuwenden.
 
 Für spätere Zwecke wird das Integral mit den Grenzen $0$ und $T$ zu einem Integral mit den Grenzen $-\frac{T}{2}$ und $\frac{T}{2}$ geändert.
 Da man lediglich den durchschnittlichen Wert innerhalb einer ganzen Periode berechnet, macht es keinen Unterschied, _wann_ diese Periode _stattfindet_.
@@ -148,23 +151,76 @@ Für das Verständis ist es womöglich nützlich nochmal auf die Interpretation 
 
 ### Problem mit den Koeffizienten
 
-Es ergibt sich jedoch ein Problem. Wenn man den Durchschnitt der Funktion $f(t) \cdot e^{\frac{-2 \pi i k}{T} t}$ berechnet,
+Es ergibt sich jedoch ein Problem. Wenn man den Durchschnitt der Funktion $f(t) \cdot e^{\frac{-2 \pi i k}{T} t}$ berechnet, da man mit dem Vorfaktor $\frac{1}{T}$ multipliziert und $T \to \infty$ gelten soll, folgt, dass $c_k \to 0$.
 
-## Probleme beim Umkehren
+<Callout>
+Dadurch, dass 
+$$
+|\int_{-\infty}^{\infty} f(t) e^{\frac{-2 \pi i k}{T}t} dt | < \int_{-\infty}^{\infty} |f(t)| dt < \infty
+$$
+gilt ([**Dirichlet-Bedingung**](https://en.wikipedia.org/wiki/Dirichlet%E2%80%93Jordan_test)), würde $c_k$ aufgrund von $\frac{1}{T}$ gegen $0$ gehen, wenn $T \to \infty$. Auf diese Bedingung wurde bereits in [*Fourier-Reihen*](./2-fourier-series#unendliche-anzahl-von-termen) hingewiesen.
+</Callout>
 
-Möchte man von einer überlagerten Funktion auf die ursprünglichen Anteilen zurückschließen ist das erstmal ziemlich schwierig.
-Probiere es doch mal selbst aus.
+Es funktioniert also nicht, wenn man einfach $T \to \infty$ und die **Fourier-Reihe** benutzt.
 
-<WaveSummationInverted
-  fixedCoordinates={[
-    [2, 3],
-    [0.5, 0.2],
-    [1, 1],
-    [5, 2],
-    [7, 1],
-    [0.1, 0.05],
-  ]}
-/>
+### Herleitung der Fourier Transfomation
+
+Um die obige [Problematik](#problem-mit-den-koeffizienten) zu umgehen, lässt sich der Term.
+
+$$
+c_k = \frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) e^{\frac{-2 \pi i k}{T} t} dt
+$$
+
+mit $T$ skalieren, um somit den Faktor $\frac{1}{T}$ in diesem Term loszuwerden.
+Um fortzufahren wird eine neue Notation eingeführt:
+
+$$
+\hat{f}(\frac{k}{T}) = \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) e^{\frac{-2 \pi i  k}{T} t} dt
+$$
+
+Es folgt also für die **Fourier-Synthese**:
+
+$$
+f(t) = \sum_{k=-\infty}^{\infty} \hat{f}(\frac{k}{T}) e^{\frac{2 \pi i k}{T} t } \frac{1}{T}
+$$
+
+Man hat also lediglich den Faktor $\frac{1}{T}$ _verlagert_.
+
+---
+
+**Was passiert nun, wenn man $T$ gegen $\infty$ gehen lässt?**
+
+Relevant ist der Quotient $\frac{k}{T}$, welcher nun aus zwei Variablen besteht, welche gegen unendlich laufen.
+Dadurch, dass $k$ nur ganze Zahlen annimmt, was von der Idee ausgeht, dass man ganzzahlige Vielfache einer bestimmten Grundfrequenz hat, handelt es sich bei den verschiedenen $\frac{k}{T}$ für ein endliches $T$ um eine diskrete Größe (abzählbar).
+Wie oben beschrieben wird jedoch der Abstand zwischen zwei verschiedenen ganzzahligen Vielfachen $\frac{k}{T}$ und $\frac{k+1}{T}$ immer kleiner, wenn $T$ größer wird (inverser Zusammenhang zwischen **Frequenzraum** und **Zeitraum**).
+Dies ist kein mathematischer Beweise, jedoch lässt sich sagen, dass ein **kontinuirliches** Frequenzspektrum entseht. Sei diese Frequenz $\xi$ (_xi_) (um Verwechlungen mit $f$ und $\hat{f}$ zu vermeiden):
+
+$$
+\lim_{T \to \infty} \frac{k}{T} = \xi
+$$
+
+Es folgt somit für die **Fourier-Analyse** bzw. nun die **Fourier-Transfomation**:
+
+$$
+\hat{f}(\xi) = \int_{-\infty}^{\infty} e^{- 2 \pi i \xi t} f(t)  dt
+$$
+
+Diesen Zusammenhang findet man genau so im [englischen Wikipediaartikel](https://en.wikipedia.org/wiki/Fourier_transform) über die **Fourier-Transfomation**.
+Das Integral wird zu einem _uneigentlichen_ Integral. Die Eigenschaft $\int_{-\infty}^{\infty} |f(t)| dt < \infty$ wird also relevant, was jedoch in diesem Artikel jedoch nicht weiter diskutiert wird.
+
+Interessant ist auch die Veränderung der **Fourier-Reihe**:
+
+$$
+\begin{equation*}
+\begin{split}
+f(t) &= \lim_{T \to \infty} \sum_{k=-\infty}^{\infty} \hat{f}(\frac{k}{T}) e^{\frac{2 \pi i k}{T} t } \frac{1}{T}\\
+f(t) &=  \int_{-\infty}^{\infty} \hat{f}(\xi) e^{2 \pi i \xi t } d\xi\\
+\end{split}
+\end{equation*}
+$$
+
+Die Unterschiede zwischen zwei Frequenzen $\frac{1}{T}$ werden unendlich klein. Aus diesem Grund wird lässt sich die _diskrete_ Summe, zu einem _kontinuirlichen_ Integral. Die Unterschiede in $\xi$ sind unendlich klein ($d \xi$).
+Dieser Zusammenhang wird auch als **inverse Fourier-Transfomation** bezeichnet.
 
 Wie du wahrscheinlich merkst, ist es ganz schön schwierig eine passende Zusammensetzung von Sinuskurven zu finden. Selbst wenn du weißt, dass sich die Funktion aus 6 Sinuskurven zusammensetzt ist es praktisch unmöglich Sinuskurven zu finden, die summiert die Funktion ergeben.
 
@@ -426,7 +482,3 @@ minX={-0.2}
 />
 
 Mithilfe dieser Kurve kann man nun die Einzelnen Periodendauern bestimmen. Diese sind in lila eingezeichnet.
-
-### Bestimmung der Amplituden
-
-Das war jetzt allerdings nur die halbe Miete, da man die Amplituden ebenfalls bestimmen möchte.

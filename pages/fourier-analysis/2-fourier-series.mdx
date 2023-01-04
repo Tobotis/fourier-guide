@@ -7,6 +7,9 @@ import { Callout } from 'nextra-theme-docs'
 import ComplexConjugates from '../../components/ComplexConjugates.tsx'
 import FrameText from '../../components/FrameText.tsx'
 
+import SingleSignal from '../../components/SingleSignal.tsx'
+import PeriodicSignal from '../../components/PeriodicSignal.tsx'
+
 # Fourier-Reihen
 
 ## Motivation der Fourier-Reihen
@@ -182,6 +185,7 @@ Im Folgenden ist das Ergebnis der Summe $(1)$ mit $c_0 = 2+i$, $c_1 = 2$ und $c_
     [2, 0, 1],
     [0, 1, 2],
   ]}
+  showPath={true}
 />
 
 <QuestionAnswer>
@@ -458,13 +462,17 @@ Aus diesem Grund werden, wie im obigen Beispiel illustriert, unendlich viele **K
 <Callout type="info" emoji="📚">
   Die *Eigenschaften* welche eine Funktion $f(t)$ erfüllen muss, werden unter
   [Wikipedia:
-  Dirichlet-Bedingung](https://de.wikipedia.org/wiki/Dirichlet-Bedingung)
+  Dirichlet-Bedingung](https://en.wikipedia.org/wiki/Dirichlet%E2%80%93Jordan_test)
   präzisiert. Es ist jedoch so, dass sich *"almost any well behaved periodic
   function"* mit der **Fourier-Reihe** darstellen lässt. Dies ist möglicherweise
   etwas unbefriedigend, da diese Antwort auf die Ausgangsfrage etwas schwammig
-  ist. Die *Eigenschaften* beinhalten jedoch z.B., dass das Integral der
+  ist. Die *Bedingungen* beinhalten jedoch z.B., dass das Integral der
   Funktion nicht unendlich groß sein darf, da sonst die
   **Fourier-Koeffizienten** nicht existieren würden.
+  Spezifischer:
+  $$
+  \int_{-\infty}^{\infty} |f(t)| dt < \infty
+  $$
 </Callout>
 
 In der Realität lassen sich häufig nur eine endliche Anzahl an Termen summieren. Aus diesem Grund stellt man sich berechtigterweise die Frage, wie viele Terme man braucht um eine zuverlässige Annäherung zu erhalten.
@@ -484,13 +492,31 @@ $$
 c_k = \frac{1}{T}\int_0^{T} f(t) e^{\frac{-2 \pi i k}{T} t} dt
 $$
 
-Aus dieser Berechnung der Koeffizienten wird deutlich, dass die Funktion $f(t)$ **integrierbar** sein muss.
-
-Diese Problematik ließe sich noch deutlich weiter analysireren. Man kann sich ausgibig Gedanken über die **Konvergenz** der **Fourier-Reihe** Gedanken machen. In diesem Abschnitt sollte jedoch lediglich geklärt werden, woher die **Fourier-Reihe** kommt, und wie man sie möglicherweise anwenden kann.
+Man kann sich ausgibig Gedanken über die **Konvergenz** der **Fourier-Reihe** Gedanken machen. In diesem Abschnitt sollte jedoch lediglich geklärt werden, woher die **Fourier-Reihe** kommt, und wie man sie möglicherweise anwenden kann.
 
 ## Ausblick: Fourier-Transformation
 
 Mit der **Fourier-Transformation** lassen sich die obigen Ideen auch auf nicht periodische Phänomene ausweiten.
-Es liegt zugrunde, dass man die **Periodendauer** gegen unendlich gehen lässt ($T \to \infty$)
-somit würde sich das _periodische_ Phänomen (bzw. nicht-periodische Phänomen) in _unendlicher_ Zeit nur ein einmal wiederholen.
+
+Es gibt zwar viele Phänomene, welche periodisches Verhalten aufweisen, jedoch gibt es auch solche, welche zunächst periodisch erscheinen, jedoch nach einer Zeit aufhören.
+
+Also eine Funktion $f(t)$, welche für $-\infty<t< \infty$ definiert ist.
+Das könnte zum Beispiel ein kurzeitiger Ton sein.
+
+<SingleSignal />
+<PeriodicSignal />
+
+<QuestionAnswer>
+  <>
+    Was könnte man tun, wenn das Intervall $[a,b]$ unbekannt ist, man jedoch
+    Werkzeuge für periodische Funktionen anwenden will?
+  </>
+  <Answer> Eine sehr kleine Periodendauer wählen. </Answer>
+  <Answer correct={true}> Eine sehr große Periodendauer wählen. </Answer>
+  <Answer> Die Periodendauer $T=1$ wählen. </Answer>
+</QuestionAnswer>
+
+Es liegt zugrunde, dass man die **Periodendauer** gegen unendlich gehen lässt ($T \to \infty$).
+Somit würde sich das _nicht-periodische_ Phänome) in _unendlicher_ Zeit nur ein einmal wiederholen.
+Eine Idee wäre also, die **Fourier-Reihe** zu verallgemeinern, indem man einfach die Periodendauer unendlich groß macht und dadurch auch auf nicht-periodeische Phänomene anwenden kann.
 Dies ist jedoch nicht ganz so einfach möglich. Eine Ausführung befindet sich im nächsten Abschnitt.

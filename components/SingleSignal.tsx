@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Mafs, FunctionGraph, CartesianCoordinates } from '../mafs'
+import { Mafs, FunctionGraph, CartesianCoordinates, Text, Line } from '../mafs'
 import FrameText from './FrameText'
 const SingleSignal: React.FC = () => {
   return (
@@ -7,7 +7,7 @@ const SingleSignal: React.FC = () => {
       display={
         <Mafs
           height={200}
-          yAxisExtent={[-1, 3]}
+          yAxisExtent={[-2, 2]}
           xAxisExtent={[-5, 5]}
           width={400}
           pan={false}
@@ -23,9 +23,17 @@ const SingleSignal: React.FC = () => {
                 : 0
             }
           />
+          <Line.Segment point1={[1, 0]} point2={[1, -1]} style="dashed" />
+          <Line.Segment point1={[-1, 0]} point2={[-1, -1]} style="dashed" />
+          <Text x={-1} y={0} attach="s" attachDistance={40}>
+            a
+          </Text>
+          <Text x={1} y={0} attach="s" attachDistance={40}>
+            b
+          </Text>
         </Mafs>
       }
-      text="Es handelt sich hierbei um ein einzelnes Signal, welches somit nur endliche Zeit existiert. Man kann jedoch eine Periodizität erzwingen, indem man das einzelne Signal einfach wiederholt."
+      text="Es handelt sich hierbei um ein einzelnes Signal, welches somit nur in einem Intervall von a bis b definiert sit. Man kann jedoch eine Periodizität erzwingen, indem man das einzelne Signal einfach wiederholt."
     />
   )
 }
