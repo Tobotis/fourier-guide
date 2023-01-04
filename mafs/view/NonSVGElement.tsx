@@ -8,7 +8,6 @@ export interface NonSVGProps {
   nonsvg?: boolean
   width?: number
   height?: number
-  getScale?: () => ScaleContextShape
   align?: Alignment
 }
 

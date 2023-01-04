@@ -1,6 +1,9 @@
 import * as React from 'react'
 import { NonSVGElement, NonSVGProps } from '../../mafs/view/NonSVGElement'
-import { ScaleContextShape } from '../../mafs/view/ScaleContext'
+import {
+  ScaleContextShape,
+  useScaleContext,
+} from '../../mafs/view/ScaleContext'
 import { Alignment, alignmentToRelativeDeviationFromCenter } from '../general'
 
 export interface MafsImageProps extends NonSVGProps {
@@ -9,7 +12,6 @@ export interface MafsImageProps extends NonSVGProps {
   source?: string
   opacity?: number
   alt?: string
-  getScale?: () => ScaleContextShape
 }
 
 export const MafsImage: React.FC<MafsImageProps> = ({
@@ -20,24 +22,21 @@ export const MafsImage: React.FC<MafsImageProps> = ({
   y = 0,
   source = '',
   alt = 'Unbennantes Bild',
-  getScale = () => undefined,
   align = 'c',
 }) => {
   let style: object = {
     opacity: opacity,
   }
 
-  const scale = React.useMemo(() => {
-    return getScale()
-  }, [getScale])
+  let { scaleX, scaleY } = useScaleContext()
 
   const pxWidth = React.useMemo(() => {
-    return scale?.scaleX(1) != undefined ? width * scale.scaleX(1) : 100
-  }, [scale])
+    return width * scaleX(1)
+  }, [scaleX])
 
   const pxHeight = React.useMemo(() => {
-    return scale?.scaleY(1) != undefined ? height * scale.scaleY(1) : 100
-  }, [scale])
+    return height * scaleY(1)
+  }, [scaleY])
 
   return (
     <NonSVGElement nonsvg>

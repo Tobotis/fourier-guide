@@ -226,10 +226,7 @@ export const MafsView: React.FC<MafsViewProps> = ({
         transform: `translate(${pxX}px, ${pxY}px) `,
       }
 
-      let new_props: NonSVGProps = Object.create(elem.props)
 
-      new_props.getScale = () => scaleContext
-      elem = React.cloneElement(elem, new_props)
       // Only display the nonSVGElements if inside the viewport.
       // The check is intentionally very generous to prevent accidental removing of elements still in the viewport
       if (Math.abs(pxX) < width && Math.abs(pxY) < height) {
