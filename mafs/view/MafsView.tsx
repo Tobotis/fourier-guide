@@ -190,15 +190,12 @@ export const MafsView: React.FC<MafsViewProps> = ({
       let x: number | undefined = elem.props['x']
       let y: number | undefined = elem.props['y']
 
-      console.log(elem.props)
-
       if (x == undefined) {
         x = 0
       }
       if (y == undefined) {
         y = 0
       }
-      console.log(x)
 
       let pxX: number = centeredMapX(x)
       let pxY: number = centeredMapY(y)
