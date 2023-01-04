@@ -1,40 +1,236 @@
-# Überlagerung umkehren
-
 import FrameMafs from '../../components/FrameMafs.tsx'
-import WaveSummationInverted from '../../components/WaveSummationInverted.tsx'
 import FixedWaveSummation from '../../components/FixedWaveSummation.tsx'
 import WaveCheck from '../../components/WaveCheck.tsx'
 import ProductIntegral from '../../components/FixedProductIntegral.tsx'
 import DynamicProductIntegral from '../../components/DynamicProductIntegral.tsx'
+import QuestionAnswer, { Answer } from '../../components/QuestionAnswer.tsx'
+import ExpandableCallout from '../../components/ExpandableCallout.tsx'
 import { Callout } from 'nextra-theme-docs'
+import {
+  CartesianCoordinates,
+  Mafs,
+  FunctionGraph,
+  Text,
+  Point,
+  Line,
+} from '../../mafs/'
+import { NonSVGWrapper, NonSVG } from '../../mafs/display/NonSVGElements'
+import WaveSummationInverted from '../../components/WaveSummationInverted.tsx'
 
-## Probleme beim Umkehren
+# Fourier-Transformation
 
-Möchte man von einer überlagerten Funktion auf die ursprünglichen Anteilen zurückschließen ist das erstmal ziemlich schwierig.
-Probiere es doch mal selbst aus.
+## Verallgemeinerung der Fourier-Reihe
 
-<WaveSummationInverted
-  fixedCoordinates={[
-    [2, 3],
-    [0.5, 0.2],
-    [1, 1],
-    [5, 2],
-    [7, 1],
-    [0.1, 0.05],
-  ]}
-/>
+Im Abschnitt über die [Fourier-Reihe](./2-fourier-series), wurde die **Fourier-Reihe** hergeleitet.
 
-Wie du wahrscheinlich merkst, ist es ganz schön schwierig eine passende Zusammensetzung von Sinuskurven zu finden. Selbst wenn du weißt, dass sich die Funktion aus 6 Sinuskurven zusammensetzt ist es praktisch unmöglich Sinuskurven zu finden, die summiert die Funktion ergeben.
+Dabei lässt sich zwischen der **Fourier-Reihe** zur **Synthese** einer Funktion $f(t)$, wenn die **Koeffizienten** $c_k$ bekannt sind,
+
+$$
+f(t) = \sum_{k=-\infty}^{\infty} c_k e^{\frac{2 \pi i}{T} k t }
+$$
+
+und der **Analyse** einer Funktion $f(t)$, bzw. das _Herausfinden_ der **Fourier-Koeffizienten** unterscheiden:
+
+$$
+c_k = \frac{1}{T}\int_0^{T} f(t) e^{\frac{-2 \pi i k}{T} t} dt
+$$
+
+---
+
+Es gibt also zwei Vorgehensweisen, welche bis jetzt bekannt sind:
+
+- **Fourier-Analyse** einer Funktion $f(t)$ (das _Zerlegen_ in die Koeffizienten)
+- **Fourier-Synthese** einer Funktion $f(t)$ (das _Wiederherstellen_ über bekannte Koeffizienten)
+
+Beide Vorgehensweisen lassen sich auch für nicht-periodische Funktionen verallgemeinern.
+Die Verallgemeinerung der **Fourier-Analyse** ist dabei die **Fourier-Transformation** und die Verallgemeinerung der **Fourier-Synthese** die **Inverse-Fourier-Transformation**.
+
+### Frequenzraum vs. Zeitraum
+
+Die verschiedenen **Fourier-Koeffizienten** lassen sich darstellen. Im sogenannte **Frequenzraum** werden die **Beträge** der Koeffizienten in Abhängigkeit der zugehörigen Frequenzen aufgetragen.
+Es ist relevant, den Betrag zu nehmen, da es sich bei den Koeffizienten um [komplexe Zahlen](../appendix/complex-numbers/1-complex-plane) handelt.
+
+Der Frequenzraum könnte beispielsweise so aussehen:
+
+<FrameMafs>
+  <Mafs pan={false} yAxisExtent={[-1, 4]}>
+    <CartesianCoordinates xAxis={{ labels: false }} />
+    <Point x={2} y={2} />
+    <Line.Segment style="dashed" point1={[2, 0]} point2={[2, 2]} />
+    <Point x={-2} y={2} />
+    <Line.Segment style="dashed" point1={[-2, 0]} point2={[-2, 2]} />
+    <Point x={0} y={0.2} />
+    <Line.Segment style="dashed" point1={[0, 0]} point2={[0, 0.2]} />
+    <Point x={1} y={1.2} />
+    <Line.Segment style="dashed" point1={[1, 0]} point2={[1, 1.2]} />
+    <Point x={-1} y={1.2} />
+    <Line.Segment style="dashed" point1={[-1, 0]} point2={[-1, 1.2]} />
+    <Point x={3} y={0} />
+    <Point x={-3} y={0} />
+    <Point x={4} y={3} />
+    <Line.Segment style="dashed" point1={[4, 0]} point2={[4, 3]} />
+    <Point x={-4} y={3} />
+    <Line.Segment style="dashed" point1={[-4, 0]} point2={[-4, 3]} />
+    <Point x={5} y={1} />
+    <Line.Segment style="dashed" point1={[5, 0]} point2={[5, 1]} />
+    <Point x={-5} y={1} />
+    <Line.Segment style="dashed" point1={[-5, 0]} point2={[-5, 1]} />
+  </Mafs>
+</FrameMafs>
+
+Diese Darstellung wird auch **Frequenzspektrum** genannt.
+
+<QuestionAnswer>
+  <>Welche Eigenschaft ist bei obiger **Fourier-Reihe** erfüllt?</>
+  <Answer correct={true}>Für $c_k$ mit $k<0$ gilt $c_k = \overline{c}_{-k}$</Answer>
+  <Answer> Es gilt $n=4$  </Answer>
+</QuestionAnswer>
+
+Im **Frequenzraum** lassen sich also die Beiträge der verschiedenen Frequenzen betrachten. Wichtig ist, dass der Abstand auf der horizontalen Achse jeweils $\frac{1}{T}$ entspricht.
+Im **Zeitraum**, was der Darstellung des Signals in Abhängigkeit der Zeit bedeutet, folgt:
+
+<FrameMafs>
+  <Mafs pan={false} xAxisExtent={[-3, 3]}>
+    <FunctionGraph.OfX
+      y={(x) =>
+        0.2 +
+        0.6 * Math.sin(Math.PI * x) +
+        Math.sin(Math.PI * 2 * x) +
+        1.5 * Math.sin(Math.PI * 4 * x) +
+        0.5 * Math.sin(Math.PI * 5 * x)
+      }
+      quality="high"
+    />
+    <CartesianCoordinates xAxis={{ labels: (x) => 0.5 * x + 'T' }} />
+  </Mafs>
+</FrameMafs>
+
+Dabei ist relevant, dass die Funktion nur **reelle** Funktionswerte, aufgrund der Eigenschaft der **kojugierten Komplexen Zahlen** $c_k$ und $c_{-k}$, annimmt.
+
+Die dargestellte Funktion im **Zeit-** und **Frequnzraum** entspricht:
+
+$$
+ f(t) = 0.2+0.6\sin \left(2 \pi \frac{1}{T} t\right) + \sin \left(2 \pi \frac{2}{T} t\right) + 1.5 \sin \left(2 \pi \frac{4}{T} t\right) + 0.5 \sin \left(2 \pi \frac{5}{T} t\right)
+$$
+
+<QuestionAnswer>
+  <>
+    Was folgt für die Darstellung der Funktion im Frequenzraum, wenn $T$ größer
+    wird?
+  </>
+  <Answer>Die Breite Frequenzspektrum ändert sich nicht</Answer>
+  <Answer correct={true}>Das Frequenzspektrum wird schmaler</Answer>
+  <Answer>Das Frequenzspektrum wird breiter</Answer>
+</QuestionAnswer>
+
+---
+
+Dadurch, dass die Frequenz invers zur Periodendauer $T$ ist, folgt, dass wenn $T$ größer wird, die Frequenzen kleiner werden. Wenn man von der Idee einer _unendlichen_ Periodendauer ausgeht, rücken die Frequenzen also _unendlich_ nah zusammen, da der Unterschied zwischen zwei Frequenzen im Frequenzspekturm wie beschrieben $\frac{1}{T}$ beträgt.
+
+Das Verständis dieses **inversen** Zusammenhangs zwischen den beiden _Räumen_ wird in Bezug auf eine _unendliche_ Periodendauer relevant: Je länger die länger die Periodendauer und somit _breiter_ der Zeitraum, desto _enger_ wird das Frequenzspektrum.
+
+## Unendliche Periodendauer
+
+Das Ziel ist es also, den Zusammenhang
+
+$$
+c_k = \frac{1}{T}\int_0^{T} f(t) e^{\frac{-2 \pi i k}{T} t} dt
+$$
+
+für $T\to \infty$ zu verallgemeinern um die bekannten Techniken auch auf nicht-periodische Phänomene anzuwenden.
+
+Für spätere Zwecke wird das Integral mit den Grenzen $0$ und $T$ zu einem Integral mit den Grenzen $-\frac{T}{2}$ und $\frac{T}{2}$ geändert.
+Da man lediglich den durchschnittlichen Wert innerhalb einer ganzen Periode berechnet, macht es keinen Unterschied, _wann_ diese Periode _stattfindet_.
+
+Für das Verständis ist es womöglich nützlich nochmal auf die Interpretation dieses Integrals zurückzublicken:
+
+- Durch die Multiplikation mit $e^{\frac{-2 \pi i k}{T} t}$ wird die Rotation mit einer Frequenz von $\frac{k}{T}$ sozusagen von allen Zeigern _subtrahiert_.
+- Dadurch ist es sicher, dass alle Zeiger rotieren, außer jener, welcher zuvor mit einer Frequenz von $\frac{k}{T}$ rotierte.
+- Der durchschnittliche Wert der Funktion multipliziert mit $e^{\frac{-2 \pi i k}{T} t}$ entspricht also dem Wert $c_k$
+
+### Problem mit den Koeffizienten
+
+Es ergibt sich jedoch ein Problem. Wenn man den Durchschnitt der Funktion $f(t) \cdot e^{\frac{-2 \pi i k}{T} t}$ berechnet, da man mit dem Vorfaktor $\frac{1}{T}$ multipliziert und $T \to \infty$ gelten soll, folgt, dass $c_k \to 0$.
+
+<Callout>
+Dadurch, dass $f(t)$ auf einem endlichen Intervall $[a,b]$ definiert ist, folgt mit der [**Dirichlet-Bedingung**](https://en.wikipedia.org/wiki/Dirichlet%E2%80%93Jordan_test):
+$$
+|\int_{a}^{b} f(t) e^{\frac{-2 \pi i k}{T}t} dt | < \int_{a}^{b} |f(t)| dt < \infty
+$$
+Der Koeffizient $c_k$ würde aufgrund von $\frac{1}{T}$ somit gegen $0$ gehen, wenn $T \to \infty$. 
+Auf diese Bedingung wurde bereits in [*Fourier-Reihen*](./2-fourier-series#unendliche-anzahl-von-termen) hingewiesen.
+</Callout>
+
+Es funktioniert also nicht, wenn man einfach $T \to \infty$ und die **Fourier-Reihe** benutzt.
+
+### Herleitung der Fourier Transfomation
+
+Um die obige [Problematik](#problem-mit-den-koeffizienten) zu umgehen, lässt sich der Term
+
+$$
+c_k = \frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) e^{\frac{-2 \pi i k}{T} t} dt
+$$
+
+mit $T$ skalieren, um somit den Faktor $\frac{1}{T}$ in diesem Term loszuwerden.
+Um fortzufahren wird eine neue Notation eingeführt:
+
+$$
+\hat{f}(\frac{k}{T}) = \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) e^{\frac{-2 \pi i  k}{T} t} dt
+$$
+
+Es folgt also für die **Fourier-Synthese**:
+
+$$
+f(t) = \sum_{k=-\infty}^{\infty} \hat{f}(\frac{k}{T}) e^{\frac{2 \pi i k}{T} t } \frac{1}{T}
+$$
+
+Man hat also lediglich den Faktor $\frac{1}{T}$ _verlagert_.
+
+---
+
+**Was passiert nun, wenn man $T$ gegen $\infty$ gehen lässt?**
+
+Relevant ist der Quotient $\frac{k}{T}$, welcher nun aus zwei Variablen besteht, welche gegen unendlich laufen.
+Dadurch, dass $k$ nur ganze Zahlen annimmt, was von der Idee ausgeht, dass man ganzzahlige Vielfache einer bestimmten Grundfrequenz hat, handelt es sich bei den verschiedenen $\frac{k}{T}$ für ein endliches $T$ um eine diskrete Größe (abzählbar).
+Wie oben beschrieben wird jedoch der Abstand zwischen zwei verschiedenen ganzzahligen Vielfachen $\frac{k}{T}$ und $\frac{k+1}{T}$ immer kleiner, wenn $T$ größer wird (inverser Zusammenhang zwischen **Frequenzraum** und **Zeitraum**).
+Dies ist kein mathematischer Beweise, jedoch lässt sich sagen, dass ein **kontinuirliches** Frequenzspektrum entseht. Sei diese Frequenz $\xi$ (_xi_) (um Verwechlungen mit $f$ und $\hat{f}$ zu vermeiden):
+
+$$
+\lim_{T \to \infty} \frac{k}{T} = \xi
+$$
+
+Es folgt somit für die **Fourier-Analyse** bzw. nun die **Fourier-Transfomation**:
+
+$$
+\hat{f}(\xi) = \int_{-\infty}^{\infty} e^{- 2 \pi i \xi t} f(t)  dt
+$$
+
+Diesen Zusammenhang findet man genau so im [englischen Wikipediaartikel](https://en.wikipedia.org/wiki/Fourier_transform) über die **Fourier-Transfomation**.
+Das Integral wird zu einem _uneigentlichen_ Integral. Die Eigenschaft $\int_{-\infty}^{\infty} |f(t)| dt < \infty$ wird also relevant, was jedoch in diesem Artikel jedoch nicht weiter diskutiert wird.
+
+Interessant ist auch die Veränderung der **Fourier-Reihe**:
+
+$$
+\begin{equation*}
+\begin{split}
+f(t) &= \lim_{T \to \infty} \sum_{k=-\infty}^{\infty} \hat{f}(\frac{k}{T}) e^{\frac{2 \pi i k}{T} t } \frac{1}{T}\\
+f(t) &=  \int_{-\infty}^{\infty} \hat{f}(\xi) e^{2 \pi i \xi t } d\xi\\
+\end{split}
+\end{equation*}
+$$
+
+Die Unterschiede zwischen zwei Frequenzen $\frac{1}{T}$ werden unendlich klein. Aus diesem Grund wird lässt sich die _diskrete_ Summe, zu einem _kontinuirlichen_ Integral. Die Unterschiede in $\xi$ sind unendlich klein ($d \xi$).
+Dieser Zusammenhang wird auch als **inverse Fourier-Transfomation** bezeichnet.
+
+Im Folgenden soll jedoch vor allem die **Fourier-Transfomation** betrachtet werden:
+
+$$
+\hat{f}(\xi) = \int_{-\infty}^{\infty} e^{- 2 \pi i \xi t} f(t)  dt
+$$
+
+Es ist womöglich noch nicht ganz klar, was
 
 ## Übereinstimmung prüfen
-
-Lass uns das Beispiel erstmal etwas vereinfachen. Im folgenden Beispiel ist es sehr einfach passende Sinus-Anteile zu finden, die die gesuchte Funktion ausmachen:
-
-<WaveSummationInverted fixedCoordinates={[[2, 3]]} />
-
-Mit dem bloßen Auge kann man in beiden Beispielen gut erkennen, ob die Funktionen übereinstimmen.
-
-Wie kann man dies jedoch mathematisch feststellen, um sich sicher zu sein, dass die Funktionen wirklich übereinstimmen?
 
 Für die beiden Funktionen gilt:
 
@@ -82,10 +278,127 @@ $$
 </Callout>
 
 Ist das Integral $A$ gleich $0$, stimmen die Periodendauern nicht überein. Anderenfalls stimmen die beiden überein.
-**Erklärung**
 
 <WaveCheck fixed_periodendauer={4} />
-### Integral ohne Unendlich{' '}
+
+<ExpandableCallout title="Warum ist das so?">
+  Stimmen die Periodendauern der einzelnen Schwingungen nicht über ein, gibt es Zeitpunkte, bei denen sie phasengleich sind und Zeitpunkte bei denen sie nicht phasengleich sind. Über einen sehr großen Zeitraum treten alle Phasenkombinationen gleich häufig auf und annulieren sich.
+
+Stimmen die Periodendauern jedoch überein, ist $p(t)$ immer positiv:
+
+Es soll gezeigt werden:
+
+$$
+p(t) \geq 0
+$$
+
+$$
+f(t) \cdot g(t) \geq 0
+$$
+
+$$
+A \cdot sin(\omega_1 \cdot t) \cdot B \cdot sin(\omega_2 \cdot t) \geq 0
+$$
+
+Aufgrund der Kommutativität der Multiplikation, gilt:
+
+$$
+AB \cdot sin(\omega_1 \cdot t) \cdot sin(\omega_2 \cdot t) \geq 0
+$$
+
+Die Sinus-Funktion kann mithilfe von [komplexen Zahlen](../appendix/complex-numbers/1-complex-plane) als $sin(x) = \frac{e^{ix}-e^{-ix}}{2i}$ geschrieben werden:
+
+$$
+AB \cdot \frac{e^{i \cdot \omega_1 \cdot t}-e^{-i \cdot \omega_1 \cdot t}}{2i} \cdot \frac{e^{i \cdot \omega_2 \cdot t}-e^{-i \cdot \omega_2 \cdot t}}{2i}\geq 0
+$$
+
+Aufgrund der Kommutativität der Multiplikation, gilt:
+
+$$
+\frac{AB}{(2i)^2} \cdot (e^{i \cdot \omega_1 \cdot t}-e^{-i \cdot \omega_1 \cdot t}) \cdot (e^{i \cdot \omega_2 \cdot t}-e^{-i \cdot \omega_2 \cdot t} )\geq 0
+$$
+
+Für das Quadrat der [komplexen Zahl](../appendix/complex-numbers/1-complex-plane) $i$ gilt: $i^2=-1$:
+
+$$
+-\frac{AB}{4} \cdot (e^{i \cdot \omega_1 \cdot t}-e^{-i \cdot \omega_1 \cdot t}) \cdot (e^{i \cdot \omega_2 \cdot t}-e^{-i \cdot \omega_2 \cdot t} )\geq 0
+$$
+
+Den Faktor $\frac{AB}{4}$ ignorieren wir ab hier erstmal.
+
+Aufgrund des Distributivgesetzes gilt:
+
+$$
+- (e^{i \cdot \omega_1 \cdot t} \cdot (e^{i \cdot \omega_2 \cdot t}-e^{-i \cdot \omega_2 \cdot t} )-e^{-i \cdot \omega_1 \cdot t} \cdot (e^{i \cdot \omega_2 \cdot t}-e^{-i \cdot \omega_2 \cdot t} ))\geq 0
+$$
+
+$$
+- (e^{i \cdot \omega_1 \cdot t} \cdot e^{i \cdot \omega_2 \cdot t}- e^{i \cdot \omega_1 \cdot t} \cdot e^{-i \cdot \omega_2 \cdot t} -e^{-i \cdot \omega_1 \cdot t} \cdot e^{i \cdot \omega_2 \cdot t}+e^{-i \cdot \omega_1 \cdot t}  \cdot e^{-i \cdot \omega_2 \cdot t} )\geq 0
+$$
+
+Eines der Exponetengesetze besagt, $a^b \cdot a^c = a^{(b+c)}$:
+
+$$
+- (e^{i \cdot (\omega_1+\omega_2) \cdot t}- e^{i \cdot (\omega_1 - \omega_2) \cdot t}  -e^{i \cdot (\omega_2 -\omega_1) \cdot t}+e^{-i \cdot (\omega_1 + \omega_2) \cdot t})\geq 0
+$$
+
+Da hier die Periodendauern gleich sind, gilt: $\omega_1 = \omega_2 \Rightarrow \omega_1 - \omega_2 = 0$
+
+$$
+- (e^{i \cdot (\omega_1+\omega_2) \cdot t}- e^{0}  -e^{0}+e^{-i \cdot (\omega_1 + \omega_2) \cdot t})\geq 0
+$$
+
+Für $\forall a \in \mathbb{C}$ gilt: $a^0 = 1$
+
+$$
+- (e^{i \cdot (\omega_1+\omega_2) \cdot t}- 1  -1+e^{-i \cdot (\omega_1 + \omega_2) \cdot t})\geq 0
+$$
+
+Aufgrund des Distributivgesetzes, kann man das Minus auf alle Terme innerhalb der Klammer anwenden:
+
+$$
+ (-e^{i \cdot (\omega_1+\omega_2) \cdot t} + 1  +1-e^{-i \cdot (\omega_1 + \omega_2) \cdot t})\geq 0
+$$
+
+Aufgrund der Kommutativität der Addition, gilt:
+
+$$
+ (1 -e^{i \cdot (\omega_1+\omega_2) \cdot t} +1-e^{-i \cdot (\omega_1 + \omega_2) \cdot t})\geq 0
+$$
+
+$\omega_1$ und $\omega_2$ sind beide Element der reelen Zahlen $\mathbb{R}$, somit ist auch die Summe $\omega_1 + \omega_2$ Element der reelen Zahlen $\mathbb{R}$.\
+Der reele Teil von $e^{-a}$ liegt im Interval $[-1;1]$, wenn $a$ eine reele Zahl $\mathbb{R}$ ist ($a \in \mathbb{R}$).
+
+Also definiert man $k$ als eine beliebige reele Zahle im Interval $[-1;1]$:
+
+$$
+ (1 -k +1-k)\geq 0
+$$
+
+$(1-k)$ ist größer-gleich $0$, da $k$ maximal $1$ sein kann.
+Also ist der Term $(1 -k +1-k) \geq 0$.
+
+Somit haben wir herausgefunden, das das Vorzeichen von $p(t)$ dem Vorzeichen von $\frac{AB}{4}$ entspricht (es existieren auch Zeitpunkte, wo $p(t) = 0$ ist).
+
+Da $A$ und $B$ ungleich $0$ sein müssen, kann man folgende Tabelle aufstellen:
+
+$$
+\begin{array}{c|c|c}
+\text{Vorzeichen } A & \text{Vorzeichen } B & \text{Vorzeichen } p(t) \\ \hline
++ & + & +\\
++ & - & -\\
+- & + & - \\
+- & - & +\\
+
+\end{array}
+$$
+
+**Was sagt uns das jetzt über das Integral?**\
+Da unzählbar unendlich viele Stellen $(\aleph_1)$existieren, bei denen $p(t)$ ungleich $0$ ist (Auf einen Beweis wird hier verzichte.) und alle jene Stellen das selbe Vorzeichen haben, muss der Betrag des Integrals $\infty$ sein. Das Vorzeichen entspricht dabei dem Vorzeichen von $A\cdot B$.
+
+</ExpandableCallout>
+
+### Integral ohne Unendlich
 
 Da es häufig schwierig ist ein Integral von $-\infty$ bis $\infty$ zu berechnen, kann man zur Vereinfachung sehr große Grenzen nehmen,
 da dies zur Annäherung ausreicht.
@@ -98,10 +411,6 @@ Beispiel:\
 Sollte es sich im Gegensatz dazu, um eine Schwingung mit der Periodendauer $T_2=100$ handeln, würden die Grenzen zu klein sein, da nur ein sehr geringer Ausschnitt einer einzigen Periode betrachtet werden würde.
 
 </Callout>
-
-**Erklärung**
-
-**Wavecheck mit 1000**
 
 In diesem Beispiel nehmen wir als Grenzen mal $-1000$ und $1000$ an.
 
@@ -129,7 +438,7 @@ Die Lücke bei $T=4$ entsteht dadurch, dass dort eine Division durch $0$ stattfi
 <Callout type="info" emoji="📚">
   Falls du wissen möchtest, wie dieser Graph entstanden ist, kannst du dies im
   Anhang nachlesen: [Herleitung Integral für
-  Fourier-Transformation](../appendix/other/1-integral-derivation) an.
+  Fourier-Transformation](../appendix/other/integral-derivation) an.
 </Callout>
 
 ### Anwendung
@@ -170,7 +479,3 @@ minX={-0.2}
 />
 
 Mithilfe dieser Kurve kann man nun die Einzelnen Periodendauern bestimmen. Diese sind in lila eingezeichnet.
-
-### Bestimmung der Amplituden
-
-Das war jetzt allerdings nur die halbe Miete, da man die Amplituden ebenfalls bestimmen möchte.

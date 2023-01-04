@@ -192,7 +192,7 @@ export const MafsView: React.FC<MafsViewProps> = ({
 
       let x: number | undefined = elem!.props['x']
       let y: number | undefined = elem!.props['y']
-
+      
       let align: Alignment | undefined = elem!.props['align']
       let elem_width: number | undefined = elem!.props['width']
       let elem_height: number | undefined = elem!.props['height']
@@ -203,6 +203,7 @@ export const MafsView: React.FC<MafsViewProps> = ({
       if (y == undefined) {
         y = 0
       }
+      
       if (align == undefined) {
         align = 'c'
       }
