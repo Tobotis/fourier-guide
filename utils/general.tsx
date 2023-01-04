@@ -45,16 +45,14 @@ export function alignmentToRelativeDeviationFromCenter(
   }
 }
 
-
-
 export interface HTMLStyleObject {
   transform?: string
   width?: string
   height?: string
   display?: string
   verticalAlign?: string
-  
-  
+}
+
 export default function useOnScreen(ref: any) {
   const [isIntersecting, setIntersecting] = React.useState(false)
 
