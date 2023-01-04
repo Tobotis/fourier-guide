@@ -1,3 +1,5 @@
+import React from 'react'
+
 export function arraysEqual(a: Array<any>, b: Array<any>) {
   if (a === b) return true
   if (a == null || b == null) return false
@@ -14,4 +16,20 @@ export function arraysEqual(a: Array<any>, b: Array<any>) {
   return true
 }
 
+export default function useOnScreen(ref: any) {
+  const [isIntersecting, setIntersecting] = React.useState(false)
 
+  const observer = new IntersectionObserver(([entry]) =>
+    setIntersecting(entry.isIntersecting)
+  )
+
+  React.useEffect(() => {
+    observer.observe(ref.current)
+    // Remove the observer as soon as the component is unmounted
+    return () => {
+      observer.disconnect()
+    }
+  }, [])
+
+  return isIntersecting
+}
