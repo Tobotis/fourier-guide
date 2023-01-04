@@ -187,12 +187,16 @@ export const MafsView: React.FC<MafsViewProps> = ({
       return
     }
 
+    if (!nonSVGElements[0].length) {
+      nonSVGElements[0] = [nonSVGElements[0]]
+    }
+
     for (let i: number = 0; i < nonSVGElements[0].length; i++) {
       let elem: any = nonSVGElements[0][i]
 
       let x: number | undefined = elem!.props['x']
       let y: number | undefined = elem!.props['y']
-      
+
       let align: Alignment | undefined = elem!.props['align']
       let elem_width: number | undefined = elem!.props['width']
       let elem_height: number | undefined = elem!.props['height']
@@ -203,7 +207,7 @@ export const MafsView: React.FC<MafsViewProps> = ({
       if (y == undefined) {
         y = 0
       }
-      
+
       if (align == undefined) {
         align = 'c'
       }
@@ -226,7 +230,6 @@ export const MafsView: React.FC<MafsViewProps> = ({
       let style: HTMLStyleObject = {
         transform: `translate(${pxX}px, ${pxY}px) `,
       }
-
 
       // Only display the nonSVGElements if inside the viewport.
       // The check is intentionally very generous to prevent accidental removing of elements still in the viewport
