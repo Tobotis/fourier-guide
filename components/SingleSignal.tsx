@@ -33,7 +33,7 @@ const SingleSignal: React.FC = () => {
           </Text>
         </Mafs>
       }
-      text="Es handelt sich hierbei um ein einzelnes Signal, welches somit nur in einem Intervall von a bis b definiert sit. Man kann jedoch eine Periodizität erzwingen, indem man das einzelne Signal einfach wiederholt."
+      text="Es handelt sich hierbei um ein einzelnes Signal, welches somit nur in einem Intervall von a bis b Werte annimmt. Man kann jedoch eine Periodizität erzwingen, indem man das einzelne Signal einfach wiederholt."
     />
   )
 }

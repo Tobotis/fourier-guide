@@ -6,6 +6,15 @@ import QuestionAnswer, { Answer } from '../../components/QuestionAnswer.tsx'
 import { Callout } from 'nextra-theme-docs'
 import ComplexConjugates from '../../components/ComplexConjugates.tsx'
 import FrameText from '../../components/FrameText.tsx'
+import FrameMafs from '../../components/FrameMafs.tsx'
+import {
+  CartesianCoordinates,
+  Mafs,
+  FunctionGraph,
+  Text,
+  Point,
+  Line,
+} from '../../mafs/'
 
 import SingleSignal from '../../components/SingleSignal.tsx'
 import PeriodicSignal from '../../components/PeriodicSignal.tsx'
@@ -496,27 +505,42 @@ Man kann sich ausgibig Gedanken über die **Konvergenz** der **Fourier-Reihe** G
 
 ## Ausblick: Fourier-Transformation
 
-Mit der **Fourier-Transformation** lassen sich die obigen Ideen auch auf nicht periodische Phänomene ausweiten.
+Mit der **Fourier-Transformation** werden die obigen Ideen auch auf **nicht-periodische Phänomene** ausgeweitet.
 
-Es gibt zwar viele Phänomene, welche periodisches Verhalten aufweisen, jedoch gibt es auch solche, welche zunächst periodisch erscheinen, jedoch nach einer Zeit aufhören.
+Es gibt zwar viele Phänomene, welche periodisches Verhalten aufweisen, jedoch gibt es in der Realität häufig solche, welche nur in einem bestimmte Zeitintervall existieren, bzw. betrachtet werden.
 
-Also eine Funktion $f(t)$, welche für $-\infty<t< \infty$ definiert ist.
-Das könnte zum Beispiel ein kurzeitiger Ton sein.
+Also eine Funktion $f(t)$, welche nur für ein bestimmtes Intervall $[a,b]$ betrachetet wird und außerhalb dieses Intervalls $0$ ist.
+Zudem scheitert die **Fourier-Reihe**, wenn folgende Funktion analysiert werden soll:
+
+<FrameMafs>
+  <Mafs>
+    <CartesianCoordinates />
+    <FunctionGraph.OfX y={(x) => Math.sin(10 * x) * Math.exp(-1 * x ** 2)} />
+  </Mafs>
+</FrameMafs>
+
+Es könnte sich zum Beispiel ein kurzeitiger Ton handeln.
+
+Man könnte diese Problematik wie folgt umgehen:
 
 <SingleSignal />
 <PeriodicSignal />
 
+Die Technik der Periodisierung wird im Grunde auch bei der **Fourier-Transfomation** angewandt
+
 <QuestionAnswer>
   <>
-    Was könnte man tun, wenn das Intervall $[a,b]$ unbekannt ist, man jedoch
-    Werkzeuge für periodische Funktionen anwenden will?
+    Was könnte man tun um das Signal unabhängig von $a$ und $b$ zu
+    periodisieren?
   </>
-  <Answer> Eine sehr kleine Periodendauer wählen. </Answer>
+  <Answer> Eine sehr kleine Periodendauer $T$ wählen. </Answer>
   <Answer correct={true}> Eine sehr große Periodendauer wählen. </Answer>
   <Answer> Die Periodendauer $T=1$ wählen. </Answer>
 </QuestionAnswer>
 
 Es liegt zugrunde, dass man die **Periodendauer** gegen unendlich gehen lässt ($T \to \infty$).
-Somit würde sich das _nicht-periodische_ Phänome) in _unendlicher_ Zeit nur ein einmal wiederholen.
+Somit würde sich das _nicht-periodische_ Phänomen quasi in _unendlicher_ Zeit nur ein einmal wiederholen.
 Eine Idee wäre also, die **Fourier-Reihe** zu verallgemeinern, indem man einfach die Periodendauer unendlich groß macht und dadurch auch auf nicht-periodeische Phänomene anwenden kann.
-Dies ist jedoch nicht ganz so einfach möglich. Eine Ausführung befindet sich im nächsten Abschnitt.
+Es stellt sich heraus, dass sich damit auch Signale analysieren lassen, welche über keine oszilierenden (schwingenden) Anteile verfügen.
+
+Dies ist jedoch nicht ganz so einfach möglich. Eine Umsetzung dieser Idee befindet sich im nächsten Abschnitt.
