@@ -1,8 +1,14 @@
+import { Alignment } from '../../utils/general'
+import { ScaleContextShape } from './ScaleContext'
+
 export interface NonSVGProps {
   children?: Array<React.ReactNode> | React.ReactNode
   x?: number
   y?: number
   nonsvg?: boolean
+  width?: number
+  height?: number
+  align?: Alignment
 }
 
 export interface NonSVGWrapperProps {

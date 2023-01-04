@@ -107,7 +107,7 @@ const WaveCheck: React.FC<props> = ({
             </NonSVGWrapper>
           </Mafs>
         </FrameMafs>
-        <div className="flex justify-center">
+        <div className="flex justify-between">
           <div className="flex align-middle">
             <p className="px-2 flex text-center">
               Periodendauer von <p className="text-cyan-400 pl-1">g(t)</p>

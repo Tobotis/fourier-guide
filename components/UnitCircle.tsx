@@ -32,9 +32,13 @@ export default function UnitCircle() {
         ]}
       />
       <Circle center={[0, 0]} radius={zoom} />
-      <FunctionGraph.OfX
-        quality="high"
-        y={(x) => (x <= 0 ? 0 : -zoom * Math.sin(x - Math.PI * time * speed))}
+      <FunctionGraph.Parametric
+        xy={(t) => [t, -zoom * Math.sin(t - Math.PI * time * speed)]}
+        t={[0, 10]}
+      />
+      <FunctionGraph.Parametric
+        xy={(t) => [zoom * Math.cos(t - Math.PI * time * speed), t]}
+        t={[-10, 0]}
       />
       <Line.Segment
         point1={[
