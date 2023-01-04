@@ -423,12 +423,14 @@ $$
 Führt man diese Auswertung nun für alle Periodendauern durch und stellt diese in einem Diagramm dar, erhält man einen Graphen, der einem die "Richtigkeit" der Periodendauer angibt.
 
 <ProductIntegral
-  lowerBound={-1000}
-  upperBound={1000}
+  lowerBound={-6}
+  upperBound={6}
+  minX={-10}
   maxX={10}
   omegaA={4}
   amplitudeA={1}
   amplitudeB={1}
+
 />
 
 Dieser Graph ist allerdings nur sehr schwer zu bestimmen, da man das Integral für jeden Wert neu bestimmen muss und der Ausdruck sehr rechenaufwändig ist. Dies ist dir vielleicht bereits beim Laden der Seite aufgefallen, da das Erstellen des Graphens bei langsameren Geräten sehr viel Zeit in Anspruch nimmt.

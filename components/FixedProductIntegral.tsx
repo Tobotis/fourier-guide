@@ -41,7 +41,7 @@ function integralValue(
     )
   }
 
-  return prod * (boundValue(upperBound) - boundValue(lowerBound))
+  return Math.abs(prod * (boundValue(upperBound) - boundValue(lowerBound)))
 }
 
 const ProductIntegral: React.FC<ProductIntegralProps> = ({
@@ -55,7 +55,11 @@ const ProductIntegral: React.FC<ProductIntegralProps> = ({
 }) => {
   return (
     <FrameMafs>
-      <Mafs xAxisExtent={[minX, maxX]} yAxisExtent={[-1, 15]} pan={false}>
+      <Mafs
+        xAxisExtent={[minX, maxX]}
+        yAxisExtent={[-1, (upperBound - lowerBound) / 2 + 1]}
+        pan={false}
+      >
         <CartesianCoordinates />
         <FunctionGraph.OfX
           quality="high"
@@ -70,11 +74,11 @@ const ProductIntegral: React.FC<ProductIntegralProps> = ({
             )
           }
         />
-        <FunctionGraph.OfX
+        {/*<FunctionGraph.OfX
           quality="high"
           color="purple"
           y={(x) => Math.abs(1 / (x - 4))}
-        />
+        />*/}
       </Mafs>
     </FrameMafs>
   )
