@@ -13,6 +13,7 @@ import {
   Vector2,
   Vector,
 } from '../mafs'
+import { NonSVG, NonSVGWrapper } from '../mafs/display/NonSVGElements'
 
 type props = {
   children: any
@@ -92,6 +93,18 @@ const WaveCheck: React.FC<props> = ({
                 <></>
               )}
             </>
+            <NonSVGWrapper>
+              <NonSVG.MathText
+                text={
+                  isClose.Relative(periodendauer, 4, 0.03)
+                    ? 'A \\to \\infty'
+                    : 'A \\approx 0'
+                }
+                x={0}
+                y={0.75}
+                size={25}
+              />
+            </NonSVGWrapper>
           </Mafs>
         </FrameMafs>
         <div className="flex justify-center">
@@ -136,11 +149,6 @@ const WaveCheck: React.FC<props> = ({
             />
           </div>
         </div>
-        <p>
-          {isClose.Relative(periodendauer, 4, 0.03)
-            ? '$A \\to infty$'
-            : '$A \\approx 0$'}
-        </p>
       </>
     </div>
   )
