@@ -75,17 +75,33 @@ Der Frequenzraum könnte beispielsweise so aussehen:
     <Line.Segment style="dashed" point1={[5, 0]} point2={[5, 1]} />
     <Point x={-5} y={1} />
     <Line.Segment style="dashed" point1={[-5, 0]} point2={[-5, 1]} />
+    <NonSVGWrapper>
+      <NonSVG.MathText text="|c_1| =  1.2" x={1} y={1.5} size={15} />
+      <NonSVG.MathText text="|c_{-1}| =  1.2" x={-1} y={1.5} size={15} />
+      <NonSVG.MathText text="|c_2| = 2" x={2} y={2.3} size={15} />
+      <NonSVG.MathText text="|c_{-2}| = 2" x={-2} y={2.3} size={15} />
+      <NonSVG.MathText text="|c_3| = 0" x={3} y={0.3} size={15} />
+      <NonSVG.MathText text="|c_{-3}| = 0" x={-3} y={0.3} size={15} />
+      <NonSVG.MathText text="|c_4| = 3" x={4} y={3.3} size={15} />
+      <NonSVG.MathText text="|c_{-4}| = 3" x={-4} y={3.3} size={15} />
+      <NonSVG.MathText text="|c_{-5}| = 1" x={-5} y={1.3} size={15} />
+      <NonSVG.MathText text="|c_{5}| = 1" x={5} y={1.3} size={15} />
+      <NonSVG.MathText text="|c_{0}| = 0.2" x={0} y={0.5} size={15} />
+      <NonSVG.MathText text="\frac{5}{T}" x={5} y={-0.3} size={15} />
+      <NonSVG.MathText text="\frac{-5}{T}" x={-5} y={-0.3} size={15} />
+      <NonSVG.MathText text="\frac{4}{T}" x={4} y={-0.3} size={15} />
+      <NonSVG.MathText text="\frac{-4}{T}" x={-4} y={-0.3} size={15} />
+      <NonSVG.MathText text="\frac{-3}{T}" x={-3} y={-0.3} size={15} />
+      <NonSVG.MathText text="\frac{3}{T}" x={3} y={-0.3} size={15} />
+      <NonSVG.MathText text="\frac{2}{T}" x={2} y={-0.3} size={15} />
+      <NonSVG.MathText text="\frac{-2}{T}" x={-2} y={-0.3} size={15} />
+      <NonSVG.MathText text="\frac{-1}{T}" x={-1} y={-0.3} size={15} />
+      <NonSVG.MathText text="\frac{1}{T}" x={1} y={-0.3} size={15} />
+    </NonSVGWrapper>
   </Mafs>
 </FrameMafs>
 
-Diese Darstellung wird auch **Frequenzspektrum** genannt.
-
-<QuestionAnswer>
-  <>Welche Eigenschaft ist bei obiger **Fourier-Reihe** erfüllt?</>
-  <Answer correct={true}>Für $c_k$ mit $k<0$ gilt $c_k = \overline{c}_{-k}$</Answer>
-  <Answer> Es gilt $n=4$  </Answer>
-</QuestionAnswer>
-
+Diese Darstellung wird auch **Frequenzspektrum** genannt. Interessant ist hierbei die Symmetrie, welche aus der Bedingung der **komplexen konjugierten Zahlen** resultiert ($c_{-k} = \overline{c}_k$ für $k\leq 0$)
 Im **Frequenzraum** lassen sich also die Beiträge der verschiedenen Frequenzen betrachten. Wichtig ist, dass der Abstand auf der horizontalen Achse jeweils $\frac{1}{T}$ entspricht.
 Im **Zeitraum**, was der Darstellung des Signals in Abhängigkeit der Zeit bedeutet, folgt:
 
@@ -228,9 +244,30 @@ $$
 \hat{f}(\xi) = \int_{-\infty}^{\infty} e^{- 2 \pi i \xi t} f(t)  dt
 $$
 
-Es ist womöglich noch nicht ganz klar, was
+Es ist womöglich noch nicht ganz klar, wie sich $\hat{f}(\xi)$ verhält. Der Zusammenhang für die sogenannte **Fourier-Transfomation** von $f(t)$: $\hat{f}(\xi)$, wurde zwar algebraisch aus dem Zusammenhang der **Fourier-Koeffizienten** hergeleitet, durch das Entfernen
+des Vorfaktors $\frac{1}{T}$, geht womöglich die Intuition etwas verloren. Die Funktion $\hat{f}(\xi)$ gibt dabei jedoch die Ausoprä
 
-## Übereinstimmung prüfen
+## Beispielanwendung
+
+Im Folgenden soll die **Fourier-Transfomation** angewendet werden:
+
+$$
+\hat{f}(\xi) = \int_{-\infty}^{\infty} e^{- 2 \pi i \xi t} f(t)  dt
+$$
+
+Dabei soll zu Demonstrationszwecken
+
+$$
+f(t) =
+\begin{cases}
+\sin(t) & \text{wenn } -6<t<6\\
+0 & \text{sonst }
+\end{cases}
+$$
+
+Es handelt sich hierbei um ein zwar nicht-periodisches Signal, welches jedoch im definierten Bereich einer $\sin$-Funktion entspricht.
+
+---
 
 Für die beiden Funktionen gilt:
 
