@@ -1,0 +1,391 @@
+import { Callout } from 'nextra-theme-docs'
+import InteractiveSin from '../../components/InteractiveSin.tsx'
+import QuestionAnswer, { Answer } from '../../components/QuestionAnswer.tsx'
+import SampleAddition from '../../components/SampleAddition'
+import WaveSummation from '../../components/WaveSummation'
+import UnitCircle from '../../components/UnitCircle'
+import FrameMafs from '../../components/FrameMafs'
+import ComplexExponentialsSum from '../../components/ComplexExponentialsSum.tsx'
+
+# Periodische Funktionen
+
+Auf dem Weg zur [**Fourier-Transformation**](./3-fourier-transform) lassen sich zunächst einige Stationen, wie z.B. die [**Fourier-Reihe**](./2-fourier-series), betrachten. Grundlegend lässt sich mit den mathematischen Funktionen Sinus und Kosinus beginnen.
+
+## Periodizität von Sinus und Kosinus
+
+Eine grundlegende Verbindung zwischen der Mathematik und **periodischen Phänomenen**, sind die periodischen Funktionen $\sin$ und $\cos$.  
+Nun kann man sich fragen, warum die Funktionen $\sin$ und $\cos$ überhaupt periodisch sind?  
+Die Periodizität von $\sin$ und $\cos$ basiert grundlegend auf der Rotationssymmetrie eines Kreises.  
+Bewegt man sich auf dem Rand eines Kreises, so kommt man nach einer Weile wieder am Punkt an, wo man gestartet ist.  
+Wenn man nun einen solchen Kreis mit dem Radius $r = 1$ betrachtet, so folgt für den Umfang dieses Kreises $U=2 \pi$. Daraus folgt, dass $\sin$ und $\cos$ periodisch mit der Periodenlänge $2\pi$ sind. Es folgt also:
+
+$$
+\sin(t) = \sin(t+2\pi) \qquad \text{und}\qquad \cos(t) = \cos(t+2\pi)
+$$
+
+<FrameMafs>
+  <UnitCircle />
+</FrameMafs>
+
+<Callout>
+  Die Darstellung von $\cos$ in vertikaler Richtung, soll lediglich den
+  Zusammenhang zum Einheitskreis verdeutlichen.{' '}
+</Callout>
+
+Es kann somit eine sogenannte **harmonische Schwingung** erzeugt werden. Die ausführliche, trigonometrische Definition der Funktionen $\sin$ und $\cos$ soll hierbei erspart bleiben.
+
+<Callout type="info" emoji="📚">
+  [Wikipedia: Sinus und
+  Kosinus](https://de.wikipedia.org/wiki/Sinus_und_Kosinus)
+</Callout>
+
+## Kompliziertes Verhalten aus einfachen Funktionen
+
+### Parametervariation
+
+Es gibt verschiedene Möglichkeiten die Sinus- und Kosinusterme zu verändern, welche wahrscheinlich aus der Schulmathematik bekannt sein sollten:
+
+$$
+f(t) = A \sin(\omega t + \Delta \varphi) \qquad \text{und} \qquad f(t) = A \cos(\omega t + \Delta \varphi)
+$$
+
+Dabei gilt:
+
+<br/>
+<div align="center">
+
+| Parameter        | Bedeutung                                                |
+| ---------------- | -------------------------------------------------------- |
+| $\Delta \varphi$ | Phasenverschiebung                                       |
+| $\omega$         | Kreisfrequenz (Bogenmaß pro Zeit) mit $\omega = 2 \pi f$ |
+| $A$              | Amplitude                                                |
+
+</div>
+____
+Im Folgenden lassen sich die obigen Parameter variieren:
+
+<InteractiveSin />
+
+<QuestionAnswer>
+  <>Für welche Phasenverschiebung $\Delta \varphi$ gilt $A \cdot \sin(\omega t + \Delta \varphi) = A \cdot \cos(\omega t)$?</>
+  <Answer>$\Delta \varphi = -\frac{\pi}{2}$</Answer>
+  <Answer>$\Delta \varphi = \pi$</Answer>
+  <Answer correct={true}>$\Delta \varphi = \frac{\pi}{2}$</Answer>
+  <Answer>$\Delta \varphi = - \pi$ </Answer>
+  <Answer>Es existiert kein $ \Delta \varphi$, welches die gewünschte Gleichheit erzeugt.</Answer>
+</QuestionAnswer>
+Die $\sin$ und $\cos$ Funktionen lassen sich also umfangreich modifizieren.
+
+Im Folgenden wird die Form
+
+$$
+\sin (2 \pi f t + \Delta \varphi) \qquad \text{ und }  \qquad \cos (2 \pi f t + \Delta \varphi)
+$$
+
+verwendet. Der Vorteil daran ist, dass man die Frequenz $f$ direkt ablesen und somit auf die Anzahl an Perioden pro Zeiteinheit schließen kann.
+Zudem ist relevant, dass $f=\frac{1}{T}$ gilt, wobei $T$ der Zeit für eine Periode entspricht (Periodendauer).
+
+### Kombination von trigonometrischen Funktionen
+
+Um nun kompliziertere periodische Vorgänge mithilfe von diesen periodischen Funktionen zu modellieren, erscheint es intuitiv, mehrere periodische Funktionen zu kombinieren.  
+Der erste Gedanke bei einer Kombination von mehreren Funktionswerten, könnte z.B. eine einfache **Addition** sein. Es lassen sich also beispielsweise mehrere $\sin$-Funktionen addieren.  
+Zum Beispiel:
+
+$$
+g(t) = \sin(2 \pi \cdot t) + 2 \sin (2 \pi \cdot 2t)+  \sin(2 \pi \cdot 9t)
+$$
+
+<SampleAddition />
+
+<QuestionAnswer>
+  <>Welche Frequenz hat die resultierende periodische Funktion?</>
+  <Answer>$f= 2 Hz$</Answer>
+  <Answer correct={true}>$f=1 Hz$</Answer>
+  <Answer>$f=9 Hz$</Answer>
+</QuestionAnswer>
+
+---
+
+Es macht Sinn, dass die Frequenz der resultierende Periodische Funktion genau dem größten gemeinsamen Teiler der Ausgangsfrequenzen entspricht, da sich der periodische _Gesamtvorgang_ erst wiederholen kann, wenn alle periodischen _Einzelbestandteile_ sich gleichzeitig wiederholen.
+
+<QuestionAnswer>
+  <>
+    Welche Grundfrequenz hat die resultierende periodische Funktion, wenn die
+    Teilfrequenzen: $4Hz$,$6Hz$,$8Hz$ sind?
+  </>
+  <Answer correct={true}>$f=2 Hz$</Answer>
+  <Answer>$f=3 Hz$</Answer>
+  <Answer>$f=4 Hz$</Answer>
+</QuestionAnswer>
+
+Zusätzlich kann auch noch die Phasenverschiebung der einzelnen Terme modifiziert
+werden, welche jedoch in obigem Beispiel erspart bleibt.
+
+---
+
+Die verschiedenen Schwingungsbeiträge haben somit Frequenzen, welche Vielfache einer bestimmten **Grundfrequenz** $f_0$ sind.
+Diese **Grundfrequenz** ist die Frequenz des komplizierteren periodischen Phänomens, welches aus der additiven Verknüpfung der verschiedenen
+Schwingungsbeiträge resultiert.
+
+#### Einführung der Summenschreibweise
+
+Es lässt sich eine kompaktere Schreibweise für die Addition der verschiedenen Sinus-Terme formulieren:
+
+$$
+\begin{equation}
+f(t) = \frac{A_0}{2} + \sum_{k=1}^n A_k \cdot \sin(2 \pi k  f_0  \cdot t+ \Delta \varphi_k)
+\end{equation}
+$$
+
+wobei $A_k$ die Amplitude und $\Delta \varphi_k$ die Phasenverschiebung für den $k$-ten Sinus-Term beschreibt.
+
+<Callout>
+  Das Summenzeichen $\sum_{(k = 1)}^n g(k)$ bedeutet, dass der folgende Term
+  $g(k)$, mit allen Werten für $k$ von $1$ bis $n$ aufsummiert wird. Somit gilt
+  beispielsweise (mit $g(k) = k$): $$ \sum_
+  {(k = 1)}^n k = 1 + 2 + ... + n $$
+</Callout>
+
+Wichtig dabei ist, dass die verschiedenen Frequenzen $k \cdot f_0$ ganzzahlige Vielfache einer **Grundfrequenz** $f_0$ sind. Die Namesgebung der Funktion ist möglicherweise etwas ungünstig, wenn es um Frequenzen geht, welche ebenfalls mit $f$ ausgedrückt werden.
+
+Zusätzlich wird häufig der Term $\frac{A_0}{2}$ dazu addiert. Durch diesen kann eine Verschiebung entlang der $y$-Achse hervorgerufen werden.
+Dies ist relevant, wenn beispielsweise ein periodisches Phänomen modelliert werden soll, dessen durchschnittliche Werte oberhalb der $x$-Achse liegen.
+
+<QuestionAnswer>
+  <>
+    Wie müssten die Parameter $A_k$ der Summendarstellung gewählt werden, um die
+    oben dargestellte periodische Funktion ( $g(t) = \sin(2 \pi \cdot t) + 2
+    \sin (2 \pi \cdot 2t)+ \sin(2 \pi \cdot 9t)$ ) darzustellen?
+  </>
+  <Answer>$A_k = 0$, außer $A_1 = 1, A_2 = 1,A_9 = 1$</Answer>
+  <Answer correct={true}>$A_k = 0$, außer $A_1 = 1, A_2 = 2,A_9 = 1$</Answer>
+  <Answer>alle $A_k = 1$</Answer>
+</QuestionAnswer>
+
+Überzeuge dich davon, dass jede beliebige Summe von $\sin$-Termen durch $(1)$ ausgedrückt werden kann.
+
+### Winkelsummenidentität
+
+Es gibt nun verschiedene praktischere und üblichere Wege den **Summenausdruck** $(1)$ zu schreiben.
+Um die Summe $2 \pi k  f_0 \cdot t+ \Delta \varphi_k$ innerhalb des $\sin$ aufzulösen, lässt sich ein Zusammenhang für **Winkelsummen** anwenden:
+
+$$
+\sin(\alpha+ \beta) = \sin(\alpha)\cos(\beta) + \cos(\alpha)\sin(\beta)
+$$
+
+Eine ausführliche Herleitung für diesen Zusammenhang ist bei [**Sinus-Winkelsummenidentität**](../appendix/trigonometric-identities/1-sine-angle-sum)
+aufgeführt. Wenn man also diesen Zusammenhang auf einen der obigen **Sinus-Terme**
+anwendet und ausmultipliziert folgt:
+
+$$
+\begin{equation}
+\begin{split}
+A_k  \sin(2 \pi k f_0 t + \Delta \varphi_k) &= A_k (\sin(2 \pi k f_0 t) \cos(\Delta \varphi_k) + \sin(\Delta \varphi_k)\cos(2 \pi k f_0 t)) \\
+&= A_k \sin(2 \pi k f_0 t) \cos(\Delta \varphi_k) + A_k \sin(\Delta \varphi_k)\cos(2 \pi k f_0 t)
+\end{split}
+\end{equation}
+$$
+
+Um das Ganze etwas zu vereinfachen, soll die Summe in die Form
+
+$$
+\begin{equation}
+f(t) = \frac{a_0}{2}+ \sum_{k=1}^n a_k \cdot \cos(2 \pi k f_0 t ) + b_k \cdot \sin(2 \pi k f_0 t)
+\end{equation}
+$$
+
+umgeschrieben werden. Es gilt $a_0 = A_0$.
+
+<QuestionAnswer>
+  <>
+    Für welche $a_k$ und $b_k$ ist sind die Ausdrücke $(1)$ und $(3)$ gleich? (Nutze $(2)$)
+  </>
+  <Answer>$a_k = A_k \cdot \frac{\sin(\Delta \varphi_k)}{\cos(\Delta \varphi_k)}$ und $b_k = A_k \cdot \frac{\cos(\Delta \varphi_k)}{\sin(\Delta \varphi_k)}$</Answer>
+  <Answer correct={true}>$a_k = A_k \cdot \sin(\Delta \varphi_k)$ und $b_k = A_k \cdot \cos(\Delta \varphi_k)$</Answer>
+  <Answer >$a_k = A_k \cdot \cos(\Delta \varphi_k)$ und $b_k = A_k \cdot \sin(\Delta \varphi_k)$</Answer>
+</QuestionAnswer>
+
+Die Darstellungen $(1)$ und $(3)$ lassen sich also problemlos ineinander überführen, ohne Information über die Phasenverschiebung zu verlieren oder Information hinzuzufügen. Es wird ausgenutzt, dass $\sin (\Delta \varphi_k)$ und $\cos (\Delta \varphi_k)$ **konstant** sind.
+Die Frage, warum Darstellung $(3)$ nützlich ist, wird jedoch erst im folgenden Abschnitt klar. Die Darstellung $(3)$ ist ein Zwischenschritt für das Umformen in eine noch praktikablere Darstellung: Die Darstellung mit **komplexen Exponentialfunktionen**.
+
+## Darstellung mit komplexen Exponentialfunktionen
+
+Man sollte sich [**komplexe Zahlen**](../appendix/complex-numbers/1-complex-plane) und den [**Zusammenhang**](../appendix/complex-numbers/2-complex-exponentials)
+
+$$
+\begin{equation}
+e^{x i} = \cos (x) + i \sin (x)
+\end{equation}
+$$
+
+plausibel machen.
+
+---
+
+Der bequemste und häufigste Weg um die Summe $(1)$ bzw. $(3)$ auszudrücken ist jedoch durch **komplexe Exponentialfunktion**.
+Das Ziel ist also, $\sin$ und $\cos$ mithilfe von $(4)$ in **komplexen Exponentialfunktionen** auszudrücken.
+
+### Sinus mit komplexen Exponentialfunktionen
+
+Für die folgende Frage ist es nützlich die Antwortmöglichkeiten auf einem Blatt Papier auszuprobieren.
+
+<QuestionAnswer>
+  <>
+    Wie kann $\sin (x)$ mithilfe von komplexen Exponentialfunktionen ausgedrückt werden?
+  </>
+  <Answer>$\sin (x) = \frac{e^{xi}}{i}$</Answer>
+  <Answer>$\sin (x) = \frac{e^{xi}-e^{-xi}}{2}$</Answer>
+  <Answer correct={true}>$\sin (x) = \frac{e^{xi}-e^{-xi}}{2i}$</Answer>
+  <Answer>$\sin (x) = \frac{e^{xi}+e^{-xi}}{2i}$</Answer>
+</QuestionAnswer>
+
+---
+
+Um $\sin (x)$ mit komplexen Exponentialfunktionen auszudrücken, macht man sich die **Symmetrien** der **trigonometrischen Funktionen** zu Nutze.
+
+$$
+\sin (x) = - \sin (-x)\qquad  \text{ und } \qquad \cos (x) = \cos(-x)
+$$
+
+<Callout type="info" emoji="📚">
+  Nachlesen zur Symmetrie von $\sin$ und $\cos$: [Wikipedia: Sinus und Kosinus
+  (Definition am
+  Einheitskreis)](https://de.wikipedia.org/wiki/Sinus_und_Kosinus#Definition_am_Einheitskreis)
+</Callout>
+
+Wenn man also nur $\sin$ alleine mithilfe von $e^{xi}$ ausdrücken will, müsste man den $\cos$-Term loswerden. Wenn man den $\cos$-Term rauskürzen will, könnte man den Term $\cos (x) - \cos(-x) = 0$ konstruieren.
+
+Dies erfolgt über:
+
+$$
+e^{xi}-e^{-xi} = \cos(x)+i \sin(x) - \cos (-x) - i \sin (-x) = 2i \sin (x)
+$$
+
+Nun fehlt nur noch das Rauskürzen des Faktors $2i$.
+
+$$
+\begin{equation}
+\frac{e^{xi}-e^{-xi}}{2i} = \sin (x)
+\end{equation}
+$$
+
+### Kosinus mit komplexen Exponentialfunktionen
+
+Es lässt sich analog für $\cos$ verfahren.
+
+<QuestionAnswer>
+  <>
+    Wie kann $\cos (x)$ mithilfe von komplexen Exponentialfunktionen ausgedrückt werden?
+  </>
+  <Answer correct={true}>$\cos  (x) = \frac{e^{xi}+e^{-xi}}{2}$</Answer>
+  <Answer>$\cos (x) = \frac{e^{xi}+e^{-xi}}{i}$</Answer>
+  <Answer>$\cos  (x) = \frac{e^{xi}-e^{-xi}}{2}$</Answer>
+  <Answer>$\cos (x) = \frac{e^{xi}+e^{-xi}}{2i}$</Answer>
+</QuestionAnswer>
+
+---
+
+Um $\cos (x)$ mit komplexen Exponentialfunktionen auszudrücken, versucht man analog zum vorherigen Abschnitt, $\sin$ rauszukürzen.
+Wenn man also $\sin$ rauskürzen will, könnte man den Term $\sin (x) + \sin(-x) = 0$ konstruieren:
+
+$$
+e^{xi}+e^{-xi} = \cos(x)+i \sin(x) + \cos (-x) + i \sin (-x) = 2 \cos (x)
+$$
+
+Nun fehlt nur noch das Rauskürzen des Faktors $2$.
+
+$$
+\begin{equation}
+\frac{e^{xi}+e^{-xi}}{2} = \cos (x)
+\end{equation}
+$$
+
+### Ausdrücken der Summe mit komplexen Exponentialfunktionen
+
+Mithilfe der obigen Übersetzung, kann nun die vorliegende Summe $(3)$:
+
+$$
+f(t) = \frac{a_0}{2} + \sum_{k=1}^n a_k \cdot \cos(2 \pi k f_0 t ) + b_k \cdot \sin(2 \pi k f_0 t)
+$$
+
+in komplexen Exponentialfunktionen ausgedrückt werden. Man sollte sich nicht vom Aussehen dieses Zusammenhangs abschrecken lassen. Mit einigen algebraischen Umformungsschritten folgt:
+
+$$
+\begin{equation}
+\begin{split}
+f(t) &= \frac{a_0}{2}+\sum_{k=1}^n a_k \cdot \cos(2 \pi k f_0 t ) + b_k \cdot \sin(2 \pi k f_0 t) \qquad | \text{ mit $(5)$ und $(6)$} \\
+&= \frac{a_0}{2}+ \sum_{k=1}^n a_k \cdot \frac{e^{2 \pi i k f_0 t }+e^{-2 \pi i k  f_0 t }}{2}+ b_k \cdot \frac{e^{2 \pi i k f_0 t}-e^{-2 \pi i k f_0 t}}{2i}\\
+&=\frac{a_0}{2}+ \sum_{k=1}^n \frac{a_k}{2} e^{2 \pi i k f_0 t }+\frac{b_k}{2i} e^{2 \pi i k f_0 t}+\frac{a_k}{2} e^{-2 \pi i k f_0 t }- \frac{b_k}{2i} e^{-2 \pi i k f_0 t}\\
+&=\frac{a_0}{2}+ \sum_{k=1}^n \frac{a_k}{2} e^{2 \pi i k f_0 t }+\frac{b_k \cdot i}{2i \cdot i} e^{2 \pi i k f_0 t}+\frac{a_k}{2} e^{-2 \pi i k f_0 t }- \frac{b_k \cdot i}{2i \cdot i} e^{-2 \pi i k f_0 t}\\
+&=\frac{a_0}{2}+ \sum_{k=1}^n \left(\frac{a_k-b_ki}{2}\right) e^{2 \pi i k f_0 t }+\left(\frac{a_k+b_k i}{2}\right) e^{-2 \pi i k f_0 t }\\
+&=\frac{a_0}{2}+ \sum_{k=1}^n \left(\frac{a_k-b_ki}{2}\right) e^{2 \pi i k f_0 t }+ \sum_{k=1}^n \left(\frac{a_k+b_k i}{2}\right) e^{-2 \pi i k f_0 t }\\
+\end{split}
+\end{equation}
+$$
+
+<Callout>
+  Eine Summe $\sum_{(k = 1)}^n a+b$ lässt sich aufgrund der Kommutativität und
+  Assoziativität der Addition in $\sum_{(k = 1)}^n a + \sum_{(k = 1)}^n b$
+  aufspalten
+</Callout>
+
+Bei den Koeffizienten $\frac{1}{2}(a_k-bi)$ und $\frac{1}{2}(a_k+b_ki)$ handelt es sich also um komplexe Zahlen. Diese haben jedoch eine interessante Eigenschaft. Die Zahlen sind gleich, bis auf das Vorzeichen des **Imaginärteils**.
+
+Sei $z = a+bi$. Dann wird eine komplexe Zahl $w = a-bi$ als **konjugiert komplexe Zahl** von $z$ bezeichnet. Die **konjugier komplexe Zahl** zu einer komplexen Zahl $z$ wird im Folgenden als $\overline{z}$ geschrieben.
+
+Interessant ist, dass für die Addition von **konjugiert komplexen Zahlen** folgt:
+
+$$
+z+\overline{z} = a+bi+a-bi = 2a
+$$
+
+Das Ergebnis ist also eine **reelle Zahl**. Dies macht auch in Bezug auf den Summenausdruck Sinn $(7)$, da es zunächst keine komplexen Anteile im Ergebnis geben soll.
+
+Man definiere also $c_k = \frac{1}{2}(a_k-bi)$, woraus $\overline{c}_k = \frac{1}{2}(a_k+b_ki)$ folgt.
+
+$$
+\begin{equation}
+\begin{split}
+f(t) &=\frac{a_0}{2}+ \sum_{k=1}^n c_k e^{2 \pi i k f_0 t }+ \sum_{k=1}^n \overline{c}_k e^{-2 \pi i k f_0 t }\\
+&\overset{*}{=} \frac{a_0}{2}+ \sum_{k=1}^n c_k e^{2 \pi i k f_0 t }+ \sum_{k=-n}^{-1} \overline{c}_{-k} e^{2 \pi i k f_0 t }\\
+&\overset{**}{=} \sum_{k=-n}^n c_k e^{2 \pi i k f_0 t }
+\end{split}
+\end{equation}
+$$
+
+$*$ Das negative Vorzeichen im Exponenten des Terms $e^{- 2 \pi i k f_0 t }$ lässt sich ausnutzen, um die Summe _umzukehren_. Das bedeutet, dass das Vorzeichen der Zählvariable (hier $k$) negiert wird. Dadurch lässt sich das negative Vorzeichen im Exponenten entfernen. Die Summe zählt nun von $-n$ bis $-1$. Die Reihenfolge der Terme in der Summe ist aufgrund der Kommutativität der Addition irrelevant.
+
+$**$ Für diesen Schritt müssen die Koeffizienten $c_k$ neu definiert werden. Zunächst galt $c_k = \frac{1}{2} (a_k - b_k i)$. Für $k <0$ muss $c_k = \overline{c}_{-k}$ (**konjugiert komplexe Zahl**). Außerdem wurde $k=0$ mit in die Summe eingebunden.
+Dafür gab es zunächst noch keine Definition. Da der zugehörige Term der komplexen Exponentialfunktion $e^{2 \pi i \cdot 0 \cdot f_0 t} = 1$ folgt, dass $c_0$ die gleichen Eigenschaften hat wie der Term $\frac{a_0}{2}$. Man setze also $c_0 = \frac{a_0}{2}$.
+
+Zusammenfassend:
+
+$$
+c_k =
+\begin{cases}
+\frac{1}{2}(a_k - b_k i) &  \text{ wenn } k > 0 \\
+\frac{a_0}{2} & \text{ wenn } k = 0 \\
+\overline{c}_{-k} & \text{ wenn } k < 0\\
+\end{cases}
+$$
+
+Die ursprüngliche Summe von $\sin$-Termen, mit den ganzzahligen Vielfachen einer **Grundfrequenz** $f_0$, lässt sich also mit **komplexen Exponentialfunktionen** als:
+
+$$
+f(t) = \sum_{k=-n}^n c_k e^{2 \pi i k f_0 t }
+$$
+
+schreiben. Warum diese Schreibweise praktischer ist, wird beispielsweise durch die Anzahl der Parameter deutlich. Es gibt lediglich die verschiedenen Koeffizienten $c_k$, welche die gesamte Information über die verschiedenen Schwingungsbeiträge beinhalten.
+Das liegt daran, dass es sich um komplexe Zahlen handelt, und somit die Information über die **Phasenverschiebung** und über die **Amplitude** der Schwingung mit im Koeffizienten $c_k$ enthalten ist.
+
+## Ausblick: Fourier-Reihen
+
+Die Schreibweise $f(t) = ...$, welche in den obigen Abschnitten benutzt wurde ist fraglich.
+Kann denn jedes periodische Signal einer **Grundfrequenz** $f_0$ überhaupt mit den grundlegenden _Baublöcken_ (trigonometrischen Funktionen) ausgedrückt werden?
+Gilt für alle Funktionen $f(t)$, welche periodisches Verhalten aufweisen, also $f(t) = f(t + \frac{1}{f_0})$, dass man:
+
+$$
+f(t) = \sum_{k=-n}^n c_k e^{2 \pi i k f_0 t }
+$$
+
+schreiben kann? Und wie könnte man dann auf die Koeffizienten $c_k$ schließen, wenn $f(t)$ und die Periodendauer bekannt sind?

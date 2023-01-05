@@ -1,0 +1,59 @@
+---
+title: Fourier... ? Eine Einführung
+---
+
+import { Callout } from 'nextra-theme-docs'
+import SingleSignal from '../components/SingleSignal.tsx'
+import PeriodicSignal from '../components/PeriodicSignal.tsx'
+import QuestionAnswer, { Answer } from '../components/QuestionAnswer.tsx'
+import WaveSummationInverted from '../components/WaveSummationInverted.tsx'
+
+# Motivation
+
+> The Fast-Fourier-Transform is the most important numerical algorithm of our lifetime.  
+> ~ <cite>[Gilbert Strang](https://en.wikipedia.org/wiki/Gilbert_Strang), amerikanischer Mathematiker</cite>
+>
+> Die **Schnelle-Fourier-Transformation** (bzw. **FFT**) ist ein Algorithmus zur sehr _schnellen_ Durchführung einer bestimmten Art der **Fourier-Transformation**.  
+> Zunächst soll jedoch geklärt werden, warum eine **Fourier-Transformation** so relevant ist.
+
+---
+
+In diesem Artikel wird zunächst die **Fourier-Reihe** betrachtet. Diese bietet umfangreiche Möglichkeiten zur Untersuchung **periodischer Phänomen**.
+
+{/* Es gibt zwar viele Phänomene, welche periodisches Verhalten aufweisen, jedoch gibt es auch solche, welche zunächst periodisch erscheinen, jedoch nach einer Zeit aufhören, oder solche, die nur einzelne _Signale sind_. <SingleSignal /> <PeriodicSignal /> Die Werkzeuge für periodisches Verhalten, lassen sich somit auch auf solch einzelne _Signale_ anwenden, indem sich nach der Anwendung wieder auf ein einzelnes _Signal_ beschränkt wird. Die Periodizität ist somit nicht unbedingt eine Einschränkung. */}
+
+Mit der **Fourier-Transformation** lassen sich die Ideen der **Fourier-Reihe** auch auf nicht-periodische Phänomene verallgemeinern, indem man die **Periodendauer** gegen unendlich gehen lässt. Was das bedeutet, wird später deutlich.
+Die **Fourier-Transformation** kann auch unabhängig von der **Fourier-Reihe** betrachtet und verstanden werden, jedoch soll in diesem Artikel zunächst auf die **Fourier-Reihe** eingegangen werden und daraus die **Fourier-Transformation** hervorgehen.
+
+## Anwendungszwecke
+
+Es lassen sich zahlreiche Anwendungszwecke der **Fourier-Transformation** bzw. sogar spezifischer, nur des Algorithmus der **FFT** auflisten.
+
+<br />
+
+| Anwendungsbereiche                           | im Detail                                                                                                                                                                                               |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Signalverarbeitung (z.B. im Rahmen von WLAN) | Jegliche Form von digitaler Signalverarbeitung basiert auf Wellen, welche bestimmte Informationen übermitteln. Dabei werden Signale spezifischer Frequenzen zur Informationsübertragung genutzt. Um ein |
+| Radioastronomie                              |                                                                                                                                                                                                         |
+| Elektrokardiographie                         |                                                                                                                                                                                                         |
+| Seismologie                                  |                                                                                                                                                                                                         |
+| Dateikompression                             |                                                                                                                                                                                                         |
+
+## Problematik
+
+Um den Nutzen von **Fourier-Reihe** und **Fourier-Transformation** zu illustrieren, addiert man **trigonometrische Funktionen** (spezifischer $\sin$) mit verschiedenen Parametern.
+Es entsteht eine Funktion, welche sich aus der Überlagerung der verschiedenen $\sin$-Funktionen ergibt.
+Möchte man von dieser Funktion auf die ursprünglichen Anteilen zurückschließen ist das erstmal ziemlich schwierig.
+
+Im Folgenden lässt sich das Zerlegen einer $\color{red}\text{resultierenden Funktion}$ in einzelne $\sin$-Terme per Hand ausprobieren.
+
+<WaveSummationInverted
+  fixedCoordinates={[
+    [2, 3],
+    [0.5, 0.2],
+    [1, 1],
+    [5, 2],
+    [7, 1],
+    [0.1, 0.05],
+  ]}
+/>

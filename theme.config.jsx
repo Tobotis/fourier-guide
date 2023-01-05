@@ -1,5 +1,8 @@
 export default {
-  github: 'https://github.com/Tobotis/fft-introduction',
+  project: {
+    link: 'https://github.com/Tobotis/fft-introduction',
+  },
+  docsRepositoryBase: 'https://github.com/Tobotis/fft-introduction',
   logo: (
     <>
       <span className="mr-2 font-extrabold hidden md:inline">Fourier...?</span>
@@ -12,6 +15,7 @@ export default {
     <>
       <meta name="msapplication-TileColor" content="#ffffff" />
       <meta property="og:title" content="Fourier?" />
+      <meta property="title" content="Fourier?" />
       <meta name="theme-color" content="#ffffff" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta httpEquiv="Content-Language" content="de" />
@@ -20,14 +24,34 @@ export default {
       <meta name="apple-mobile-web-app-title" content="Fourier?" />
     </>
   ),
-  search: false,
-  prevLinks: true,
-  nextLinks: true,
+  //primaryHue: 299,
+  search: {
+    placeholder: 'Suchen...',
+  },
+  navigation: true,
   footer: true,
   titleSuffix: false,
-  footerEditLink: false,
-  footerText: (
-    <>{new Date().getFullYear()} © Florian Reinecke und Tobias Steinbrecher.</>
-  ),
-  unstable_faviconGlyph: '𝓕',
+  editLink: {
+    text: 'Bearbeite diese Seite auf GitHub →',
+  },
+  feedback: {
+    content: 'Fragen? Gebe uns Feedback →',
+  },
+  footer: {
+    text: (
+      <span>
+        {new Date().getFullYear()} © Florian Reinecke und Tobias Steinbrecher.
+      </span>
+    ),
+  },
+  toc: {
+    title: 'Auf dieser Seite:',
+  },
+  faviconGlyph: '𝓕',
+  sidebar: { defaultMenuCollapseLevel: 0 },
+  useNextSeoProps() {
+    return {
+      titleTemplate: '%s – Fourier...',
+    }
+  },
 }

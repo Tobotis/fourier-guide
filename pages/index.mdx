@@ -2,16 +2,45 @@
 title: 'Fourier... ? Eine Einführung'
 ---
 
-import Callout from 'nextra-theme-docs/callout'
-import FrameMafs from '../components/FrameMafs.jsx'
+import { Callout } from 'nextra-theme-docs'
+import FrameMafs from '../components/FrameMafs.tsx'
 import VectorFieldExample from '../components/VectorFieldExample.tsx'
+import QuestionAnswer, { Answer } from '../components/QuestionAnswer.tsx'
+import TestFrame from '../components/TestFrame.tsx'
+import LinkButton from '../components/LinkButton.tsx'
 
 # Fourier... ? Eine Einführung
 
-<Callout type="warning" emoji="🚧">
-  Dieser Bereich ist in Arbeit!
+Nach dem Lesen dieses Artikels solltest du einen Überblick über die **Fourier-Transformation** und den Algorithmus der **Schnellen-Fourier-Transformation** haben. Es steht dabei vor allem im Vordergrund, dass keine Annahmen getätigt werden,
+sondern ein Verständnis auf dem Fundament der Schulphysik/-mathematik aufgebaut wird.
+
+Es ist wichtig, sich selbst Gedanken über den Inhalt zu machen und _aktiv_ zu lernen. Dabei ist vor allem die Intuition wichtig um sich den Inhalt plausibel zu machen.
+Aus diesem Grund werden kleine Zwischenfragen zum Nachdenken gestellt, diese sind wie folgt aufgebaut:
+
+<QuestionAnswer>
+  <>Was ist $\sin(0)$?</>
+  <Answer correct={true}>$0$</Answer>
+  <Answer> $1$ </Answer>
+  <Answer>$\pi$</Answer>
+</QuestionAnswer>
+
+Es ist nicht schlimm, wenn man manche Fragen nicht beantworten kann.
+Man sollte jedoch versuchen die richtige Antwort nachzuvollziehen und sich plausibel zu machen.
+
+## Anmerkungen
+
+Zudem befinden sich an manchen Stellen Anmerkungen:
+
+<Callout>
+  Diese Anmerkungen sind für Ergänzungen mathematischer Natur, welche teilweise
+  von Nutzen sein könnten.
 </Callout>
 
----
+<Callout type="info" emoji="📚">
+  Diese Anmerkungen sollen auf Material zum Vertiefen bzw. Nachlesen hinweisen.
+  Dies ist jedoch nicht essentiell für das Verstehen des Artikels.
+</Callout>
 
-<FrameMafs component={<VectorFieldExample />} />
+## Anhang
+
+Auch die Inhalte im Anhang sind zu empfehlen. Diese sind essentiell zum Verständnis mancher Zusammenhänge, haben jedoch keinen Platz in der direkten Umgebung von **Fourier-Transformation** gefunden. Speziell die Einführung in [**komplexe Zahlen**](./appendix/complex-numbers/1-complex-plane) und die [**komplexe Exponentialfunktion**](./appendix/complex-numbers/2-complex-exponentials) ist zu empfehlen.
