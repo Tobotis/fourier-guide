@@ -31,7 +31,9 @@ const WaveCheck: React.FC<props> = ({
   leftBound = -Infinity,
   rightBound = Infinity,
 }) => {
-  let [periodendauer, setPeriodendauer] = React.useState(2)
+  let [periodendauer, setPeriodendauer] = React.useState(
+    0.1 * fixed_periodendauer + fixed_periodendauer
+  )
 
   let [istFlächeAngezeigt, setIstFlächeAngezeigt] = React.useState(true)
 
@@ -48,7 +50,7 @@ const WaveCheck: React.FC<props> = ({
             <div className="m-5 text-center">
               <TeX>
                 {
-                  '\\Re(f(t) \\cdot e^{- 2 \\pi \\xi i t}) = \\color{purple}{\\cos(- 2 \\pi \\xi i t) \\cdot f(t)}'
+                  '\\Re(f(t) \\cdot e^{- 2 \\pi \\xi i t}) = \\color{purple}{\\cos(- 2 \\pi \\xi t) \\cdot f(t)}'
                 }
               </TeX>
             </div>
@@ -139,7 +141,7 @@ const WaveCheck: React.FC<props> = ({
             <div className="m-5 text-center">
               <TeX>
                 {
-                  '\\Im(f(t) \\cdot e^{- 2 \\pi \\xi i t}) = \\color{purple}{\\sin(- 2 \\pi \\xi i t) \\cdot f(t)}'
+                  '\\Im(f(t) \\cdot e^{- 2 \\pi \\xi i t}) = \\color{purple}{\\sin(- 2 \\pi \\xi t) \\cdot f(t)}'
                 }
               </TeX>
             </div>
@@ -229,7 +231,7 @@ const WaveCheck: React.FC<props> = ({
               type="range"
               className="align-middle"
               min={1 / (fixed_periodendauer * 4)}
-              max={1 / (fixed_periodendauer / 4)}
+              max={1 / (fixed_periodendauer / 2)}
               step={0.01}
               value={1 / periodendauer}
               onChange={(event) => setPeriodendauer(1 / +event.target.value)}

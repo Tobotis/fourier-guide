@@ -300,7 +300,7 @@ $$
 
 Es handelt sich hierbei um ein zwar nicht-periodisches Signal, welches jedoch im definierten Bereich einer $\sin$-Funktion entspricht.
 
-### Bilden des Integrals
+### Aufstellen des Integrals
 
 Man wende also nun die **Fourier-Transfomation** auf $f(t)$ an, um eine Repräsentation von $f(t)$ im **Frequenbereich** zu erhalten.
 
@@ -319,9 +319,12 @@ $$
   <Answer> $\pi$ </Answer>
 </QuestionAnswer>
 
-Um $\hat{f}(\xi)$ nachzuvollziehen, kann man das Integral genauer betrachten. 
-Dies lässt sich als eine Berechnung der zwischen $x$-Achse und $e^{- 2 \pi i \xi t} f(t)$ eingeschlossenen Fläche betrachten.
+Da $f(t)$ außerhalb des Intervalls $]-6,6[$ $0$ ist, folgt, dass auch das Integral in diesem Bereich $0$ ist.
 
+### Visualisierung des Integrals
+
+Um $\hat{f}(\xi)$ besser nachzuvollziehen, kann man das Integral über $e^{- 2 \pi i \xi t} f(t)$ genauer betrachten. 
+Dies lässt sich als eine Berechnung der zwischen $x$-Achse und $e^{- 2 \pi i \xi t} f(t)$ eingeschlossenen Fläche betrachten.
 
 <Callout emoji="💡">
   Ein Integral ($\int_{a}^{b} g(x) dx$) gibt die **Fläche** zwischen x-Achse und
@@ -329,13 +332,27 @@ Dies lässt sich als eine Berechnung der zwischen $x$-Achse und $e^{- 2 \pi i \x
   oberhalb der x-Achse als positiv angesehen und Flächen unterhalb als negativ.
 </Callout>
 
-Wenn angenommen wird, dass $f(t) \in \mathbb{R}$ und somit ausschließlich **reelle** Funktionswerte annimmt, was bei obiger Funktion der Fall ist, dann gilt Folgendes für den
-**Real-** und **Imaginärteil** von $e^{- 2 \pi i \xi t} f(t)$. 
+Wenn angenommen wird, dass $f(t) \in \mathbb{R}$ und somit ausschließlich **reelle** Funktionswerte annimmt, was bei obiger Funktion der Fall ist, dann ist $\Im(f(t)) = 0$ für alle $t$.
 
-(Folgt mit $e^{xi} = \cos(x) + i \sin(x)$)
+Im Folgenden wird $\Re(e^{- 2 \pi i \xi t} f(t))$ und $\Im(e^{- 2 \pi i \xi t} f(t))$ in Abhängigkeit der Zeit $t$ dargestellt.
+Es gilt:
+
+$$
+e^{- 2 \pi i \xi t} f(t) = \cos(- 2 \pi \xi t) \cdot f(t) + i \sin(- 2 \pi \xi t) \cdot f(t)
+$$
+
 
 <WaveCheck fixed_periodendauer={4} leftBound={-8} rightBound={8}/>
 
+Es lässt sich erkennen, dass ein Maximum im Frequenzspektrum genau da entsteht, wo $\xi$ der Frequenz des $\sin$-Terms der Funktion $f(t)$ entspricht.
+Es konnten also mithilfe der **Fourier-Transfomation** die Frequenzbestandteile eines nicht-periodischen Signals herausgefunden werden. Die **Fourier-Reihe** bzw. der Zusammenhang für den **Fourier-Koeffizienten** konnte hierbei nicht angewendet werden, da es sich nicht um einen periodische Funktion handelt ($f(t) = f(t+T)$ gilt nicht für alle $t$).
+
+<Callout emoji="🚧">Dieser Abschnitt wird womöglich noch etwas erweitert.</Callout>
+
+### Ausblick: FFT
+
+Berechtigterweise kann man sich die Frage stellen, wie man den hergeleiteten Zusammenhang in der Realität anwendet. Wenn es sich um *kompliziertere* Funktionen $f(t)$ handelt, wobei die Funktionsgleichung unbekannt ist und z.B. lediglich Messwerte vorhanden sind, lässt sich die **Diskrete Fourier-Transfomation** anwenden, welche im nächsten Kapitel erklärt wird.
+Wenn man die **Diskrete Fourier-Transfomation** mit dem Computer durchführen will, was selbstverständlich von hoher Bedeutung ist, wurden ursprünglich ziemlich viele Berechnungen benötigt. 1965 wurde eine deutlich effizietere Implementierung entdeckt: der Algorithmus der **Schnellen-Fourier-Transfomation (FFT)**. Dieser Algorithmus gewann an viel Bedeutung und wird heute, aufgrund seiner vielfältigen Einsatzmöglichkeiten, als einer der wichtigsten Algorithmen angesehen.
 
 
 {/**
