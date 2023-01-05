@@ -105,9 +105,9 @@ Im **Zeitraum**, was der Darstellung des Signals in Abhängigkeit der Zeit bedeu
   </Mafs>
 </FrameMafs>
 
-Dabei ist relevant, dass die Funktion nur **reelle** Funktionswerte, aufgrund der Eigenschaft der **kojugierten Komplexen Zahlen** $c_k$ und $c_{-k}$, annimmt.
+Dabei ist relevant, dass die Funktion nur **reelle** Funktionswerte, aufgrund der Eigenschaft der **konjugierten Komplexen Zahlen** $c_k$ und $c_{-k}$, annimmt.
 
-Die dargestellte Funktion im **Zeit-** und **Frequnzraum** entspricht:
+Die dargestellte Funktion im **Zeit-** und **Frequenzraum** entspricht:
 
 $$
  f(t) = 0.2+0.6\sin \left(2 \pi \frac{1}{T} t\right) + \sin \left(2 \pi \frac{2}{T} t\right) + 1.5 \sin \left(2 \pi \frac{4}{T} t\right) + 0.5 \sin \left(2 \pi \frac{5}{T} t\right)
@@ -125,9 +125,9 @@ $$
 
 ---
 
-Dadurch, dass die Frequenz invers zur Periodendauer $T$ ist, folgt, dass wenn $T$ größer wird, die Frequenzen kleiner werden. Wenn man von der Idee einer _unendlichen_ Periodendauer ausgeht, rücken die Frequenzen also _unendlich_ nah zusammen, da der Unterschied zwischen zwei Frequenzen im Frequenzspekturm wie beschrieben $\frac{1}{T}$ beträgt.
+Dadurch, dass die Frequenz invers zur Periodendauer $T$ ist, folgt, dass wenn $T$ größer wird, die Frequenzen kleiner werden. Wenn man von der Idee einer _unendlichen_ Periodendauer ausgeht, rücken die Frequenzen also _unendlich_ nah zusammen, da der Unterschied zwischen zwei Frequenzen im Frequenzspektrum wie beschrieben $\frac{1}{T}$ beträgt.
 
-Das Verständis dieses **inversen** Zusammenhangs zwischen den beiden _Räumen_ wird in Bezug auf eine _unendliche_ Periodendauer relevant: Je länger die länger die Periodendauer und somit _breiter_ der Zeitraum, desto _enger_ wird das Frequenzspektrum.
+Das Verständnis dieses **inversen** Zusammenhangs zwischen den beiden _Räumen_ wird in Bezug auf eine _unendliche_ Periodendauer relevant: Je länger die länger die Periodendauer und somit _breiter_ der Zeitraum, desto _enger_ wird das Frequenzspektrum.
 
 ## Unendliche Periodendauer
 
@@ -142,7 +142,7 @@ für $T\to \infty$ zu verallgemeinern um die bekannten Techniken auch auf nicht-
 Für spätere Zwecke wird das Integral mit den Grenzen $0$ und $T$ zu einem Integral mit den Grenzen $-\frac{T}{2}$ und $\frac{T}{2}$ geändert.
 Da man lediglich den durchschnittlichen Wert innerhalb einer ganzen Periode berechnet, macht es keinen Unterschied, _wann_ diese Periode _stattfindet_.
 
-Für das Verständis ist es womöglich nützlich nochmal auf die Interpretation dieses Integrals zurückzublicken:
+Für das Verständnis ist es womöglich nützlich nochmal auf die Interpretation dieses Integrals zurückzublicken:
 
 - Durch die Multiplikation mit $e^{\frac{-2 \pi i k}{T} t}$ wird die Rotation mit einer Frequenz von $\frac{k}{T}$ sozusagen von allen Zeigern _subtrahiert_.
 - Dadurch ist es sicher, dass alle Zeiger rotieren, außer jener, welcher zuvor mit einer Frequenz von $\frac{k}{T}$ rotierte.
@@ -163,7 +163,7 @@ Auf diese Bedingung wurde bereits in [*Fourier-Reihen*](./2-fourier-series#unend
 
 Es funktioniert also nicht, wenn man einfach $T \to \infty$ und die **Fourier-Reihe** benutzt.
 
-### Herleitung der Fourier Transfomation
+### Herleitung der Fourier Transformation
 
 Um die obige [Problematik](#problem-mit-den-koeffizienten) zu umgehen, lässt sich der Term
 
@@ -193,19 +193,19 @@ Man hat also lediglich den Faktor $\frac{1}{T}$ _verlagert_.
 Relevant ist der Quotient $\frac{k}{T}$, welcher nun aus zwei Variablen besteht, welche gegen unendlich laufen.
 Dadurch, dass $k$ nur ganze Zahlen annimmt, was von der Idee ausgeht, dass man ganzzahlige Vielfache einer bestimmten Grundfrequenz hat, handelt es sich bei den verschiedenen $\frac{k}{T}$ für ein endliches $T$ um eine diskrete Größe (abzählbar).
 Wie oben beschrieben wird jedoch der Abstand zwischen zwei verschiedenen ganzzahligen Vielfachen $\frac{k}{T}$ und $\frac{k+1}{T}$ immer kleiner, wenn $T$ größer wird (inverser Zusammenhang zwischen **Frequenzraum** und **Zeitraum**).
-Dies ist kein mathematischer Beweise, jedoch lässt sich sagen, dass ein **kontinuirliches** Frequenzspektrum entseht. Sei diese Frequenz $\xi$ (_xi_) (um Verwechlungen mit $f$ und $\hat{f}$ zu vermeiden):
+Dies ist kein mathematischer Beweise, jedoch lässt sich sagen, dass ein **kontinuierliches** Frequenzspektrum entsteht. Sei diese Frequenz $\xi$ (_xi_) (um Verwechslungen mit $f$ und $\hat{f}$ zu vermeiden):
 
 $$
 \lim_{T \to \infty} \frac{k}{T} = \xi
 $$
 
-Es folgt somit für die **Fourier-Analyse** bzw. nun die **Fourier-Transfomation**:
+Es folgt somit für die **Fourier-Analyse** bzw. nun die **Fourier-Transformation**:
 
 $$
 \hat{f}(\xi) = \int_{-\infty}^{\infty} e^{- 2 \pi i \xi t} f(t)  dt
 $$
 
-Diesen Zusammenhang findet man genau so im [englischen Wikipediaartikel](https://en.wikipedia.org/wiki/Fourier_transform) über die **Fourier-Transfomation**.
+Diesen Zusammenhang findet man genau so im [englischen Wikipedia-Artikel](https://en.wikipedia.org/wiki/Fourier_transform) über die **Fourier-Transformation**.
 Das Integral wird zu einem _uneigentlichen_ Integral. Die Eigenschaft $\int_{-\infty}^{\infty} |f(t)| dt < \infty$ wird also relevant, was jedoch in diesem Artikel jedoch nicht weiter diskutiert wird.
 
 Interessant ist auch die Veränderung der **Fourier-Reihe**:
@@ -219,10 +219,10 @@ f(t) &=  \int_{-\infty}^{\infty} \hat{f}(\xi) e^{2 \pi i \xi t } d\xi\\
 \end{equation*}
 $$
 
-Die Unterschiede zwischen zwei Frequenzen $\frac{1}{T}$ werden unendlich klein. Aus diesem Grund wird lässt sich die _diskrete_ Summe, zu einem _kontinuirlichen_ Integral. Die Unterschiede in $\xi$ sind unendlich klein ($d \xi$).
-Dieser Zusammenhang wird auch als **inverse Fourier-Transfomation** bezeichnet.
+Die Unterschiede zwischen zwei Frequenzen $\frac{1}{T}$ werden unendlich klein. Aus diesem Grund wird lässt sich die _diskrete_ Summe, zu einem _kontinuierlichen_ Integral. Die Unterschiede in $\xi$ sind unendlich klein ($d \xi$).
+Dieser Zusammenhang wird auch als **inverse Fourier-Transformation** bezeichnet.
 
-Im Folgenden soll jedoch vor allem die **Fourier-Transfomation** betrachtet werden:
+Im Folgenden soll jedoch vor allem die **Fourier-Transformation** betrachtet werden:
 
 $$
 \hat{f}(\xi) = \int_{-\infty}^{\infty} e^{- 2 \pi i \xi t} f(t)  dt
@@ -366,10 +366,10 @@ $$
  (1 -e^{i \cdot (\omega_1+\omega_2) \cdot t} +1-e^{-i \cdot (\omega_1 + \omega_2) \cdot t})\geq 0
 $$
 
-$\omega_1$ und $\omega_2$ sind beide Element der reelen Zahlen $\mathbb{R}$, somit ist auch die Summe $\omega_1 + \omega_2$ Element der reelen Zahlen $\mathbb{R}$.\
-Der reele Teil von $e^{-a}$ liegt im Interval $[-1;1]$, wenn $a$ eine reele Zahl $\mathbb{R}$ ist ($a \in \mathbb{R}$).
+$\omega_1$ und $\omega_2$ sind beide Element der reellen Zahlen $\mathbb{R}$, somit ist auch die Summe $\omega_1 + \omega_2$ Element der reelen Zahlen $\mathbb{R}$.\
+Der reelle Teil von $e^{-a}$ liegt im Intervall $[-1;1]$, wenn $a$ eine reelle Zahl $\mathbb{R}$ ist ($a \in \mathbb{R}$).
 
-Also definiert man $k$ als eine beliebige reele Zahle im Interval $[-1;1]$:
+Also definiert man $k$ als eine beliebige reelle Zahle im Intervall $[-1;1]$:
 
 $$
  (1 -k +1-k)\geq 0
@@ -404,7 +404,7 @@ Da es häufig schwierig ist ein Integral von $-\infty$ bis $\infty$ zu berechnen
 da dies zur Annäherung ausreicht.
 
 <Callout>
-  Der numerische Wert ist hierbei nicht der einzige ausschlaggegebende Wert. Die _"Größe"_ der Grenzen hängt auch von der Periodendauer der Schwingungen ab.
+  Der numerische Wert ist hierbei nicht der einzige ausschlaggebende Wert. Die _"Größe"_ der Grenzen hängt auch von der Periodendauer der Schwingungen ab.
 
 Beispiel:\
  Hat man eine Schwingung mit der Periodendauer $T_1=1$ umfassen die Grenzen von $-10$ bis $10$ 20 Perioden, was meist für die Auswertung ausreicht.
@@ -472,8 +472,8 @@ Nochmal zu Erinnerung:
     
   ]}
 
-lowerBound={-100}
-upperBound={100}
+lowerBound={-10}
+upperBound={10}
 step={0.5}
 maxX={8.2}
 minX={-0.2}
