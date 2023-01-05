@@ -293,7 +293,7 @@ Nun wird folgende Beispielfunktion betrachtet:
 $$
 f(t) =
 \begin{cases}
-\sin(t) & \text{wenn } -6<t<6\\
+\sin(2 \pi \cdot \frac{t}{4}) & \text{wenn } -6<t<6\\
 0 & \text{sonst }
 \end{cases}
 $$
@@ -302,7 +302,7 @@ Es handelt sich hierbei um ein zwar nicht-periodisches Signal, welches jedoch im
 
 ### Bilden des Integrals
 
-Man wende also nun die **Fourier-Transfomation** auf $f(t)$ an, um eine Repräsentation von $f(t)$ im Frequenzraum zu erhalten.
+Man wende also nun die **Fourier-Transfomation** auf $f(t)$ an, um eine Repräsentation von $f(t)$ im **Frequenbereich** zu erhalten.
 
 $$
 \hat{f}(\xi) = \int_{-\infty}^{\infty} e^{- 2 \pi i \xi t} f(t)  dt
@@ -319,7 +319,24 @@ $$
   <Answer> $\pi$ </Answer>
 </QuestionAnswer>
 
-Dadurch, dass es in
+Um $\hat{f}(\xi)$ nachzuvollziehen, kann man das Integral genauer betrachten. 
+Dies lässt sich als eine Berechnung der zwischen $x$-Achse und $e^{- 2 \pi i \xi t} f(t)$ eingeschlossenen Fläche betrachten.
+
+
+<Callout emoji="💡">
+  Ein Integral ($\int_{a}^{b} g(x) dx$) gibt die **Fläche** zwischen x-Achse und
+  dem Graphen von $g(x)$ im Bereich von $a$ bis $b$ an. Dabei werden Flächen
+  oberhalb der x-Achse als positiv angesehen und Flächen unterhalb als negativ.
+</Callout>
+
+Wenn angenommen wird, dass $f(t) \in \mathbb{R}$ und somit ausschließlich **reelle** Funktionswerte annimmt, was bei obiger Funktion der Fall ist, dann gilt Folgendes für den
+**Real-** und **Imaginärteil** von $e^{- 2 \pi i \xi t} f(t)$. 
+
+(Folgt mit $e^{xi} = \cos(x) + i \sin(x)$)
+
+<WaveCheck fixed_periodendauer={4} leftBound={-8} rightBound={8}/>
+
+
 
 {/**
 
@@ -331,11 +348,7 @@ Dadurch, dass es in
   $$\lim_{n\to \infty}$$ bedeutet hierbei einfach, dass sich $n$ immer näher an $\infty$ nähert.
 </Callout>
 
-<Callout emoji="💡">
-  Ein Integral ($\int_{a}^{b} f(x) dx$) gibt die **Fläche** zwischen x-Achse und
-  dem Graphen von $f(x)$ im Bereich von $a$ bis $b$ an. Dabei werden Flächen
-  oberhalb der x-Achse als positiv angesehen und Flächen unterhalb als negativ.
-</Callout>
+
 
 <Callout type="info" emoji="📚">
   Der obige Hinweis reicht für das Verständis dieses Artikels aus. Falls du
@@ -346,7 +359,6 @@ Dadurch, dass es in
 
 Ist das Integral $A$ gleich $0$, stimmen die Periodendauern nicht überein. Anderenfalls stimmen die beiden überein.
 
-<WaveCheck fixed_periodendauer={4} />
 
 <ExpandableCallout title="Warum ist das so?">
   Stimmen die Periodendauern der einzelnen Schwingungen nicht über ein, gibt es Zeitpunkte, bei denen sie phasengleich sind und Zeitpunkte bei denen sie nicht phasengleich sind. Über einen sehr großen Zeitraum treten alle Phasenkombinationen gleich häufig auf und annulieren sich.
@@ -489,16 +501,7 @@ $$
 
 Führt man diese Auswertung nun für alle Periodendauern durch und stellt diese in einem Diagramm dar, erhält man einen Graphen, der einem die "Richtigkeit" der Periodendauer angibt.
 
-<ProductIntegral
-  lowerBound={-6}
-  upperBound={6}
-  minX={-10}
-  maxX={10}
-  omegaA={4}
-  amplitudeA={1}
-  amplitudeB={1}
 
-/>
 
 Dieser Graph ist allerdings nur sehr schwer zu bestimmen, da man das Integral für jeden Wert neu bestimmen muss und der Ausdruck sehr rechenaufwändig ist. Dies ist dir vielleicht bereits beim Laden der Seite aufgefallen, da das Erstellen des Graphens bei langsameren Geräten sehr viel Zeit in Anspruch nimmt.
 
