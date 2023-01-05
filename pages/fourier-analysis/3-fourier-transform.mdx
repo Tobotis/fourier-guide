@@ -186,7 +186,7 @@ Bei der Berechnung des Durchschnitt des Terms in einer Periode $f(t) \cdot e^{\f
 <Callout>
 Dadurch, dass $f(t)$ auf einem endlichen Intervall $[a,b]$ definiert ist, folgt mit der [**Dirichlet-Bedingung**](https://en.wikipedia.org/wiki/Dirichlet%E2%80%93Jordan_test):
 $$
-|\int_{a}^{b} f(t) e^{\frac{-2 \pi i k}{T}t} dt | < \int_{a}^{b} |f(t)| dt < \infty \Rightarrow \int_{a}^{b} |f(t)| dt = X
+\left|\int_{a}^{b} f(t) e^{\frac{-2 \pi i k}{T}t} dt \right| < \int_{a}^{b} |f(t)| dt < \infty \Rightarrow \int_{a}^{b} |f(t)| dt = X
 $$
 Der Koeffizient $c_k$ würde aufgrund von $\frac{1}{T}$ somit gegen $0$ gehen, wenn $T \to \infty$. 
 Auf diese Bedingung wurde bereits in [*Fourier-Reihen*](./2-fourier-series#unendliche-anzahl-von-termen) hingewiesen.
@@ -216,7 +216,7 @@ Da man nun den Faktor $\frac{1}{T}$ aus dem **Fourier-Analyse** Zusammenhang weg
 Man bezeichne eine Funktion $\hat{f}$ mit dem bekannten Zusammenhang:
 
 $$
-\hat{f}(\frac{k}{T}) = \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) e^{\frac{-2 \pi i  k}{T} t} dt
+\hat{f}\left(\frac{k}{T}\right) = \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) e^{\frac{-2 \pi i  k}{T} t} dt
 $$
 
 Diese Funktion ist abhängig von der Frequenz $\frac{k}{T}$ und beschreibt wie zuvor, den komplexen Wert des Koeffizienten, jedoch ohne den Vorfaktor $\frac{1}{T}$.
@@ -224,7 +224,7 @@ Diese Funktion ist abhängig von der Frequenz $\frac{k}{T}$ und beschreibt wie z
 Für die **Fourier-Synthese** durch _Auslagerung_ des Faktors $\frac{1}{T}$:
 
 $$
-f(t) = \sum_{k=-\infty}^{\infty} \hat{f}(\frac{k}{T}) e^{\frac{2 \pi i k}{T} t } \frac{1}{T}
+f(t) = \sum_{k=-\infty}^{\infty} \hat{f}\left(\frac{k}{T}\right) e^{\frac{2 \pi i k}{T} t } \frac{1}{T}
 $$
 
 ### $T$ geht gegen unendlich
@@ -254,7 +254,7 @@ Interessant ist auch die Veränderung der **Fourier-Reihe**:
 $$
 \begin{equation*}
 \begin{split}
-f(t) &= \lim_{T \to \infty} \sum_{k=-\infty}^{\infty} \hat{f}(\frac{k}{T}) e^{\frac{2 \pi i k}{T} t } \frac{1}{T}\\
+f(t) &= \lim_{T \to \infty} \sum_{k=-\infty}^{\infty} \hat{f}\left(\frac{k}{T}\right) e^{\frac{2 \pi i k}{T} t } \frac{1}{T}\\
 f(t) &=  \int_{-\infty}^{\infty} \hat{f}(\xi) e^{2 \pi i \xi t } d\xi\\
 \end{split}
 \end{equation*}

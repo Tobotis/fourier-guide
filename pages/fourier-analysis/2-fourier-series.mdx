@@ -33,7 +33,7 @@ ausgedrückt werden kann. Diese Frage soll in diesem Abschnitt beantwortet werde
 
 Warum sollte man jedoch überhaupt versuchen eine bekannte periodische Funktion $f(t)$ mithilfe einer Summe der obigen Form darzustellen?
 
-### Rechteckssignal
+### Rechtecksignal
 
 Man kann zum Beispiel das Signal, welches der Funktion $f(t) = \begin{cases} 1 \text{ wenn } \lfloor t \rfloor \text{ gerade} \\ -1 \text{ wenn } \lfloor t \rfloor \text{ ungerade} \end{cases}$ entspricht, betrachten:
 
@@ -45,8 +45,8 @@ Man kann zum Beispiel das Signal, welches der Funktion $f(t) = \begin{cases} 1 \
 <SignalPlotter f={(x) => 2 * (1 - Math.abs(Math.floor(x) % 2) - 0.5)} />
 
 <Callout type="info" emoji="📚">
-  Nachlesen zur Rechtecksschwingung: [Wikipedia:
-  Rechtecksschwingung](https://de.wikipedia.org/wiki/Rechteckschwingung)
+  Nachlesen zur Rechteckschwingung: [Wikipedia:
+  Rechteckschwingung](https://de.wikipedia.org/wiki/Rechteckschwingung)
 </Callout>
 
 Dieses Signal ist beispielsweise relevant in der Informationsübertragung (Kodierung von $1$ und $0$ mit verschiedenen Spannungen).
@@ -128,7 +128,7 @@ f(t) = \frac{a_0}{2} + \sum_{k=1}^n a_k \sin \left(\frac{2 \pi k}{T} t\right)+ b
 \end{equation}
 $$
 
-welche ausschließlich **reele Funktionswerte** erzeugt, in die Summe
+welche ausschließlich **reelle Funktionswerte** erzeugt, in die Summe
 
 $$
 \begin{equation}
@@ -200,7 +200,7 @@ Im Folgenden ist das Ergebnis der Summe $(1)$ mit $c_0 = 2+i$, $c_1 = 2$ und $c_
 <QuestionAnswer>
   <>
     Wo liegt der durchschnittliche Wert der obigen Funktion, wenn man eine
-    Periode der gesamten Schwingung betrachet?
+    Periode der gesamten Schwingung betrachtet?
   </>
   <Answer>Bei $0$</Answer>
   <Answer>Bei $1+i$</Answer>
@@ -211,7 +211,7 @@ Im Folgenden ist das Ergebnis der Summe $(1)$ mit $c_0 = 2+i$, $c_1 = 2$ und $c_
 Eine Herangehensweise zu obiger Frage könnte über die durchschnittlichen Werte der einzelnen Schwingungsbeiträge sein.
 Da alle Schwingungsbeiträge per Definition der Summe, eine Frequenz haben, welche einem ganzzahliges Vielfachen der **Grundfrequenz** (Frequenz der gesamten Schwingung) entspricht, muss jeder **rotierende Zeiger** eine ganzzahlige Anzahl an Rotationen vollführen.
 
-Wenn man nun einen Zeiger separat betrachtet und dieser eine ganzzahlige Anzahl an Malen um den Urpsrung rotiert, dann muss dieser Zeiger logischerweise einen durchschnittlichen Wert von $0$ haben.
+Wenn man nun einen Zeiger separat betrachtet und dieser eine ganzzahlige Anzahl an Malen um den Ursprung rotiert, dann muss dieser Zeiger logischerweise einen durchschnittlichen Wert von $0$ haben.
 
 Da dies für jeden Zeiger gilt, welcher eine ganzzahlige Anzahl an Malen in der Zeit einer Periode rotiert, hängt der durchschnittliche Funktionswert nur von jenen Zeigern ab, welche nicht rotieren.
 Da nur der Zeiger, welcher aus dem Term $c_0 \cdot e^{0} = c_0$ resultiert, nicht rotiert, ist somit der durchschnittliche Funktionswert nur von $c_0$ abhängig. Der durchschnittliche Funktionswert entspricht also dadurch, dass $c_0$ konstant ist, $c_0$.
@@ -249,7 +249,7 @@ $$
 
 Die obige [Idee](#überlegung-mithilfe-von-durchschnittlichen-funktionswerten), den durchschnittlichen Funktionswert auszunutzen, um den Wert eines Koeffizienten zu bestimmen, welcher zur konstanten Verschiebung gehört, lässt sich tatsächlich für alle Koeffizienten anwenden.
 
-Man könnte versuchen jeweils einen spezifischen rotierenden Zeiger, zu einem Zeiger zu verändern, welcher für eine konstante Verschiebung sorgt. Dabei müssen jedoch alle anderen Zeiger eine ganzzahlige Anzahl an Malen um den Urpsrung rotieren.
+Man könnte versuchen jeweils einen spezifischen rotierenden Zeiger, zu einem Zeiger zu verändern, welcher für eine konstante Verschiebung sorgt. Dabei müssen jedoch alle anderen Zeiger eine ganzzahlige Anzahl an Malen um den Ursprung rotieren.
 
 Um einen spezifischen Koeffizienten $c_m$ herauszufinden, probiert man also die Funktion $f(t)$ so zu manipulieren, dass genau der Zeiger $m$ _stehen bleibt_
 und somit _alleinig_ den durchschnittlichen Funktionswert der manipulierten Funktion beeinflusst. Folgend könnte man $c_m$ analog zu $c_0$ ermitteln.
@@ -278,7 +278,7 @@ $$
 
 Die Multiplikation mit $e^{-\frac{2 \pi i m}{T}t}$ kann man als Rotation der gesamten Funktion $f(t)$ sehen, welche die Rotation $e^{\frac{2 \pi i m}{T}t}$ _rauskürzt_. Somit erscheint der Koeffizient $c_m$ wie eine konstante Verschiebung.
 
-Da es nur genau diesen einen Term mit $k=m$ gibt, wird auch nur genau dieser Zeiger $m$ die konstante Verschiebung von Urpsrung beeinflussen.
+Da es nur genau diesen einen Term mit $k=m$ gibt, wird auch nur genau dieser Zeiger $m$ die konstante Verschiebung von Ursprung beeinflussen.
 
 <FrameText
   display={
@@ -319,7 +319,7 @@ Da es nur genau diesen einen Term mit $k=m$ gibt, wird auch nur genau dieser Zei
 />
 
 Verwirrend erscheint womöglich, dass man die Funktion $f(t)$ die ganze Zeit
-bereits im Zeigermodell betrachet, obwohl man die Koeffizienten der
+bereits im Zeigermodell betrachtet, obwohl man die Koeffizienten der
 Summendarstellung und somit die Zeiger noch gar nicht kennt. Die obigen
 Darstellungen sollen jedoch nur illustrieren, wie eine Funktion $f(t)$ in der Summendarstellung aussähe.
 
@@ -372,7 +372,7 @@ $*$ hierbei ist relevant, dass $e^{2 \pi i a} = 1$ mit $a \in \mathbb{Z}$ (a ist
 Dadurch, dass es sich bei $k-m$ um eine ganze Zahl handelt, folgt also $e^{2 \pi i (k-m)} = 1$
 
 Es sind einige Argumentationspunkte aus [der Verallgemeinerung von durchschnittlichen Funktionswerten](#verallgemeinerung-des-verfahrens-auf-alle-koeffizienten) in der algebraischen Herleitung wiederzuerkennen.
-Zum Beispiel, dass das Integral über eine Periode für alle Terme mit $k\neq m$, $0$ ergibt. Dies wurde zuvor mit der Idee begründet, dass jeder Zeiger mit $k\neq m$ eine ganzzahlige Anzahl an Rotation um den Urpsrung vollführt.
+Zum Beispiel, dass das Integral über eine Periode für alle Terme mit $k\neq m$, $0$ ergibt. Dies wurde zuvor mit der Idee begründet, dass jeder Zeiger mit $k\neq m$ eine ganzzahlige Anzahl an Rotation um den Ursprung vollführt.
 
 Es ist jedoch schön zu sehen, wie die mehr oder weniger geometrische Intuition und algebraische Umformungen zur gleichen Lösung führen:
 
@@ -397,7 +397,7 @@ gilt. Ein Parameter, welcher jedoch bis jetzt unbeachtet geblieben ist, ist die 
 Zudem ist weiterhin die Frage offen, inwiefern jede beliebige periodische Funktion $f(t)$ mit dieser Summe dargestellt werden kann.
 Um diese Frage zu beantworten, muss man zunächst $n$ betrachten. Wenn beispielsweise $n=1$ und es sich somit lediglich um zwei Summanden handelt, kann offensichtlicherweise nicht jede periodische Funktion angenähert werden.
 
-### Rechtecksschwingung
+### Rechteckschwingung
 
 Wenn man z.B. die bereits gezeigte Rechteckschwingung
 
@@ -456,7 +456,7 @@ Dies ist kein mathematischer Beweis, jedoch lässt sich intuitiv sagen, dass ein
 
 ### Unendliche Anzahl von Termen
 
-Durch [Jospeh Fourier's](https://de.wikipedia.org/wiki/Joseph_Fourier) Überlegungen, wurde später deutlich, dass jede periodische Funktion $f(t)$ mit der Periodendauer $T$, welche bestimmte Eigenschaften erfüllt, mit
+Durch [Joseph Fourier's](https://de.wikipedia.org/wiki/Joseph_Fourier) Überlegungen, wurde später deutlich, dass jede periodische Funktion $f(t)$ mit der Periodendauer $T$, welche bestimmte Eigenschaften erfüllt, mit
 
 $$
 f(t) = \sum_{k=-\infty}^{\infty} c_k e^{\frac{2 \pi i}{T} k t }
@@ -501,7 +501,7 @@ $$
 c_k = \frac{1}{T}\int_0^{T} f(t) e^{\frac{-2 \pi i k}{T} t} dt
 $$
 
-Man kann sich ausgibig Gedanken über die **Konvergenz** der **Fourier-Reihe** Gedanken machen. In diesem Abschnitt sollte jedoch lediglich geklärt werden, woher die **Fourier-Reihe** kommt, und wie man sie möglicherweise anwenden kann.
+Man kann sich ausgiebig Gedanken über die **Konvergenz** der **Fourier-Reihe** Gedanken machen. In diesem Abschnitt sollte jedoch lediglich geklärt werden, woher die **Fourier-Reihe** kommt, und wie man sie möglicherweise anwenden kann.
 
 ## Ausblick: Fourier-Transformation
 
@@ -509,7 +509,7 @@ Mit der **Fourier-Transformation** werden die obigen Ideen auch auf **nicht-peri
 
 Es gibt zwar viele Phänomene, welche periodisches Verhalten aufweisen, jedoch gibt es in der Realität häufig solche, welche nur in einem bestimmte Zeitintervall existieren, bzw. betrachtet werden.
 
-Also eine Funktion $f(t)$, welche nur für ein bestimmtes Intervall $[a,b]$ betrachetet wird und außerhalb dieses Intervalls $0$ ist.
+Also eine Funktion $f(t)$, welche nur für ein bestimmtes Intervall $[a,b]$ betrachtet wird und außerhalb dieses Intervalls $0$ ist.
 Zudem scheitert die **Fourier-Reihe**, wenn folgende Funktion analysiert werden soll:
 
 <FrameMafs>
@@ -526,7 +526,7 @@ Man könnte diese Problematik wie folgt umgehen:
 <SingleSignal />
 <PeriodicSignal />
 
-Die Technik der Periodisierung wird im Grunde auch bei der **Fourier-Transfomation** angewandt
+Die Technik der Periodisierung wird im Grunde auch bei der **Fourier-Transformation** angewandt
 
 <QuestionAnswer>
   <>
@@ -540,7 +540,7 @@ Die Technik der Periodisierung wird im Grunde auch bei der **Fourier-Transfomati
 
 Es liegt zugrunde, dass man die **Periodendauer** gegen unendlich gehen lässt ($T \to \infty$).
 Somit würde sich das _nicht-periodische_ Phänomen quasi in _unendlicher_ Zeit nur ein einmal wiederholen.
-Eine Idee wäre also, die **Fourier-Reihe** zu verallgemeinern, indem man einfach die Periodendauer unendlich groß macht und dadurch auch auf nicht-periodeische Phänomene anwenden kann.
-Es stellt sich heraus, dass sich damit auch Signale analysieren lassen, welche über keine oszilierenden (schwingenden) Anteile verfügen.
+Eine Idee wäre also, die **Fourier-Reihe** zu verallgemeinern, indem man einfach die Periodendauer unendlich groß macht und dadurch auch auf nicht-periodische Phänomene anwenden kann.
+Es stellt sich heraus, dass sich damit auch Signale analysieren lassen, welche über keine oszillierenden (schwingenden) Anteile verfügen.
 
 Dies ist jedoch nicht ganz so einfach möglich. Eine Umsetzung dieser Idee befindet sich im nächsten Abschnitt.
