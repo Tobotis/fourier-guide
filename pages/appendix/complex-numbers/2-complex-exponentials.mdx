@@ -33,7 +33,7 @@ Im Folgenden soll geklärt werden, was diese Gleichung wirklich aussagt und nich
 
 ## Beweis mithilfe von Differentialrechnung
 
-Zunächst lässt sich ein sehr _einfacher_ Beweis der Gleichheit begutachten. Dieser erfolgt über das Ableiten einer geschickt gewählten Funktion $f(\theta)$.
+Zunächst lässt sich ein sehr _einfacher_ Beweis der Gleichheit begutachten. Dieser erfolgt über das Ableiten einer geschickt gewählten Funktion $f(\phi)$.
 
 $$
 f(\phi) = e^{- i \phi} (\cos(\phi) + i \sin(\phi))
@@ -96,14 +96,14 @@ Wenn man z.B. mit dem Geldbetrag $1$€ startet und ein Jahr wartet, dann würde
 1. Option: $1\text{€} \cdot (1+0.06) = \textbf{1.06}$
 2. Option: $1\text{€} \cdot \overbrace{(1+0.005) \cdot (1+0.005) \cdot ... \cdot (1+0.005)}^{12 \text{ mal }} = 1\text{€} \cdot (1+0.005)^{12} \approx \textbf{1.0617}$
 
-Berechtigterweise lässt sich nun fragen, was passiert, wenn man das Jahr in noch kleiner Intervalle einteilt und in jedem Zeitintervall $\frac{6}{n} \%$ Zinsen bekommt.
-Wenn mit mit wieder mit einem Betrag von $1$€ startet, dann folgt für die den Geldbetrag nach einem Jahr:
+Berechtigterweise lässt sich nun fragen, was passiert, wenn man das Jahr in $n$ kleinere Intervalle einteilt und in jedem Zeitintervall $\frac{6}{n} \%$ Zinsen bekommt.
+Wenn man mit einem Betrag von $1$€ startet, dann folgt für die den Geldbetrag nach einem Jahr:
 
 $$
 B_{0.06}(n)=\left(1+\frac{0.06}{n}\right)^n
 $$
 
-Wenn man das Zeitintervall also in immer kleinere Intervalle einteilt und somit noch mehr Gebrauch vom Zinseszins macht, kann man dann durch $n \to \infty$ immer mehr Geld bekommen?
+Wenn man das Zeitintervall also in immer kleinere Intervalle einteilt und somit _noch mehr Gebrauch_ vom Zinseszins macht, kann man dann durch $n \to \infty$ immer mehr Geld bekommen?
 
 <br />
 <div align="center">
@@ -149,7 +149,7 @@ Es scheint logisch, sich den Wert des Terms $\lim_{m\to \infty} \left(1+\frac{1}
 
 Es handelt sich wiederum um keinen Beweis, jedoch scheint es so zu sein, dass sich der Term einem ganz bestimmten Wert annähert. Es könnte natürlich so sein, dass der Term plötzlich bei einem noch größeren $m$ wieder von diesem Wert abweicht.
 
-Ein rigoroser Beweis soll jedoch erspart bleiben. Genau dieser Wert wurde letztendlich als die **eulersche Zahl** $e \approx 2.718$ definiert. Somit lässt scih obiger Term umschreiben und von $B(x)$ zu dem üblichen $\exp (x)$ umbenennen:
+Ein rigoroser Beweis soll jedoch erspart bleiben. Genau dieser Wert wurde letztendlich als die **eulersche Zahl** $e \approx 2.718$ definiert. Somit lässt sich obiger Term umschreiben und von $B(x)$ zu dem üblichen $\exp (x)$ umbenennen:
 
 $$
 \exp (x) = e^x
@@ -187,7 +187,7 @@ $$
 $$
 
 Um zu verstehen, was sich beim Potenzieren der komplexen Zahl $z = \lim_{n\to\infty} (1+\frac{\theta i}{n})$ ergibt, ist es sinnvoll die Polardarstellung zu ermitteln.
-Der Betrag wird durch das Potenzieren mit $n$ ebenfalls $n$ potenziert, der Polarwinkel jedoch mit $n$ multipliziert.
+Der Betrag wird durch das Potenzieren mit $n$, ebenfalls $n$ potenziert, der Polarwinkel jedoch mit $n$ multipliziert (dies wurde in [_Komplexe Ebene_](./1-complex-plane#folgerungen)).
 
 #### Betrag
 
@@ -211,8 +211,9 @@ Die komplexe Zahl $\exp(\theta i)$ muss also auf einen Betrag von $1$ haben und 
 
 #### Polarwinkel
 
-Der Polarwinkel der komplexen Zahl $z = 1+\frac{\theta i}{n}$ extrem nah an $\frac{\theta}{n}$. Wenn man nun $z$ mit $n$ potenziert, dann folgt eine Addition der Winkel. Somit
-liegt der Polarwinkel von $z^n$ für große $n$ extrem nah bei $n \cdot \frac{\theta}{n} = \theta$. Dies soll kein mathematischer Beweis sein.
+Der Polarwinkel der komplexen Zahl $z = 1+\frac{\theta i}{n}$ liegt für große $n$ extrem nah an $\frac{\theta}{n}$. Wenn man nun $z$ mit $n$ potenziert, dann folgt eine Addition der Winkel.
+
+Somit liegt der Polarwinkel von $z^n$ für große $n$ extrem nah bei $n \cdot \frac{\theta}{n} = \theta$. Dies soll kein mathematischer Beweis sein.
 
 Die komplexe Zahl $\exp(\theta i)$ muss also auf dem Einheitskreis liegen und den Polarwinkel von $\theta$ einschließen.
 
