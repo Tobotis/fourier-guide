@@ -21,19 +21,40 @@ export function e_pow_ipi(theta: number): Vector {
 export const clamp = (num: number, min: number, max: number) =>
   Math.min(Math.max(num, min), max)
 
+function isCloseRelative(
+  num: number,
+  comparedTo: number,
+  tolRel: number = 0.1
+): boolean {
+  return Math.abs(num / comparedTo - 1) < tolRel
+}
+const Relative = isCloseRelative
 
+function isCloseAbsolute(
+  num: number,
+  comparedTo: number,
+  tolAbs: number
+): boolean {
+  return Math.abs(num - comparedTo) < tolAbs
+}
+const Absolute = isCloseAbsolute
 
-function isCloseRelative(num: number, comparedTo: number, tolRel: number = 0.1): boolean {
-  return Math.abs((num / comparedTo) - 1) < tolRel
-} 
-const Relative = isCloseRelative;
-
-function isCloseAbsolute (num: number, comparedTo: number, tolAbs: number) : boolean {
-  return Math.abs((num - comparedTo)) < tolAbs
-} 
-const Absolute = isCloseAbsolute;
-
-export const isClose= {
+export const isClose = {
   Relative,
-  Absolute
+  Absolute,
+}
+
+function integrator(
+  func: (x: number) => number,
+  lowerBound: number,
+  upperBound: number,
+  step: number
+) {
+  let sum: number = 0
+  for (let i = lowerBound; i < upperBound; i += step) {
+    sum += func(i)
+  }
+  sum /= (upperBound - lowerBound) / step
+
+  return sum
 }
