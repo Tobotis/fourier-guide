@@ -293,16 +293,16 @@ Nun wird folgende Beispielfunktion betrachtet:
 $$
 f(t) =
 \begin{cases}
-\sin(t) & \text{wenn } -6<t<6\\
+\sin(2 \pi \cdot \frac{t}{4}) & \text{wenn } -6<t<6\\
 0 & \text{sonst }
 \end{cases}
 $$
 
 Es handelt sich hierbei um ein zwar nicht-periodisches Signal, welches jedoch im definierten Bereich einer $\sin$-Funktion entspricht.
 
-### Bilden des Integrals
+### Aufstellen des Integrals
 
-Man wende also nun die **Fourier-Transfomation** auf $f(t)$ an, um eine Repräsentation von $f(t)$ im Frequenzraum zu erhalten.
+Man wende also nun die **Fourier-Transfomation** auf $f(t)$ an, um eine Repräsentation von $f(t)$ im **Frequenbereich** zu erhalten.
 
 $$
 \hat{f}(\xi) = \int_{-\infty}^{\infty} e^{- 2 \pi i \xi t} f(t)  dt
@@ -319,7 +319,41 @@ $$
   <Answer> $\pi$ </Answer>
 </QuestionAnswer>
 
-Dadurch, dass es in
+Da $f(t)$ außerhalb des Intervalls $]-6,6[$ $0$ ist, folgt, dass auch das Integral in diesem Bereich $0$ ist.
+
+### Visualisierung des Integrals
+
+Um $\hat{f}(\xi)$ besser nachzuvollziehen, kann man das Integral über $e^{- 2 \pi i \xi t} f(t)$ genauer betrachten. 
+Dies lässt sich als eine Berechnung der zwischen $x$-Achse und $e^{- 2 \pi i \xi t} f(t)$ eingeschlossenen Fläche betrachten.
+
+<Callout emoji="💡">
+  Ein Integral ($\int_{a}^{b} g(x) dx$) gibt die **Fläche** zwischen x-Achse und
+  dem Graphen von $g(x)$ im Bereich von $a$ bis $b$ an. Dabei werden Flächen
+  oberhalb der x-Achse als positiv angesehen und Flächen unterhalb als negativ.
+</Callout>
+
+Wenn angenommen wird, dass $f(t) \in \mathbb{R}$ und somit ausschließlich **reelle** Funktionswerte annimmt, was bei obiger Funktion der Fall ist, dann ist $\Im(f(t)) = 0$ für alle $t$.
+
+Im Folgenden wird $\Re(e^{- 2 \pi i \xi t} f(t))$ und $\Im(e^{- 2 \pi i \xi t} f(t))$ in Abhängigkeit der Zeit $t$ dargestellt.
+Es gilt:
+
+$$
+e^{- 2 \pi i \xi t} f(t) = \cos(- 2 \pi \xi t) \cdot f(t) + i \sin(- 2 \pi \xi t) \cdot f(t)
+$$
+
+
+<WaveCheck fixed_periodendauer={4} leftBound={-8} rightBound={8}/>
+
+Es lässt sich erkennen, dass ein Maximum im Frequenzspektrum genau da entsteht, wo $\xi$ der Frequenz des $\sin$-Terms der Funktion $f(t)$ entspricht.
+Es konnten also mithilfe der **Fourier-Transfomation** die Frequenzbestandteile eines nicht-periodischen Signals herausgefunden werden. Die **Fourier-Reihe** bzw. der Zusammenhang für den **Fourier-Koeffizienten** konnte hierbei nicht angewendet werden, da es sich nicht um einen periodische Funktion handelt ($f(t) = f(t+T)$ gilt nicht für alle $t$).
+
+<Callout emoji="🚧">Dieser Abschnitt wird womöglich noch etwas erweitert.</Callout>
+
+### Ausblick: FFT
+
+Berechtigterweise kann man sich die Frage stellen, wie man den hergeleiteten Zusammenhang in der Realität anwendet. Wenn es sich um *kompliziertere* Funktionen $f(t)$ handelt, wobei die Funktionsgleichung unbekannt ist und z.B. lediglich Messwerte vorhanden sind, lässt sich die **Diskrete Fourier-Transfomation** anwenden, welche im nächsten Kapitel erklärt wird.
+Wenn man die **Diskrete Fourier-Transfomation** mit dem Computer durchführen will, was selbstverständlich von hoher Bedeutung ist, wurden ursprünglich ziemlich viele Berechnungen benötigt. 1965 wurde eine deutlich effizietere Implementierung entdeckt: der Algorithmus der **Schnellen-Fourier-Transfomation (FFT)**. Dieser Algorithmus gewann an viel Bedeutung und wird heute, aufgrund seiner vielfältigen Einsatzmöglichkeiten, als einer der wichtigsten Algorithmen angesehen.
+
 
 {/**
 
@@ -331,11 +365,7 @@ Dadurch, dass es in
   $$\lim_{n\to \infty}$$ bedeutet hierbei einfach, dass sich $n$ immer näher an $\infty$ nähert.
 </Callout>
 
-<Callout emoji="💡">
-  Ein Integral ($\int_{a}^{b} f(x) dx$) gibt die **Fläche** zwischen x-Achse und
-  dem Graphen von $f(x)$ im Bereich von $a$ bis $b$ an. Dabei werden Flächen
-  oberhalb der x-Achse als positiv angesehen und Flächen unterhalb als negativ.
-</Callout>
+
 
 <Callout type="info" emoji="📚">
   Der obige Hinweis reicht für das Verständis dieses Artikels aus. Falls du
@@ -346,7 +376,6 @@ Dadurch, dass es in
 
 Ist das Integral $A$ gleich $0$, stimmen die Periodendauern nicht überein. Anderenfalls stimmen die beiden überein.
 
-<WaveCheck fixed_periodendauer={4} />
 
 <ExpandableCallout title="Warum ist das so?">
   Stimmen die Periodendauern der einzelnen Schwingungen nicht über ein, gibt es Zeitpunkte, bei denen sie phasengleich sind und Zeitpunkte bei denen sie nicht phasengleich sind. Über einen sehr großen Zeitraum treten alle Phasenkombinationen gleich häufig auf und annulieren sich.
@@ -489,16 +518,7 @@ $$
 
 Führt man diese Auswertung nun für alle Periodendauern durch und stellt diese in einem Diagramm dar, erhält man einen Graphen, der einem die "Richtigkeit" der Periodendauer angibt.
 
-<ProductIntegral
-  lowerBound={-6}
-  upperBound={6}
-  minX={-10}
-  maxX={10}
-  omegaA={4}
-  amplitudeA={1}
-  amplitudeB={1}
 
-/>
 
 Dieser Graph ist allerdings nur sehr schwer zu bestimmen, da man das Integral für jeden Wert neu bestimmen muss und der Ausdruck sehr rechenaufwändig ist. Dies ist dir vielleicht bereits beim Laden der Seite aufgefallen, da das Erstellen des Graphens bei langsameren Geräten sehr viel Zeit in Anspruch nimmt.
 

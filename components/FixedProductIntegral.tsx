@@ -12,36 +12,23 @@ import {
   Text,
   Vector2,
   Vector,
+  Theme,
+  Line,
 } from '../mafs'
+
+import { NonSVG, NonSVGWrapper } from '../mafs/display/NonSVGElements'
+import { NonSVGElement } from '../mafs/view/NonSVGElement'
 
 interface ProductIntegralProps {
   minX?: number
   maxX: number
   omegaA: number
   amplitudeA: number
-  amplitudeB: number
   lowerBound: number
   upperBound: number
-}
-
-function integralValue(
-  omegaA: number,
-  omegaB: number,
-  amplitudeA: number,
-  amplitudeB: number,
-  lowerBound: number,
-  upperBound: number
-): number {
-  let sum: number = omegaA + omegaB
-  let diff: number = omegaA - omegaB
-  let prod: number = amplitudeA * amplitudeB
-  const boundValue: (bound: number) => number = (bound: number) => {
-    return (
-      Math.sin(diff * bound) / (2 * diff) - Math.sin(sum * bound) / (2 * sum)
-    )
-  }
-
-  return Math.abs(prod * (boundValue(upperBound) - boundValue(lowerBound)))
+  linePos?: number
+  reInteg: (x: number, omega: number) => number
+  imInteg: (x: number, omega: number) => number
 }
 
 const ProductIntegral: React.FC<ProductIntegralProps> = ({
@@ -49,10 +36,24 @@ const ProductIntegral: React.FC<ProductIntegralProps> = ({
   maxX,
   omegaA,
   amplitudeA,
-  amplitudeB,
   lowerBound,
   upperBound,
+  linePos = 0,
+  reInteg,
+  imInteg,
 }) => {
+  function integralValue(
+    omegaF: number,
+    omegaExp: number,
+    amplitudeF: number,
+    lowerBound: number,
+    upperBound: number
+  ): number {
+    let reInt = reInteg(upperBound, omegaExp) - reInteg(lowerBound, omegaExp)
+    let imInt = imInteg(upperBound, omegaExp) - imInteg(lowerBound, omegaExp)
+
+    return Math.sqrt(Math.pow(reInt, 2) + Math.pow(imInt, 2))
+  }
   return (
     <FrameMafs>
       <Mafs
@@ -66,13 +67,17 @@ const ProductIntegral: React.FC<ProductIntegralProps> = ({
           y={(x) =>
             integralValue(
               omegaA,
-              x,
+              2 * Math.PI * x,
               amplitudeA,
-              amplitudeB,
               lowerBound,
               upperBound
             )
           }
+        />
+        <Line.Segment
+          point1={[linePos, 0]}
+          point2={[linePos, (upperBound - lowerBound) / 2 + 2]}
+          color={Theme.blue}
         />
         {/*<FunctionGraph.OfX
           quality="high"
