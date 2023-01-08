@@ -1,0 +1,12 @@
+{
+  "index": "Introduction",
+  "motivation": "Motivation",
+  "fourier-analysis": "Chapter 1: Fourier-Analysis",
+  "fft": "Chapter 2: FFT",
+  "appendix": "Chapter X: Appendix",
+  "references": "References",
+  "about": {
+    "type": "page",
+    "title": "About this project"
+  }
+}

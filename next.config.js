@@ -11,8 +11,12 @@ const withNextra = require('nextra')({
   },
   images: {
     unoptimized: true,
-  }
+  },
 })
 
-module.exports = withNextra()
-
+module.exports = withNextra({
+  i18n: {
+    locales: ['en', 'de'],
+    defaultLocale: 'en',
+  },
+})
