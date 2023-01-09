@@ -19,7 +19,13 @@ export default function UnitCircle() {
   let speed = 1 / 5
   let zoom = 2
   return (
-    <Mafs height={400} width={800} xAxisExtent={[-3, 9]} yAxisExtent={[-3, 3]}>
+    <Mafs
+      height={400}
+      width={800}
+      xAxisExtent={[-3, 9]}
+      yAxisExtent={[-3, 3]}
+      pan={false}
+    >
       <CartesianCoordinates
         xAxis={{ labels: false }}
         yAxis={{ labels: false }}

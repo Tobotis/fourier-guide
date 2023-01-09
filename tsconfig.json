@@ -9,11 +9,7 @@
     "noImplicitAny": true,
     "checkJs": true,
     "allowJs": true,
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
@@ -21,12 +17,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
-, "components/FrameMafs.tsx", "components/MultiplyChoice.tsx"  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
 }
