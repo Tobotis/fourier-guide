@@ -1,15 +1,12 @@
 import * as React from 'react'
 import FrameMafs from './FrameMafs'
-import * as vec from 'vec-la'
 import { sinSum } from '../utils/math_ext'
 import {
   Mafs,
   FunctionGraph,
   CartesianCoordinates,
-  useMovablePoint,
   MovablePoint,
   Vector2,
-  Vector,
 } from '../mafs'
 
 const WaveSummation: React.FC = () => {

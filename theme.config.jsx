@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router'
 export default {
   project: {
-    link: 'https://github.com/Tobotis/fft-introduction',
+    link: 'https://github.com/Tobotis/fourier-gruide',
   },
-  docsRepositoryBase: 'https://github.com/Tobotis/fft-introduction',
+  docsRepositoryBase: 'https://github.com/Tobotis/fourier-guide',
   logo: () => {
     const { locale } = useRouter()
     if (locale == 'de')
