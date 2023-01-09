@@ -34,7 +34,7 @@ const PolarCoordinates = () => {
           end_angle={Math.max(Math.atan2(tip.y, tip.x), 0)}
           radius={vec.mag(tip.point) / 2}
           label={
-            'φ ≈ ' +
+            'θ ≈ ' +
             ((Math.atan2(tip.y, tip.x) * 180) / Math.PI).toFixed(2) +
             '°'
           }
