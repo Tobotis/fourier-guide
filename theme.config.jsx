@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 export default {
   project: {
-    link: 'https://github.com/Tobotis/fourier-gruide',
+    link: 'https://github.com/Tobotis/fourier-guide',
   },
   docsRepositoryBase: 'https://github.com/Tobotis/fourier-guide',
   logo: () => {
