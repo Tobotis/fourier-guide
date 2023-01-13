@@ -1,3 +1,59 @@
 import { Callout } from 'nextra-theme-docs'
+import SingleSignal from '../components/SingleSignal.tsx'
+import PeriodicSignal from '../components/PeriodicSignal.tsx'
+import QuestionAnswer, { Answer } from '../components/QuestionAnswer.tsx'
+import WaveSummationInverted from '../components/WaveSummationInverted.tsx'
 
-<Callout emoji="🌎">Translation missing (German $\to$ English)</Callout>
+# Motivation
+
+> The Fast-Fourier-Transform is the most important numerical algorithm of our lifetime.  
+> ~ <cite>[Gilbert Strang](https://en.wikipedia.org/wiki/Gilbert_Strang), american mathematician</cite>
+
+The **Fast-Fourier-Transfomation** (or **FFT**) is an algorithm for doing a specific type of **Fourier-Transfomation** very fast.
+In the first part we need to understand, why the **Fourier-Transformation** even is relevant.
+
+---
+
+This article will look at the **Fourier-Series**. They give many options to research **periodic phenomens**.
+
+By using **Fourier-Transformation** the concept of the **Fourier-Series** can also be used on non-periodic phenomens, by letting the **period duration** approach infinity.
+The meaning of this is explained later.
+The **Fourier-Transformation** can also be looked at and understood without the **Fourier-Series**, but in this article will first explain the **Fourier-Series** and then transition towards the **Fourier-Transformation**.
+
+## Use-cases
+There are plenty of use-cases for **Fourier-Transformation** or more specifically the **FFT**.
+
+
+<br />
+
+
+| Use-cases                                      | in detail                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Signalprocessing (e.g. in the context of wifi) | Any form of digital signalprocessing works with waves transmitting certain information via special frequencies. Splitting **Time-Signals** into their frequency components is a very useful instrument to filter for specific frequencies or information. A detailed explanation will be given later.                                                                                                                                                           |
+| Radioastronomy                                 | In Radioastronomy radiowaves are used for observing _celestial objects_. The **Fourier-Transfomation** can be used to get the **Frequencyspectrum of the collected waves for researchin certain properties on them.                                                                                                                                                                                                                                             |
+| Electrocardiography                            | An electrocardiograph utilises changes in the electric potential to measure the heart's frequency and other information. A challenge are interfering electrical fields, which create a contant **noise**. It is possible to eliminate frequencies in the frequencyspectrum, which do not belong to the heartrate and by this minimising the noise. This idea of reducing the _Background Noise_ can also be used in many other areas (e.g. in radartechnology). |
+| Seismology                                     | One field of seismology concerns the detection of underground explosons. By creating a **Frequencyspectrum** on measured seismic waves, distinctive frequencies can indicate different seismic phenomens. In fact the development of the **FFT** algorithm was developed to monitor underground atomic bomb tests in the cold war ([interesting content about this](https://www.youtube.com/watch?v=nmgFG7PUHfo)).                                              |
+| Filecompression                                | Sometimes it can be irrelevant to save parts in audiofiles, that humans can not perceive. This is why frequencies, which are not heard by humans, can be filtered out to minimise the filesize of an audiofile. The **Frequencyspectrum** of the signal is used to achieve this. **Fourier-Transfomation** also can be used in **image compression**. Here the signal is not viewed on a time axis but as a _spacial_ signal over the pixels.                   |
+
+
+## Problem
+
+To show the advantages of **Fourier-Serieses** and **Fourier-Transfomation** properly, **trigonometric functions** (to be more precise $\sin$) with different parameters are summated.
+We get a function, which is made out of the overlayed $\sin$ functions.
+Infering the entered parts by hand is very difficult.
+
+Here you can try seperate the $\color{red}\text{resulting function}$ into seperate $\sin$-terms by hand.
+
+<WaveSummationInverted
+  fixedCoordinates={[
+    [2, 3],
+    [0.5, 0.2],
+    [1, 1],
+    [5, 2],
+    [7, 1],
+    [0.1, 0.05],
+  ]}
+/>
+
+This means a _mathmatical instrument_ has to be created, which can do this seperation into **frequency parts**.
+
