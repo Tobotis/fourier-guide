@@ -35,10 +35,12 @@ export default {
       <meta property="title" content="Fourier Guide" />
       <meta name="theme-color" content="#ffffff" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta httpEquiv="Content-Language" content="de" />
-      <meta name="description" content="Fourier Guide - Eine Einführung" />
-      <meta name="og:description" content="Fourier Guide - Eine Einführung" />
+      <meta httpEquiv="Content-Language" content="en" />
+      <meta name="description" content="Fourier Guide - An introduction" />
+      <meta name="og:description" content="Fourier Guide - An introduction" />
       <meta name="apple-mobile-web-app-title" content="Fourier Guide" />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:image" content={'/fourier-guide.png'} />
     </>
   ),
   //primaryHue: 299,
@@ -94,7 +96,8 @@ export default {
   sidebar: { defaultMenuCollapseLevel: 0 },
   useNextSeoProps() {
     return {
-      titleTemplate: '%s – Fourier Guide',
+      titleTemplate: '%s',
+      description: 'interactive introduction to the Fourier-Transform',
     }
   },
   i18n: [
