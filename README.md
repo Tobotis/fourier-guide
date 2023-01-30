@@ -1,3 +1,4 @@
+![](./public/fourier-guide.png)
 # Fourier Guide
 ## Steps to start
 1. `yarn install`
