@@ -1,3 +1,187 @@
 import { Callout } from 'nextra-theme-docs'
 
-<Callout emoji="🌎">Translation missing (German $\to$ English)</Callout>
+import InteractiveSin from '../../components/InteractiveSin.tsx'
+import QuestionAnswer, { Answer } from '../../components/QuestionAnswer.tsx'
+import SampleAddition from '../../components/SampleAddition'
+import WaveSummation from '../../components/WaveSummation'
+import UnitCircle from '../../components/UnitCircle'
+import FrameMafs from '../../components/FrameMafs'
+import ComplexExponentialsSum from '../../components/ComplexExponentialsSum.tsx'
+
+
+#Periodic functions
+
+On the way of discovering the [**Fourier-Transform**](./3-fourier-transform) there are some stations to be looked at; for example the [**Fourier-Series**](./2-fourier-series). But as a basis the mathmatical Sine and Cosine functions will be looked at.
+
+## Periodicity of Sine and Cosine
+
+The very basic connection between mathmatics and **periodic phenomena** are the periodic functions of $\sin$ and $\cos$.
+But why are the $\sin$ and $\cos$ periodic in the first place?
+The periodicity of $\sin$ and $\cos$ is based on the rotational symmetry of a circle.
+When moving on the edge of an circle, one ends up at the same point again after a while.
+For a circle with a radius of $r = 1$ the cirumference is given by $U=2 \pi$. So $\sin$ and $\cos$ are periodic with a period length of $2\pi$. This lets to follow:
+
+$$
+\sin(t) = \sin(t+2\pi) \qquad \text{and}\qquad \cos(t) = \cos(t+2\pi)
+$$
+
+<FrameMafs>
+  <UnitCircle />
+</FrameMafs>
+
+<Callout>
+    The vertical depiction of $\cos$ is only used to make the connection to the unit circle clear. {' '}
+</Callout>
+
+A **harmonic oscillation** can therefore be created. An extensive trigonometric definition of the $\sin$ and $\cos$ functions will be left out.
+
+<Callout type="info" emoji="📚">
+  [Wikipedia: Sine and
+  cosine](https://en.wikipedia.org/wiki/Sine_and_cosine)
+</Callout>
+
+## Complicated behaviour out of simple functions
+
+### Parametervariation
+
+There are different ways of modulating Sine- and Cosineterms, which probably are already familiar from mathmatics in school:
+
+$$
+f(t) = A \sin(\omega t + \Delta \varphi) \qquad \text{and} \qquad f(t) = A \cos(\omega t + \Delta \varphi)
+$$
+
+We have:
+
+<br/>
+<div align="center">
+
+| Parameter        | Meaning                                                     |
+| -----------------|------------------------------------------------------------ |
+| $\Delta \varphi$ | Phaseshifting                                               |
+| $\omega$         | Angular frequency (radian per time) with $\omega = 2 \pi f$ |
+| $A$              | Amplitude                                                   |
+
+</div>
+____
+In the following example the parameters can be varied:
+
+<InteractiveSin />
+
+
+<QuestionAnswer>
+  <>For which phaseshift $\Delta \varphi$ do we have $A \cdot \sin(\omega t + \Delta \varphi) = A \cdot \cos(\omega t)$?</>
+  <Answer>$\Delta \varphi = -\frac{\pi}{2}$</Answer>
+  <Answer>$\Delta \varphi = \pi$</Answer>
+  <Answer correct={true}>$\Delta \varphi = \frac{\pi}{2}$</Answer>
+  <Answer>$\Delta \varphi = - \pi$ </Answer>
+  <Answer>There is no $ \Delta \varphi$, which lets the equation be true.</Answer>
+</QuestionAnswer>
+So the $\sin$ and $\cos$ functions can be broadly modified.
+
+In the following
+
+$$
+\sin (2 \pi f t + \Delta \varphi) \qquad \text{ and }  \qquad \cos (2 \pi f t + \Delta \varphi)
+$$
+
+will be the used forms.
+This holds the advantage , that the frequency $f$ can be directly seen from the equation, which allows to determine the number of periods per time span.
+Thereover it is relevant to know $f=\frac{1}{T}$, with $T$ as the time per period (period length).
+
+### Combining periodic functions
+To modulate complex periodic processes, it seems intuitiv to combine multiple periodic functions.
+For example a simple **addition** of the functions values could come to mind.
+Multiple $\sin$-Functions could be summed.
+For example:
+
+$$
+g(t) = \sin(2 \pi \cdot t) + 2 \sin (2 \pi \cdot 2t)+  \sin(2 \pi \cdot 9t)
+$$
+
+<SampleAddition />
+
+<QuestionAnswer>
+  <>Which frequency does this periodic function have?</>
+  <Answer>$f= 2 Hz$</Answer>
+  <Answer correct={true}>$f=1 Hz$</Answer>
+  <Answer>$f=9 Hz$</Answer>
+</QuestionAnswer>
+
+---
+
+The frequency of the resulting periodic function must be the **largest common divisor** of the input frequencies, because the periodic _overall process_ can only happen, if all periodic _single processes_ repeat at the same time.
+
+<Callout>
+    The largest common divisor is the largest number, which can be used to devide two or more numbers.
+    This is resembled by: $\text{ggT}(a,b)$
+</Callout>
+
+<QuestionAnswer>
+  <>
+    Which base frequency does the resulting periodic function have, if the component's frequencies are: $4Hz$,$6Hz$,$8Hz$?
+  </>
+  <Answer correct={true}>$f=2 Hz$</Answer>
+  <Answer>$f=3 Hz$</Answer>
+  <Answer>$f=4 Hz$</Answer>
+</QuestionAnswer>
+
+In addition the phase shift of each term can be modified to, but this will not be looked at.
+
+---
+
+So the various components of the oscillation have frequencies, which are multiples of a certain **base frequency** $f_0$.
+This **base frequency** is the frequency of the resulting periodic phenomenon, which consists of the multiple added oscillation components.
+
+#### Introducing the Capital-sigma notation
+
+There is a more compact notation for the addition of the Sine-Terms:
+
+$$
+\begin{equation}
+f(t) = \frac{A_0}{2} + \sum_{k=1}^n A_k \cdot \sin(2 \pi k  f_0  \cdot t+ \Delta \varphi_k)
+\end{equation}
+$$
+
+whereas $A_k$ stands for the amplitude and $\Delta \varphi_k$ is the phaseshift of the $k$-th Sine-Term.
+
+<Callout>
+    The summation symbol $\sum_{(k = 1)}^n g(k)$ means, that the following term of $g(k)$ with all values of $k$ from $1$ to $n$ will be summed.
+    This implies for example (with $g(k)=k$):  $$ \sum_{(k = 1)}^n k = 1 + 2 + ... + n $$
+</Callout>
+
+
+It is important, that the different frequencies $k \cdot f_0$ are natural multiples of a **base frequency** $f_0$.
+The name of the function may be a little bit awkward, when discussing frequencies, which are also resembled by $f$.
+
+Additionally the term $\frac{A_0}{2}$ is often added.
+A shift on the $y$-axis is made possible by it.
+This is relevant for example, when the average values of a modulated periodic phenomenon are above the $x$-axis.
+
+<QuestionAnswer>
+  <>
+    How should the parameter $A_k$ of the Capital-sigma notation be chosen, to resemble the displayed function above ( $g(t) = \sin(2 \pi \cdot t) + 2
+    \sin (2 \pi \cdot 2t)+ \sin(2 \pi \cdot 9t)$ )?
+  </>
+  <Answer>$A_k = 0$, except for $A_1 = 1, A_2 = 1,A_9 = 1$</Answer>
+  <Answer correct={true}>$A_k = 0$, except for $A_1 = 1, A_2 = 2,A_9 = 1$</Answer>
+  <Answer>all $A_k = 1$</Answer>
+</QuestionAnswer>
+
+Convince yourself that any sum of $\sin$ terms can be expressed by $(1)$.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<Callout emoji="🌎">Translation in progress (German $\to$ English)</Callout>
