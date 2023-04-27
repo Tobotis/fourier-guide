@@ -169,6 +169,47 @@ This is relevant for example, when the average values of a modulated periodic ph
 
 Convince yourself that any sum of $\sin$ terms can be expressed by $(1)$.
 
+### Angle sum identity
+
+There are some notations for the **sum expression** $(1)$, which are more convienient and are more frequently used.
+For solving the sum of $2 \pi k  f_0 \cdot t+ \Delta \varphi_k$ inside of the $\sin$, a relationship for the **sum of angles in a triangle** can be used:
+
+$$
+\sin(\alpha+ \beta) = \sin(\alpha)\cos(\beta) + \cos(\alpha)\sin(\beta)
+$$
+
+An in depth derivation of this relationship can be found at [**Sine-Angle-Sum**](../appendix/trigonometric-identities/1-sine-angle-sum).
+When applying this relationship unto the **sine-term** above and expanding the equation following applies:
+
+$$
+\begin{equation}
+\begin{split}
+A_k  \sin(2 \pi k f_0 t + \Delta \varphi_k) &= A_k (\sin(2 \pi k f_0 t) \cos(\Delta \varphi_k) + \sin(\Delta \varphi_k)\cos(2 \pi k f_0 t)) \\
+&= A_k \sin(2 \pi k f_0 t) \cos(\Delta \varphi_k) + A_k \sin(\Delta \varphi_k)\cos(2 \pi k f_0 t)
+\end{split}
+\end{equation}
+$$
+
+To simplify this the sum can be written in the form of:
+
+$$
+\begin{equation}
+f(t) = \frac{a_0}{2}+ \sum_{k=1}^n a_k \cdot \cos(2 \pi k f_0 t ) + b_k \cdot \sin(2 \pi k f_0 t)
+\end{equation}
+$$
+
+Given $a_0 = A_0$.
+
+<QuestionAnswer>
+  <>
+   For which $a_k$ and $b_k$ are the expressions $(1)$ and $(3)$ equal? (Use $(2)$).
+  </>
+  <Answer>$a_k = A_k \cdot \frac{\sin(\Delta \varphi_k)}{\cos(\Delta \varphi_k)}$ und $b_k = A_k \cdot \frac{\cos(\Delta \varphi_k)}{\sin(\Delta \varphi_k)}$</Answer>
+  <Answer correct={true}>$a_k = A_k \cdot \sin(\Delta \varphi_k)$ und $b_k = A_k \cdot \cos(\Delta \varphi_k)$</Answer>
+  <Answer >$a_k = A_k \cdot \cos(\Delta \varphi_k)$ und $b_k = A_k \cdot \sin(\Delta \varphi_k)$</Answer>
+</QuestionAnswer>
+
+
 
 
 
