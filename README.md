@@ -2,12 +2,7 @@
 
 # Fourier Guide
 
-A interactive guide to the **Fourier-Transform** on the basis of high-school knowledge.
-
-
-> The translation for english is missing 🤨 and the some pages are kind of slow and buggy... I will optimize this if I find time 
-> 
-> *Tobias Steinbrecher*
+A interactive guide to the **Fourier-Transform** on the basis of highschool knowledge.
 
 ## Authors
 
