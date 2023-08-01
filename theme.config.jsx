@@ -53,7 +53,6 @@ export default {
   },
   navigation: true,
   footer: true,
-  titleSuffix: false,
   editLink: {
     text: () => {
       const { locale } = useRouter()
@@ -93,13 +92,14 @@ export default {
     },
   },
   faviconGlyph: '𝓕',
-  sidebar: { defaultMenuCollapseLevel: 0 },
+  sidebar: { defaultMenuCollapseLevel: 1 },
   useNextSeoProps() {
     return {
       titleTemplate: '%s',
       description: 'interactive introduction to the Fourier-Transform',
     }
   },
+  primaryHue: {light: 239},
   i18n: [
     { locale: 'en', text: '🇬🇧 English' },
     { locale: 'de', text: '🇩🇪 Deutsch' },

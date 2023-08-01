@@ -1,0 +1,577 @@
+import { Callout } from 'nextra-theme-docs'
+
+# Komplexe Ebene
+
+import ComplexPlaneAdder from '../components/complex-numbers/ComplexPlaneAdder.tsx'
+import ComplexPlaneRotation from '../components/complex-numbers/ComplexPlaneRotation.tsx'
+import ComplexPowers from '../components/complex-numbers/ComplexPowers.tsx'
+import QuestionAnswer, { Answer } from '../components/general/QuestionAnswer.tsx'
+import MCQComponent from '../components/general/MultipleChoiceQuestion.tsx'
+import {Coordinates,Mafs,Plot,Text,Vector} from "mafs"
+import { BlockMath, InlineMath } from 'react-katex';
+
+import PolarCoordinates from '../components/complex-numbers/PolarCoordinates.tsx'
+
+
+## Neue Zahlensysteme
+
+Es ergibt sich eine Problematik, wenn man Gleichungen wie
+
+$$
+x^2 = -1
+$$
+
+mit den reellen Zahlen $\mathbb{R}$ lösen will.
+In der Schule lernt man, dass diese Gleichung keine Lösung hat. Sie ist äquivalent zum Problem, Nullstellen der Funktion $f(x)= x^2+1$ zu finden.
+
+Warum besitzt die Gleichung $x + 5 = 4$ aber ein Lösung?
+  
+Wenn man nur die positiven Zahlen betrachtet, dann gibt es keine Lösung. Es scheint uns dennoch logisch, dass es eine Lösung bei -1 gibt. Man geht benutzt hierbei also intuitiv negative Zahlen.
+Die Bedeutung dieser Lösung ist in der Realität jedoch auch fraglich: *Wie viele Äpfel bleiben übrig, wenn man 4 Äpfel hat und 5 weggenommen werden?*
+  
+Es ist eine Frage des Abstraktionsniveaus.
+Wenn man auf Probleme stößt, lässt sich einfach die Menge der betrachteten Zahlen erweitern. Auch wenn die *neuen* Zahlen nicht immer einen direkt nachvollziehbaren Realitätsbezug bieten (z.B. negative Anzahlen oder Längen).
+
+$$
+\mathbb{N} \rightarrow \mathbb{Z} \rightarrow \mathbb{Q} \rightarrow \mathbb{R} \rightarrow \text{ ? }
+$$
+
+Um eine Lösung für die obige Gleichung zu finden, lässt sich somit ein weiteres Zahlensystem einführen: $\mathbb{C}$ (die **komplexen Zahlen**).
+Diese werden auch als _imaginäre Zahlen_ bezeichnet, was jedoch ein problematischer Name ist. Die komplexen Zahlen haben tatsächlich unglaublich viele Anwendungen bei der Beschreibung von Phänomenen der **Realität**, was hoffentlich im Folgenden deutlich wird.
+
+## Die _imaginäre_ Einheit
+
+Um das Problem von $x^2 = -1$ zu lösen, gebe es also eine Zahl mit der Eigenschaft
+
+$$
+i = \sqrt{-1}
+$$
+
+Das scheint absurd, da es unserer Intuition widerspricht: Egal welche Zahl man quadriert, das Vorzeichen vom Ergebnis ist immer positiv.
+
+Man muss jedoch annehmen, dass $i$ nun mal genau so definiert ist, dass $i^2 = -1$. Die Zahl $i$ erscheint also zunächst irgendwie nicht wie eine *gewöhnliche* Zahl, welche ein Vorzeichen besitzt und auf dem Zahlenstrahl eingeordnet werden kann. Sie ist nun mal keine reelle Zahl ($i \notin \mathbb{R}$).
+
+Für das Erste ist es schwer, die Annahme $i^2 = -1$ zu akzeptieren. Im Verlauf erscheint dieser Schritt, des Definierens von $i$ als $\sqrt{-1}$ jedoch immer logischer.
+Mithilfe von $i$ lässt sich selbstverständlich auch jede andere negative Wurzel darstellen:
+
+$$
+\sqrt{-a} = \sqrt{a \cdot -1} = \sqrt{a} \cdot \sqrt{-1} = \sqrt{a} \cdot i
+$$
+
+Komplexe Zahlen können auch mit reellen Zahlen addiert werden. Was das bedeutet, bleibt weiterhin fraglich. Der Term $5+i$ beispielsweise, lässt sich jedoch nicht weiter vereinfachen. Er wird als komplexe Zahl betrachtet. Die allgemeine Form einer komplexen Zahl $z\in \mathbb{C}$ stellt sich dabei als $z=a+bi$ heraus.
+
+## Darstellung komplexer Zahlen
+
+Es folgt eine weitere absurde Annahme, welche zunächst beziehungslos zu $i=\sqrt{-1}$ scheint. Da wie bereits beschrieben, die _imaginäre_ Einheit $i$ irgendwie nicht auf dem Zahlenstrahl lokalisiert werden kann,
+betrachtet man die Zahlen nicht mehr als eindimensional, sondern erweitert die Zahlen um eine Dimension. Es existiert also nicht mehr ein **Strahl** an Zahlen, sondern eine **Ebene** (zweidimensional) an Zahlen.
+Jede Zahl kann durch einen Punkt bzw. Vektor auf dieser Ebene dargestellt werden:
+
+
+    <Mafs pan={false} viewBox={{ x: [-5, 5], y: [-3, 3]} }>
+      <Coordinates.Cartesian
+        yAxis={{
+          labels: (y) => {
+            return y.toString() + 'i'
+          },
+        }}
+      />
+      <Vector tip={[-3, 1]} weight={1}/>
+      <Text x={-3} y={1} attach="w" attachDistance={15}> 
+      {"i-3"} 
+      </Text>
+      <Vector tip={[2, -1]}  weight={1}/>
+      <Text x={2} y={-1} attach="n" attachDistance={30}>
+      {"2-i"}
+      </Text>
+      <Vector tip={[4, 0]} weight={1}/>
+      <Text x={4} y={0} attach="s" attachDistance={30}>
+        {"4"}
+      </Text>
+    </Mafs>
+
+Es ist weiterhin fraglich, was diese Zahlenebene mit der Definition der imaginären Einheit zutun hat. Wichtig ist, dass man auf dieser Zahlenebene jede komplexe Zahl darstellen kann. Selbstverständlich existieren weiterhin die reellen Zahlen ohne Einschränkungen. Drei Zahlen sind links durch Vektoren mit ihren Koordinaten gekennzeichnet.
+
+Ähnlich zum kartesischen Koordinatensystem, gibt es eine vertikale Achse und eine horizontale Achse, welche orthogonal zueinander sind.
+
+## Real- und Imaginärteil
+
+Man kann eine komplexe Zahl immer in einen **Realteil**
+und in einen **Imaginärteil** zerlegen. Die Namensgebung, ist auch hierbei, wie bereits herausgestellt, problematisch.
+Der **Realteil** von einer komplexen Zahl $z \in \mathbb{C}$ ($z=a+bi$) wird im Folgenden mit $\Re (a+bi)$ und der Imaginärteil $\Im (a+bi)$ in Frakturschreibweise abgekürzt. Häufig werden sie auch mit $\text{Re}(a+bi)$ und $\text{Im}(a+bi)$ abgekürzt.
+
+<MCQComponent
+  questionData={{
+    question: 'Was ist vermutlich $\\Re (5+2i)$?',
+    options: [
+      {
+        text: '$\\Re(5+2i) = 7$',
+        isCorrect: false,
+      },
+      {
+        text: "$\\Re (5+2i) = 5$",
+        isCorrect: true,
+      },
+      {
+        text: '$\\Re (5+2i) = 2$',
+        isCorrect: false,
+      },
+      {
+        text: '$\\Re (5+2i) = 2i$',
+        isCorrect: false,
+      },
+    ],
+  }}
+/>
+
+
+Der **Realteil** ist nach obiger geometrischer Interpretation, die horizontale Komponente der komplexen Zahl:
+
+$$
+
+\Re (a+bi) = a
+
+
+$$
+
+Der **Imaginärteil** ist nach obiger geometrischer Interpretation, die vertikale Komponente der komplexen Zahl:
+
+$$
+
+\Im (a+bi) = b
+
+
+$$
+
+Man kann sich die komplexe Zahlenebene also wie ein **kartesisches Koordinatensystem** vorstellen, in welchem jede komplexe Zahl $z \in \mathbb{C}$ die Koordinaten $(\Re (z ), \Im (z))$ besitzt.
+
+## Addition von komplexen Zahlen
+
+Im Folgenden lässt sich die Addition von komplexen Zahlen betrachten. Sie funktioniert genauso so wie man es wahrscheinlich erwartet.
+
+<ComplexPlaneAdder />
+<MCQComponent
+  questionData={{
+    question: 'Was ergibt $(2+2i)+ (-3+i)$?',
+    options: [
+      {
+        text: '$5+3i$',
+        isCorrect: false,
+      },
+      {
+        text: "$-1-3i$",
+        isCorrect: false,
+      },
+      {
+        text: '$-1+3i$',
+        isCorrect: true,
+      },
+   
+    ],
+  }}
+/>
+
+Die Addition von komplexen Zahlen ist also analog zur Addition von reellen Zahlen, bloß im zweidimensionalen Raum. Zum Einen addiert man die horizontalen Komponenten (den **Realteil**) und zum Anderen addiert man die vertikalen Komponenten (den **Imaginärteil**).
+
+Der Zusammenhang zwischen der aufgezeigten _geometrische_ Interpretation der komplexen Zahlen und der Definition der **imaginären Einheit** $i = \sqrt{-1}$ bleibt weiterhin fraglich.
+Dieser wird jedoch bei der Multiplikation von komplexen Zahlen sehr deutlich. Danach erscheint es logisch, warum man **imaginäre Einheit** auf einer neuen orthogonalen Achse platziert und eine neue Dimension hinzufügt.
+
+## Multiplikation von komplexen Zahlen
+
+### Rotation von Vektoren um den Ursprung
+
+Zunächst soll ein scheinbar bezugloses Phänomen betrachtet werden: die **Rotation** um $90°$ um den Ursprung:
+
+<ComplexPlaneRotation />
+
+Jeder Vektor bzw. Punkt auf der **komplexen Ebene** bzw. auch im **kartesischen Koordinatensystem** lässt sich um den Ursprung rotieren.
+
+<MCQComponent
+  questionData={{
+    question: "Welche Zahl ergibt sich, wenn man $-2+i$ um $90^{\\circ}$ gegen den Uhrzeigersinn um den Ursprung rotiert?",
+    options: [
+      {
+        text: '$2-i$',
+        isCorrect: false,
+      },
+      {
+        text: "$-2+1$",
+        isCorrect: false,
+      },
+      {
+        text: '$-1-2i$',
+        isCorrect: true,
+      },
+   
+    ],
+  }}
+/>
+
+Im Folgenden soll ein Punkt $(a,b) \in \mathbb{R}^2$ im **kartesischen Koordinatensystem** betrachtet werden.
+
+<Callout>
+  $\mathbb{R}^2$ enthält alle zweidimensionalen Punkte (bzw. *Tupel*) der reellen Zahlen. Man
+  schreibt auch $\mathbb{R} \times \mathbb{R} = \mathbb{R}^2$. Die Menge $\mathbb{R}^3$
+  ist die Menge aller $3$-dimensionalen Punkte mit reellen Zahlen; $\mathbb{R}
+  ^n$ die Menge der $n$-dimensionalen Punkte (bzw. *Tupel*) mit reellen Zahlen.
+</Callout>
+
+<MCQComponent
+  questionData={{
+    question: "Welcher Punkt bzw. Vektor ergibt sich, wenn man $(a,b) \\in \\mathbb{R}^2$ um $90^{\\circ}$ gegen den Urzeigersinn um den Ursprung rotiert?",
+    options: [
+      {
+        text: '$(-b,a)$',
+        isCorrect: true,
+      },
+      {
+        text: "$(-a,b)$",
+        isCorrect: false,
+      },
+      {
+        text: '$(b,a)$',
+        isCorrect: false,
+      },
+      {
+        text: '$(a,-b)$',
+        isCorrect: false,
+      },
+    ],
+  }}
+/>
+
+Wenn man einen Punkt $(a,b) \in \mathbb{R}^2$ somit vier mal um $90°$ um den Ursprung gegen den Uhrzeigersinn rotiert, müsste man wieder $(a,b)$ erhalten:
+
+$$
+(a,b) \xrightarrow{90°} (-b,a)\xrightarrow{90°} (-a,-b) \xrightarrow{90°} (b,-a) \xrightarrow{90°} (a,b)
+$$
+
+Wie bereits herausgestellt, ist die **komplexe Ebene** sehr ähnlich zum **kartesischen Koordinatensystem**. Die vertikale Achse beschreibt den Imaginärteil $\Im$ und die horizontale beschreibt den Realteil $\Re$.
+
+Wenn man eine **komplexe Zahl** $a+bi = z \in \mathbb{C}$ also um $90°$ gegen den Uhrzeigersinn um den Ursprung rotiert, müsste analog zum **kartesischen Koordinatensystem** Folgendes passieren:
+
+$$
+a+bi\xrightarrow{90°}-b+ai \xrightarrow{90°} -a-bi \xrightarrow{90°} b-ai \xrightarrow{90°}a+bi
+$$
+
+
+### Multiplikation mit der _imaginären_ Einheit
+
+Nun soll betrachtet werden, was unabhängig von der **geometrischen** Interpretation einer komplexen Zahl, passiert, wenn man komplexe Zahlen multipliziert.
+
+<MCQComponent
+  questionData={{
+    question: "Was müsste $i\\cdot (-2+i)$ ergeben? (Bedenke $i= \\sqrt{-1}$)",
+    options: [
+      {
+        text: '$-1+2i$',
+        isCorrect: false,
+      },
+      {
+        text: "$2-i$",
+        isCorrect: false,
+      },
+      {
+        text: ' $-2-i$',
+        isCorrect: false,
+      },
+      {
+        text: '$-1-2i$',
+        isCorrect: true,
+      },
+    ],
+  }}
+/>
+
+<MCQComponent
+  questionData={{
+    question: "Was müsste $i\\cdot (a+bi)$ ergeben? (Bedenke $i= \\sqrt{-1}$)",
+    options: [
+      {
+        text: '$b-ai$',
+        isCorrect: false,
+      },
+      {
+        text: "$b+ai$",
+        isCorrect: false,
+      },
+      {
+        text: '$-b+ai$',
+        isCorrect: true,
+      },
+      {
+        text: '$-a+bi$',
+        isCorrect: false,
+      },
+    ],
+  }}
+/>
+
+
+---
+
+Es fällt möglicherweise auf, dass durch die Multiplikation mit $i$ das gleiche passiert (wie bei der Rotation einer **komplexen Zahl** um $90°$ gegen den Uhrzeigersinn um den Ursprung).
+
+$$
+a+bi\xrightarrow{\cdot i}-b+ai \xrightarrow{\cdot i} -a-bi \xrightarrow{\cdot i} b-ai \xrightarrow{\cdot i}a+bi
+$$
+
+Die *Transformationen* sind also *äquivalent*.
+
+### Einklang zwischen Rotation und Multiplikation
+
+Die Multiplikation mit $i$ ist also äquivalent zu einer Rotation um $90°$ gegen den Uhrzeigersinn. Es macht also Sinn, dass man $i$ genau da platziert, wo die komplexe Zahl $z = 1 +0i$ landen würde, wenn man sie um $90°$ gegen den Uhrzeigersinn rotiert. Dieser Einklang von der **geometrischen Intuition** und der **algebraischen Lösung**, lässt sich noch weiter verallgemeinern.
+
+Wie bereits gezeigt wurde, wird jede komplexe Zahl bei Multiplikation mit $i$ um $90°$ gegen den Uhrzeigersinn rotiert.
+
+
+<MCQComponent
+  questionData={{
+    question: "Wie lässt sich eine Multiplikation mit $i^2$ geometrisch interpretieren?",
+    options: [
+      {
+        text: 'Rotation um $90^{\\circ}$ gegen den Uhrzeigersinn',
+        isCorrect: false,
+      },
+      {
+        text: "Rotation um $180^{\\circ}$ um den Uhrzeigersinn",
+        isCorrect: true,
+      },
+      {
+        text: 'Rotation um $270^{\\circ}$ um den Uhrzeigersinn',
+        isCorrect: false,
+      },
+    ],
+  }}
+/>
+
+<MCQComponent
+  questionData={{
+    question: "Wie lässt sich eine Multiplikation mit $i^{30}$ geometrisch interpretieren?",
+    options: [
+      {
+        text: 'Rotation um $90^{\\circ}$ gegen den Uhrzeigersinn',
+        isCorrect: false,
+      },
+      {
+        text: "Rotation um $180^{\\circ}$ um den Uhrzeigersinn",
+        isCorrect: true,
+      },
+      {
+        text: 'Rotation um $270^{\\circ}$ um den Uhrzeigersinn',
+        isCorrect: false,
+      },
+      {
+        text: 'Rotation um $0^{\\circ}$',
+        isCorrect: false,
+      },
+    ],
+  }}
+/>
+
+
+
+## Polarkoordinaten
+
+Um im Folgenden diese Verknüpfung zwischen Multiplikation und Rotation zu verallgemeinern, lässt sich eine neue Form für die **Repräsentation** der komplexen Zahlen einführen.
+
+Jede komplexe Zahl ist eindeutig durch ihren Realteil $\Re$ und ihren Imaginärteil $\Im$ bestimmt. Man kann sich nun überlegen, durch welche Informationen man eine komplexe Zahl ebenfalls eindeutig bestimmen kann.
+
+Im Folgenden wird eine Zahl $a+bi$ auf der **komplexen Ebene** und der zugehörige **Winkel** zwischen dem Vektor der komplexen Zahl und der _Realteil-Achse_ betrachtet:
+
+<PolarCoordinates />
+
+<MCQComponent
+  questionData={{
+    question: "Reicht der Winkel $\\vartheta$ zur eindeutigen Beschreibung eines Punktes aus?",
+    options: [
+      {
+        text: 'Ja',
+        isCorrect: false,
+      },
+      {
+        text: "Nein",
+        isCorrect: true,
+      },
+    ],
+  }}
+/>
+
+---
+
+Die Darstellung einer komplexen Zahl in Abhängigkeit des obigen Winkels, eignet sich zum Verständnis des bereits betrachteten Phänomens der **Rotation und Multiplikation**.
+
+Wenn nun die zusätzlich zu einem Winkel $\phi$ die Information über die Länge $r$ des Vektors bekannt ist, lässt sich jede komplexe Zahl mit dem Paar $(r,\phi)$ eindeutig beschreiben.
+
+Wenn $r$ und $\phi$ eine komplexe Zahl eindeutig beschreiben, muss die komplexe Zahl $a+bi$ selbstverständlich in Abhängigkeit dieser beiden Größen ausgedrückt werden können.
+Dies lässt sich mithilfe von **trigonometrische Zusammenhängen** umsetzen.
+
+<MCQComponent
+  questionData={{
+    question: "Wie lässt sich der Imaginärteil $b$ in Abhängigkeit von $\\phi$ und $r$ ausdrücken? (für $a+bi = z \\in \\mathbb{C}$)",
+    options: [
+      {
+        text: '$b=\\cos (r \\phi)$',
+        isCorrect: false,
+      },
+      {
+        text: "$b=r\\cos ( \\phi)$",
+        isCorrect: false,
+      },
+      {
+        text: "$b=\\sin (r \\phi)$",
+        isCorrect: false,
+      },
+      {
+        text: "$b=r \\sin (\\phi)$",
+        isCorrect: true,
+      }
+    ],
+  }}
+/>
+<MCQComponent
+  questionData={{
+    question: "Wie lässt sich der Realteil $a$ in Abhängigkeit von $\\phi$ und $r$ ausdrücken? (für $a+bi = z \\in \\mathbb{C}$)",
+    options: [
+      {
+        text: '$a=\\cos (r \\phi)$',
+        isCorrect: false,
+      },
+      {
+        text: "$a=r\\cos ( \\phi)$",
+        isCorrect: true,
+      },
+      {
+        text: "$a=\\sin (r \\phi)$",
+        isCorrect: false,
+      },
+      {
+        text: "$a=r \\sin (\\phi)$",
+        isCorrect: false,
+      }
+    ],
+  }}
+/>
+
+
+---
+
+Eine **komplexe Zahl** $z\in \mathbb{C}$ kann somit auch mit $\phi$ und $r$ als
+
+$$
+z = r \cos (\phi) + i r \cos (\phi) = r (\cos (\phi) + i \sin (\phi))
+$$
+
+ausgedrückt werden. Dies folgt nachdem die entsprechenden Repräsentationen für $a$ und $b$ eingesetzt wurden. 
+Diese Darstellung wird auch als **Polardarstellung** bezeichnet.
+Die **Polardarstellung** wird im Folgenden nützlich sein, um die Rotation von komplexen Zahlen wirklich zu verstehen. Bis jetzt wurde lediglich phänomenologisch erkannt, dass die Rotation um $90^\circ$ äquivalent zu einer
+Multiplikation mit $i$ ist.
+
+Der Term $\cos (\phi) + i \sin (\phi)$ wird im folgenden auch mit $\text{cis} (\phi)$ abgekürzt.
+Somit $z= r \text{cis} (\phi)$.
+
+Im Folgenden wird $r$ als **Betrag** und $\phi$ als **Polarwinkel** der komplexen Zahl $z$ bezeichnet.
+
+## Multiplikation von beliebigen komplexen Zahlen
+
+Zuvor wurde lediglich die Multiplikation von $i$ und einer beliebigen komplexen Zahl $z \in \mathbb{C}$ betrachtet und herausgestellt, dass die Multiplikation mit $i$, eine Rotation um $90°$ gegen den Uhrzeigersinn bewirkt.
+
+Eine gerechtfertigte Frage lautet nun, inwiefern dieses Verhalten beim multiplizieren von beliebigen komplexen Zahlen $z \in \mathbb{C}$ und $w \in \mathbb{C}$ auch auftritt.
+
+### Multiplikation in algebraischer Darstellung
+
+Wenn man die beiden Zahlen in der **algebraischen Darstellung** multipliziert folgt:
+
+$$
+z \cdot w = (a+bi) \cdot (c+di) = ac + bic + adi - bd
+$$
+
+Hieraus lässt sich noch kein eindeutiger Schluss über die Rotation ziehen.
+
+### Multiplikation mit Polardarstellung
+
+Seien $(r,\phi)$ die **Polarkoordinaten** von $z$ und $(s,\theta)$ die **Polarkoordinaten** von $w$.
+Bei Multiplikation in der **Polardarstellung** folgt (Mit **Distributiveigenschaft**):
+
+$$
+\begin{equation*}
+\begin{split}
+z \cdot w &= (r \cos(\phi) + ri \sin (\phi)) \cdot (s \cos (\theta) + si \sin (\theta))\\
+&= r \cos (\phi) \cdot s \cos (\theta) + ri \sin (\phi) \cdot s \cos (\theta)+ r\cos(\phi) \cdot si\sin(\theta) + r i^2 \sin (\phi) \cdot s \sin (\theta)\\
+&= rs (\cos (\phi) \cos (\theta) - \sin (\phi) \sin (\theta)) + rsi(\sin(\phi) \cos(\theta) + \cos ( \phi) \sin(\theta)) \\
+&\overset{*}{=} rs \cos(\phi + \theta) +rsi(\sin(\phi) \cos(\theta) + \cos ( \phi) \sin(\theta)) \\
+&\overset{**}{=} rs \cos(\phi + \theta) +rsi \sin(\phi + \theta) \\
+&= rs (\cos(\phi+\theta) + i \sin(\phi + \theta))\\
+&= rs \text{cis}(\phi + \theta)
+\end{split}
+\end{equation*}
+$$
+
+Bei $*$ wird die [Winkelsummenidentität für Kosinus (Herleitung)](./appendix/2-cosine-angle-sum) verwendet:
+
+$$
+\cos (\phi + \theta) = \cos(\phi) \cos(\theta) - \sin (\phi) \sin(\theta)
+$$
+
+Bei $**$ wird die [Winkelsummenidentität für Sinus (Herleitung)](./appendix/1-sine-angle-sum) verwendet:
+
+$$
+\sin (\phi + \theta) = \sin(\phi) \cos(\theta) + \sin (\theta) \cos (\phi)
+$$
+
+---
+
+Am Ergebnis der Multiplikation ist die Polardarstellung einer _neuen_ komplexen Zahl zu erkennen.
+Die komplexe Zahl $z\cdot w$ hat einen **Polarwinkel** von $\phi + \theta$ und der **Betrag** ist das Produkt der beiden Beträge von $z$ und $w$.
+
+## Folgerungen
+
+Aus der obigen Herleitung ist also zu erkennen, dass für die Multiplikation zweier komplexer Zahlen der Zusammenhang
+
+$$
+A \text{cis} (\phi) \cdot B \text{cis} (\theta) = AB \text{cis} (\phi + \theta)
+$$
+
+gilt.
+
+Damit lässt sich auch die zuvor betrachtete Multiplikation mit $i$ erklären. Die komplexe Zahl $z=i$ schließt einen Winkel von $\phi = 90°$ ein. Der zugehörige Vektor hat eine Länge von $1$.
+
+Bei Multiplikation mit einer beliebigen komplexen Zahl muss somit:
+
+$$
+1 \cdot \text{cis} (90°) \cdot B \text{cis} (\theta) = B \text{cis} (\theta + 90°)
+$$
+
+---
+
+Interessant ist zudem die Betrachtung von **Potenzen** komplexer Zahlen. Es handelt sich dabei um eine wiederholte Multiplikation von komplexen Zahlen.
+
+Im Folgenden lässt sich ausprobieren, wie sich die **Potenzen** einer komplexen Zahl $z$ verhalten.
+
+<ComplexPowers interactive={true} />
+
+<MCQComponent
+  questionData={{
+    question: "Was gilt allgemein für die Potenz einer komplexen Zahl $z^k$? (Bedenke $z =r \\text{cis} (\\phi)$ und den hergeleiteten Zusammenhang für die Multiplikation komplexer Zahlen)",
+    options: [
+      {
+        text: '$z^k = k \\cdot r \\text{cis} (\\phi^k)$',
+        isCorrect: false,
+      },
+      {
+        text: "$z^k = r^k \\text{cis} (k \\cdot \\phi)$",
+        isCorrect: true,
+      },
+      {
+        text: "$z^k = k \\cdot r \\text{cis} (k \\cdot \\phi)$",
+        isCorrect: false,
+      },
+      {
+        text: "$z^k = r^k \\text{cis} (\\phi^k)$",
+        isCorrect: false,
+      }
+    ],
+  }}
+/>
+
+
+Wichtig ist, dass die **Beträge** bei einer Multiplikation multipliziert, und die **Polarwinkel** addiert werden.

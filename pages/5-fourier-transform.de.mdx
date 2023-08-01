@@ -1,0 +1,586 @@
+import WaveCheck from '../components/WaveCheck.tsx'
+import MCQComponent from '../components/general/MultipleChoiceQuestion.tsx'
+import { Callout } from 'nextra-theme-docs'
+import {
+  Coordinates,
+  Mafs,
+  Plot,
+  Text,
+  Point,
+  Line,
+  LaTeX,
+} from 'mafs'
+
+
+# Fourier-Transformation
+
+## Verallgemeinerung der Fourier-Reihe
+
+Im Abschnitt über die [Fourier-Reihe](./2-fourier-series), wurde die **Fourier-Reihe** sowie ein Zusammenhang für die Ermittlung der **Fourier-Koeffizienten** hergeleitet.
+Dabei lässt sich zwischen der **Fourier-Reihe** zur **Synthese** einer Funktion $f(t)$ mit bekannten **Koeffizienten** $c_k$,
+
+$$
+f(t) = \sum_{k=-\infty}^{\infty} c_k e^{\frac{2 \pi i}{T} k t }
+$$
+
+und der **Analyse** einer Funktion $f(t)$, bzw. das _Herausfinden_ der **Fourier-Koeffizienten** unterscheiden:
+
+$$
+c_k = \frac{1}{T}\int_0^{T} f(t) e^{\frac{-2 \pi i k}{T} t} dt
+$$
+
+---
+
+Es gibt also zwei Vorgehensweisen, welche bis jetzt bekannt sind:
+
+- **Fourier-Analyse** einer Funktion $f(t)$ (das _Zerlegen_ in die Koeffizienten)
+- **Fourier-Synthese** einer Funktion $f(t)$ (das _Wiederherstellen_ über bekannte Koeffizienten)
+
+Beide Vorgehensweisen lassen sich auch für nicht-periodische Funktionen verallgemeinern.
+Die Verallgemeinerung der **Fourier-Analyse** ist dabei die **Fourier-Transformation** und die Verallgemeinerung der **Fourier-Synthese** die **Inverse-Fourier-Transformation**.
+
+### Frequenzbereich vs. Zeitbereich
+
+Eine der wichtigsten Erkenntnisse ist die Unterscheidung zwischen **Frequenzbereich** und **Zeitbereich**.
+Die **Fourier-Koeffizienten** beschreiben letztendlich die Ausprägung des Beitrags der jeweilige zugrhörigen Frequenz.
+
+Im sogenannte **Frequenzbereich** werden die **Beträge** der Koeffizienten in Abhängigkeit der zugehörigen Frequenzen dargestellt.
+Es ist relevant, den Betrag zu nehmen, da es sich bei den Koeffizienten um [komplexe Zahlen](../appendix/complex-numbers/1-complex-plane) handelt.
+
+Der **Frequenzbereich** könnte beispielsweise so aussehen:
+
+  <Mafs pan={false} viewBox={{y:[-1,4]}}>
+    <Coordinates.Cartesian xAxis={{ labels: false }} />
+    <Point x={2} y={2} />
+    <Line.Segment style="dashed" point1={[2, 0]} point2={[2, 2]} />
+    <Point x={-2} y={2} />
+    <Line.Segment style="dashed" point1={[-2, 0]} point2={[-2, 2]} />
+    <Point x={0} y={0.2} />
+    <Line.Segment style="dashed" point1={[0, 0]} point2={[0, 0.2]} />
+    <Point x={1} y={1.2} />
+    <Line.Segment style="dashed" point1={[1, 0]} point2={[1, 1.2]} />
+    <Point x={-1} y={1.2} />
+    <Line.Segment style="dashed" point1={[-1, 0]} point2={[-1, 1.2]} />
+    <Point x={3} y={0} />
+    <Point x={-3} y={0} />
+    <Point x={4} y={3} />
+    <Line.Segment style="dashed" point1={[4, 0]} point2={[4, 3]} />
+    <Point x={-4} y={3} />
+    <Line.Segment style="dashed" point1={[-4, 0]} point2={[-4, 3]} />
+    <Point x={5} y={1} />
+    <Line.Segment style="dashed" point1={[5, 0]} point2={[5, 1]} />
+    <Point x={-5} y={1} />
+    <Line.Segment style="dashed" point1={[-5, 0]} point2={[-5, 1]} />
+      <LaTeX tex="|c_1| =  1.2" at={[1,1.5]} />
+      <LaTeX tex="|c_{-1}| =  1.2" at={[-1,1.5]} />
+      <LaTeX tex="|c_2| = 2" at={[2,2.3]} />
+      <LaTeX tex="|c_{-2}| = 2" at={[-2,2.3]} />
+      <LaTeX tex="|c_3| = 0" at={[3,0.3]}/>
+      <LaTeX tex="|c_{-3}| = 0" at={[-3,0.3]}/>
+      <LaTeX tex="|c_4| = 3" at={[4,3.3]}/>
+      <LaTeX tex="|c_{-4}| = 3" at={[-4,3.3]}/>
+      <LaTeX tex="|c_{-5}| = 1" at={[-5,1.3]}/>
+      <LaTeX tex="|c_{5}| = 1" at={[5,1.3]}/>
+      <LaTeX tex="|c_{0}| = 0.2" at={[0,0.5]}/>
+      <LaTeX tex="\frac{5}{T}" at={[5,-0.3]}/>
+      <LaTeX tex="\frac{-5}{T}" at={[-5,-0.3]}/>
+      <LaTeX tex="\frac{4}{T}" at={[4,-0.3]}/>
+      <LaTeX tex="\frac{-4}{T}" at={[-4,-0.3]}/>
+      <LaTeX tex="\frac{-3}{T}" at={[-3,-0.3]}/>
+      <LaTeX tex="\frac{3}{T}" at={[3,-0.3]}/>
+      <LaTeX tex="\frac{2}{T}" at={[2,-0.3]}/>
+      <LaTeX tex="\frac{-2}{T}" at={[-2,-0.3]}/>
+      <LaTeX tex="\frac{-1}{T}" at={[-1,-0.3]}/>
+      <LaTeX tex="\frac{1}{T}" at={[1,-0.3]}/>
+  </Mafs>
+
+Diese Darstellung wird auch **Frequenzspektrum** genannt. Interessant ist hierbei die Symmetrie, welche aus der Bedingung der **komplexen konjugierten Zahlen** resultiert ($c_{-k} = \overline{c}_k$ für $k\leq 0$)
+Im **Frequenzbereich** lassen sich also die Beiträge der verschiedenen Frequenzen betrachten. Wichtig ist, dass der Abstand auf der horizontalen Achse jeweils $\frac{1}{T}$ entspricht.
+
+Im **Zeitbereich**, was der Darstellung des Signals in Abhängigkeit der Zeit bedeutet, folgt:
+
+  <Mafs pan={false} xAxisExtent={[-3, 3]}>
+    <Plot.OfX
+      y={(x) =>
+        0.2 +
+        0.6 * Math.sin(Math.PI * x) +
+        Math.sin(Math.PI * 2 * x) +
+        1.5 * Math.sin(Math.PI * 4 * x) +
+        0.5 * Math.sin(Math.PI * 5 * x)
+      }
+      quality="high"
+    />
+    <Coordinates.Cartesian xAxis={{ labels: (x) => 0.5 * x + 'T' }} />
+  </Mafs>
+
+Dabei ist relevant, dass die Funktion nur **reelle** Funktionswerte, aufgrund der Eigenschaft der **kojugierten Komplexen Zahlen** $c_k$ und $c_{-k}$, annimmt.
+Es muss sich zudem nicht unbedingt um einen **Zeitraum** handelt. Es kann sich beispielsweise auch um eine Periodizität im Raum handeln.
+
+Die obige Funktion im **Zeitbereich** entspricht:
+
+$$
+ f(t) = 0.2+0.6\sin \left(2 \pi \frac{1}{T} t\right) + \sin \left(2 \pi \frac{2}{T} t\right) + 1.5 \sin \left(2 \pi \frac{4}{T} t\right) + 0.5 \sin \left(2 \pi \frac{5}{T} t\right)
+$$
+
+Wenn man die **Fourier-Koeffizienten** von $f(t)$ bestimmt, erhält man die obige Darstellung im **Frequenzbereich**.
+
+Wichtig ist, dass sich eine Funktion $f(t)$ mithilfe der **Fourier-Analyse** vom **Zeitbereich** in den **Frequenbereich** _transformieren_ lässt.
+Mit der **Fourier-Synthese** lässt sich eine Funktion $g(\frac{k}{T})$ (Abhängig von einer Frequenz) vom **Frequenbereich** in den **Zeitbereich** _transformieren_.
+
+<MCQComponent
+  questionData={{
+    question: "Was folgt für die Darstellung der Funktion im Frequenbereich, wenn $T$ größer wird?",
+    options: [
+      {
+        text: 'Die Breite Frequenzspektrum ändert sich nicht',
+        isCorrect: false,
+      },
+      {
+        text: "Das Frequenzspekturm wird schmaler",
+        isCorrect: true,
+      },
+      {
+        text: "Das Frequenzspektrum wird breiter",
+        isCorrect: false,
+      },
+    ],
+  }}
+/>
+
+---
+
+Dadurch, dass die Frequenz invers zur Periodendauer $T$ ist, folgt, dass wenn $T$ größer wird, die Frequenzen kleiner werden. Wenn man von der Idee einer _unendlichen_ Periodendauer ausgeht, rücken die Frequenzen also _unendlich_ nah zusammen, da der Unterschied zwischen zwei Frequenzen im Frequenzspektrum wie beschrieben $\frac{1}{T}$ beträgt.
+
+Das Verständis dieses **inversen** Zusammenhangs zwischen den beiden **Bereiche** wird in Bezug auf eine _unendliche_ Periodendauer relevant: Je länger die länger die Periodendauer und somit _breiter_ der Zeitbereich, desto _enger_ wird das Frequenzspektrum.
+
+## Unendliche Periodendauer
+
+Das Ziel ist es also, den Zusammenhang
+
+$$
+c_k = \frac{1}{T}\int_0^{T} f(t) e^{\frac{-2 \pi i k}{T} t} dt
+$$
+
+für $T\to \infty$ zu verallgemeinern um die bekannten Techniken auch auf nicht-periodische Phänomene anzuwenden.
+
+Für spätere Zwecke wird das Integral mit den Grenzen $0$ und $T$ zu einem Integral mit den Grenzen $-\frac{T}{2}$ und $\frac{T}{2}$ geändert.
+Da man lediglich den durchschnittlichen Wert innerhalb einer ganzen Periode berechnet, macht es keinen Unterschied, _wann_ diese Periode _stattfindet_:
+
+$$
+c_k = \frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) e^{\frac{-2 \pi i k}{T} t} dt
+$$
+
+Für das Verständis ist es womöglich nützlich, nochmal auf die vorherige Interpretation dieser Berechnung zurückzublicken:
+
+1. Die Funktion $f(t)$ wird als eine Addition von Zeigern (auf der **komplexe Ebene**) zu betrachtet.
+2. Durch die Multiplikation mit $e^{\frac{-2 \pi i k}{T} t}$ wird die Rotation mit einer Frequenz von $\frac{k}{T}$ von allen Zeigern _subtrahiert_.
+3. Dadurch ist es sicher, dass alle Zeiger rotieren, außer jener, welcher zuvor mit einer Frequenz von $\frac{k}{T}$ rotierte.
+4. Der nicht rotierende Zeiger trägt als einziger zur _Verschiebung_ der Funktionswerte von Urpsrung bei.
+5. Der durchschnittliche Wert von $f(t) \cdot e^{\frac{-2 \pi i k}{T} t}$ in einer Periode, entspricht dieser Verschiebung vom Urpsrung und somit der Position des stehenden Zeigers ($c_k$)
+
+### Problem mit den Koeffizienten
+
+Bei der Berechnung des Durchschnitt des Terms in einer Periode $f(t) \cdot e^{\frac{-2 \pi i k}{T} t}$ ergibt sich jedoch ein Problem. Da man mit dem Vorfaktor $\frac{1}{T}$ multipliziert und $T \to \infty$ gelten soll, folgt, dass $c_k \to 0$.
+
+<Callout>
+Dadurch, dass $f(t)$ auf einem endlichen Intervall $[a,b]$ definiert ist, folgt mit der [**Dirichlet-Bedingung**](https://en.wikipedia.org/wiki/Dirichlet%E2%80%93Jordan_test):
+$$
+\left|\int_{a}^{b} f(t) e^{\frac{-2 \pi i k}{T}t} dt \right| < \int_{a}^{b} |f(t)| dt < \infty \Rightarrow \int_{a}^{b} |f(t)| dt = X
+$$
+Der Koeffizient $c_k$ würde aufgrund von $\frac{1}{T}$ somit gegen $0$ gehen, wenn $T \to \infty$. 
+Auf diese Bedingung wurde bereits in [*Fourier-Reihen*](./2-fourier-series#unendliche-anzahl-von-termen) hingewiesen.
+
+$$
+\lim_{T \to \infty} \frac{1}{T} \cdot X = 0
+$$
+
+</Callout>
+
+Es funktioniert also nicht, wenn man einfach $T \to \infty$ auf den Zusammenhang für die **Fourier-Koeffizienten** anwendet.
+
+### Lösungsidee
+
+Um die obige [Problematik](#problem-mit-den-koeffizienten) zu umgehen, lässt sich der Faktor $\frac{1}{T}$ aus dem Term
+
+$$
+c_k = \frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) e^{\frac{-2 \pi i k}{T} t} dt
+$$
+
+irgendwie entfernt werden. Man könnte $\frac{1}{T}$ zum Beispiel erst wieder bei der **Fourier-Synthese** hinzuzufügen.
+Es scheint zunächst so, als würde man das Problem damit nur verlagern, jedoch ergibt sich dadurch ein neuer interessanter Zusammenhang.
+
+### Neue Notation
+
+Da man nun den Faktor $\frac{1}{T}$ aus dem **Fourier-Analyse** Zusammenhang weglässt, wird eine neue Notation eingeführt. Was dieses Weglassen des Faktors $\frac{1}{T}$ bedeutet, wird später deutlich.
+Man bezeichne eine Funktion $\hat{f}$ mit dem bekannten Zusammenhang:
+
+$$
+\hat{f}\left(\frac{k}{T}\right) = \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) e^{\frac{-2 \pi i  k}{T} t} dt
+$$
+
+Diese Funktion ist abhängig von der Frequenz $\frac{k}{T}$ und beschreibt wie zuvor, den komplexen Wert des Koeffizienten, jedoch ohne den Vorfaktor $\frac{1}{T}$.
+
+Für die **Fourier-Synthese** durch _Auslagerung_ des Faktors $\frac{1}{T}$:
+
+$$
+f(t) = \sum_{k=-\infty}^{\infty} \hat{f}\left(\frac{k}{T}\right) e^{\frac{2 \pi i k}{T} t } \frac{1}{T}
+$$
+
+### $T$ geht gegen unendlich
+
+**Was passiert nun, wenn man $T$ gegen $\infty$ gehen lässt?**
+
+Relevant ist der Quotient $\frac{k}{T}$, welcher aus zwei Variablen besteht, welche gegen unendlich laufen ($k$ ist eine beliebige ganze Zahl).
+Dadurch, dass $k$ nur ganze Zahlen annimmt, was von der Idee ausgeht, dass man ganzzahlige Vielfache einer bestimmten Grundfrequenz hat, handelt es sich bei den verschiedenen $\frac{k}{T}$ für ein endliches $T$ um eine diskrete Größe (abzählbar).
+Wie oben beschrieben wird jedoch der Abstand zwischen zwei verschiedenen ganzzahligen Vielfachen $\frac{k}{T}$ und $\frac{k+1}{T}$ immer kleiner, wenn $T$ größer wird (inverser Zusammenhang zwischen **Frequenzbereich** und **Zeitbereich**).
+Dies ist kein mathematischer Beweis, jedoch lässt sich sagen, dass wenn nun $T\to \infty$, ein **kontinuierliches** Frequenzspektrum entsteht. Sei diese Frequenz $\xi$ (_xi_) (um Verwechslungen mit $f$ und $\hat{f}$ zu vermeiden):
+
+$$
+\lim_{T \to \infty} \frac{k}{T} = \xi
+$$
+
+Es folgt somit für die **Fourier-Analyse** bzw. nun die **Fourier-Transformation**:
+
+$$
+\hat{f}(\xi) = \int_{-\infty}^{\infty} e^{- 2 \pi i \xi t} f(t)  dt
+$$
+
+Diesen Zusammenhang findet man genau so im [englischen Wikipedia-Artikel](https://en.wikipedia.org/wiki/Fourier_transform) über die **Fourier-Transformation**.
+Das Integral wird zu einem _uneigentlichen_ Integral. Die Eigenschaft $\int_{-\infty}^{\infty} |f(t)| dt < \infty$ wird also relevant, da sonst das _uneigentliche Integral_ nicht existieren würde. Dies wird jedoch in diesem Artikel nicht weiter diskutiert.
+
+Interessant ist auch die Veränderung der **Fourier-Reihe**:
+
+$$
+\begin{equation*}
+\begin{split}
+f(t) &= \lim_{T \to \infty} \sum_{k=-\infty}^{\infty} \hat{f}\left(\frac{k}{T}\right) e^{\frac{2 \pi i k}{T} t } \frac{1}{T}\\
+f(t) &=  \int_{-\infty}^{\infty} \hat{f}(\xi) e^{2 \pi i \xi t } d\xi\\
+\end{split}
+\end{equation*}
+$$
+
+Die Unterschiede zwischen zwei Frequenzen $\frac{1}{T}$ werden unendlich klein. Aus diesem Grund wird die _diskrete_ Summe, zu einem _kontinuierlichen_ Integral. Die Unterschiede in $\xi$ sind unendlich klein ($d \xi$).
+Dieser Zusammenhang wird auch als **inverse Fourier-Transformation** bezeichnet (Es lässt sich aus $\hat{f}(\xi)$, $f(t)$ synthetisieren).
+
+Im Folgenden soll jedoch vor allem die **Fourier-Transformation** betrachtet werden:
+
+$$
+\hat{f}(\xi) = \int_{-\infty}^{\infty} e^{- 2 \pi i \xi t} f(t)  dt
+$$
+
+Es ist womöglich noch nicht ganz klar, wie sich $\hat{f}(\xi)$ verhält. Der Zusammenhang für die sogenannte **Fourier-Transfomation** von $f(t)$, welche hier als $\hat{f}(\xi)$ bezeichnet wird, wurde zwar algebraisch aus dem Zusammenhang der **Fourier-Koeffizienten** hergeleitet, durch das Entfernen
+des Vorfaktors $\frac{1}{T}$ und die _unendliche_ Periodendauer, geht womöglich die ursprüngliche Intuition über die **Fourier-Koeffizienten** etwas verloren.
+
+Man sollte etwas skeptisch gegenüber der obigen Herleitung sein, da das studierte Konzept der **Fourier-Reihe** erweitert wurde, ohne die Interpretation der Zeigerdarstellung o.Ä. fortzusetzen.
+Zudem erfolgte die Herleitung womöglich etwas zu schnell.
+
+## Beispielanwendung
+
+Häufig hilft ein Beispiel um ein neues Konzept nachzuvollziehen.
+
+Die **Fourier-Transfomation** ermöglicht es ähnlich wie die **Fourier-Koeffizienten**, eine gegebene Funktion aus dem **Zeitbereich** in den **Frequenbereich** zu überführen.
+Dabei ist das **Frequenzspektrum** welches aus der **Fourier-Transfomation** resultiert, jedoch kontinuierlich.
+
+Für die **Fourier-Transfomation** wurde hergeleitet:
+
+$$
+\hat{f}(\xi) = \int_{-\infty}^{\infty} e^{- 2 \pi i \xi t} f(t)  dt
+$$
+
+Nun wird folgende Beispielfunktion betrachtet:
+
+$$
+f(t) =
+\begin{cases}
+\sin(2 \pi \cdot \frac{t}{4}) & \text{wenn } -6<t<6\\
+0 & \text{sonst }
+\end{cases}
+$$
+
+Es handelt sich hierbei um ein zwar nicht-periodisches Signal, welches jedoch im definierten Bereich einer $\sin$-Funktion entspricht.
+
+### Aufstellen des Integrals
+
+Man wende also nun die **Fourier-Transfomation** auf $f(t)$ an, um eine Repräsentation von $f(t)$ im **Frequenbereich** zu erhalten.
+
+$$
+\hat{f}(\xi) = \int_{-\infty}^{\infty} e^{- 2 \pi i \xi t} f(t)  dt
+$$
+
+
+<MCQComponent
+  questionData={{
+    question: "Welchen Wert nimmt das Integral im Bereich $[6,\\infty]$ und $[-\\infty,-6]$ an?",
+    options: [
+      {
+        text: '$0$',
+        isCorrect: true,
+      },
+      {
+        text: "$1$",
+        isCorrect: false,
+      },
+      {
+        text: "$\\infty$$",
+        isCorrect: false,
+      },
+      {
+        text: "\\pi",
+        isCorrect: false,
+      }
+    ],
+  }}
+/>
+
+
+
+Da $f(t)$ außerhalb des Intervalls $]-6,6[$ $0$ ist, folgt, dass auch das Integral in diesem Bereich $0$ ist.
+
+### Visualisierung des Integrals
+
+Um $\hat{f}(\xi)$ besser nachzuvollziehen, kann man das Integral über $e^{- 2 \pi i \xi t} f(t)$ genauer betrachten. 
+Dies lässt sich als eine Berechnung der zwischen $x$-Achse und $e^{- 2 \pi i \xi t} f(t)$ eingeschlossenen Fläche betrachten.
+
+<Callout emoji="💡">
+  Ein Integral ($\int_{a}^{b} g(x) dx$) gibt die **Fläche** zwischen x-Achse und
+  dem Graphen von $g(x)$ im Bereich von $a$ bis $b$ an. Dabei werden Flächen
+  oberhalb der x-Achse als positiv angesehen und Flächen unterhalb als negativ.
+</Callout>
+
+Wenn angenommen wird, dass $f(t) \in \mathbb{R}$ und somit ausschließlich **reelle** Funktionswerte annimmt, was bei obiger Funktion der Fall ist, dann ist $\Im(f(t)) = 0$ für alle $t$.
+
+Im Folgenden wird $\Re(e^{- 2 \pi i \xi t} f(t))$ und $\Im(e^{- 2 \pi i \xi t} f(t))$ in Abhängigkeit der Zeit $t$ dargestellt.
+Es gilt:
+
+$$
+e^{- 2 \pi i \xi t} f(t) = \cos(- 2 \pi \xi t) \cdot f(t) + i \sin(- 2 \pi \xi t) \cdot f(t)
+$$
+
+
+<WaveCheck fixed_periodendauer={4} leftBound={-8} rightBound={8}/>
+
+Es lässt sich erkennen, dass ein Maximum im Frequenzspektrum genau da entsteht, wo $\xi$ der Frequenz des $\sin$-Terms der Funktion $f(t)$ entspricht.
+Es konnten also mithilfe der **Fourier-Transfomation** die Frequenzbestandteile eines nicht-periodischen Signals herausgefunden werden. Die **Fourier-Reihe** bzw. der Zusammenhang für den **Fourier-Koeffizienten** konnte hierbei nicht angewendet werden, da es sich nicht um einen periodische Funktion handelt ($f(t) = f(t+T)$ gilt nicht für alle $t$).
+
+<Callout emoji="🚧" >Dieser Abschnitt wird womöglich noch etwas erweitert.</Callout>
+
+## Ausblick: FFT
+
+Berechtigterweise kann man sich die Frage stellen, wie man den hergeleiteten Zusammenhang in der Realität anwendet. Wenn es sich um *kompliziertere* Funktionen $f(t)$ handelt, wobei die Funktionsgleichung unbekannt ist und z.B. lediglich Messwerte vorhanden sind, lässt sich die **Diskrete Fourier-Transfomation** anwenden, welche im nächsten Kapitel erklärt wird.
+Wenn man die **Diskrete Fourier-Transfomation** mit dem Computer durchführen will, was selbstverständlich von hoher Bedeutung ist, wurden ursprünglich ziemlich viele Berechnungen benötigt. 1965 wurde eine deutlich effizietere Implementierung entdeckt: der Algorithmus der **Schnellen-Fourier-Transfomation (FFT)**. Dieser Algorithmus gewann an viel Bedeutung und wird heute, aufgrund seiner vielfältigen Einsatzmöglichkeiten, als einer der wichtigsten Algorithmen angesehen.
+
+
+{/**
+
+<Callout emoji="💡">
+  Genaugenommen notiert man hier nicht direkt die $\infty$-Symbole, sondern notiert diese wiefolgt als Grenzwert:
+  $$
+  A = \lim_{n\to \infty}\int_{-n}^{n} p(t) dt
+  $$
+  $$\lim_{n\to \infty}$$ bedeutet hierbei einfach, dass sich $n$ immer näher an $\infty$ nähert.
+</Callout>
+
+
+
+<Callout type="info" emoji="📚">
+  Der obige Hinweis reicht für das Verständis dieses Artikels aus. Falls du
+  jedoch mehr über Integralrechnung erfahren möchtest, schau dir doch mal diesen
+  [Wikipedia-Artikel zu
+  Integralen](https://de.wikipedia.org/wiki/Integralrechnung) an.
+</Callout>
+
+Ist das Integral $A$ gleich $0$, stimmen die Periodendauern nicht überein. Anderenfalls stimmen die beiden überein.
+
+
+<ExpandableCallout title="Warum ist das so?">
+  Stimmen die Periodendauern der einzelnen Schwingungen nicht über ein, gibt es Zeitpunkte, bei denen sie phasengleich sind und Zeitpunkte bei denen sie nicht phasengleich sind. Über einen sehr großen Zeitraum treten alle Phasenkombinationen gleich häufig auf und annulieren sich.
+
+Stimmen die Periodendauern jedoch überein, ist $p(t)$ immer positiv:
+
+Es soll gezeigt werden:
+
+$$
+p(t) \geq 0
+$$
+
+$$
+f(t) \cdot g(t) \geq 0
+$$
+
+$$
+A \cdot sin(\omega_1 \cdot t) \cdot B \cdot sin(\omega_2 \cdot t) \geq 0
+$$
+
+Aufgrund der Kommutativität der Multiplikation, gilt:
+
+$$
+AB \cdot sin(\omega_1 \cdot t) \cdot sin(\omega_2 \cdot t) \geq 0
+$$
+
+Die Sinus-Funktion kann mithilfe von [komplexen Zahlen](../appendix/complex-numbers/1-complex-plane) als $sin(x) = \frac{e^{ix}-e^{-ix}}{2i}$ geschrieben werden:
+
+$$
+AB \cdot \frac{e^{i \cdot \omega_1 \cdot t}-e^{-i \cdot \omega_1 \cdot t}}{2i} \cdot \frac{e^{i \cdot \omega_2 \cdot t}-e^{-i \cdot \omega_2 \cdot t}}{2i}\geq 0
+$$
+
+Aufgrund der Kommutativität der Multiplikation, gilt:
+
+$$
+\frac{AB}{(2i)^2} \cdot (e^{i \cdot \omega_1 \cdot t}-e^{-i \cdot \omega_1 \cdot t}) \cdot (e^{i \cdot \omega_2 \cdot t}-e^{-i \cdot \omega_2 \cdot t} )\geq 0
+$$
+
+Für das Quadrat der [komplexen Zahl](../appendix/complex-numbers/1-complex-plane) $i$ gilt: $i^2=-1$:
+
+$$
+-\frac{AB}{4} \cdot (e^{i \cdot \omega_1 \cdot t}-e^{-i \cdot \omega_1 \cdot t}) \cdot (e^{i \cdot \omega_2 \cdot t}-e^{-i \cdot \omega_2 \cdot t} )\geq 0
+$$
+
+Den Faktor $\frac{AB}{4}$ ignorieren wir ab hier erstmal.
+
+Aufgrund des Distributivgesetzes gilt:
+
+$$
+- (e^{i \cdot \omega_1 \cdot t} \cdot (e^{i \cdot \omega_2 \cdot t}-e^{-i \cdot \omega_2 \cdot t} )-e^{-i \cdot \omega_1 \cdot t} \cdot (e^{i \cdot \omega_2 \cdot t}-e^{-i \cdot \omega_2 \cdot t} ))\geq 0
+$$
+
+$$
+- (e^{i \cdot \omega_1 \cdot t} \cdot e^{i \cdot \omega_2 \cdot t}- e^{i \cdot \omega_1 \cdot t} \cdot e^{-i \cdot \omega_2 \cdot t} -e^{-i \cdot \omega_1 \cdot t} \cdot e^{i \cdot \omega_2 \cdot t}+e^{-i \cdot \omega_1 \cdot t}  \cdot e^{-i \cdot \omega_2 \cdot t} )\geq 0
+$$
+
+Eines der Exponetengesetze besagt, $a^b \cdot a^c = a^{(b+c)}$:
+
+$$
+- (e^{i \cdot (\omega_1+\omega_2) \cdot t}- e^{i \cdot (\omega_1 - \omega_2) \cdot t}  -e^{i \cdot (\omega_2 -\omega_1) \cdot t}+e^{-i \cdot (\omega_1 + \omega_2) \cdot t})\geq 0
+$$
+
+Da hier die Periodendauern gleich sind, gilt: $\omega_1 = \omega_2 \Rightarrow \omega_1 - \omega_2 = 0$
+
+$$
+- (e^{i \cdot (\omega_1+\omega_2) \cdot t}- e^{0}  -e^{0}+e^{-i \cdot (\omega_1 + \omega_2) \cdot t})\geq 0
+$$
+
+Für $\forall a \in \mathbb{C}$ gilt: $a^0 = 1$
+
+$$
+- (e^{i \cdot (\omega_1+\omega_2) \cdot t}- 1  -1+e^{-i \cdot (\omega_1 + \omega_2) \cdot t})\geq 0
+$$
+
+Aufgrund des Distributivgesetzes, kann man das Minus auf alle Terme innerhalb der Klammer anwenden:
+
+$$
+ (-e^{i \cdot (\omega_1+\omega_2) \cdot t} + 1  +1-e^{-i \cdot (\omega_1 + \omega_2) \cdot t})\geq 0
+$$
+
+Aufgrund der Kommutativität der Addition, gilt:
+
+$$
+ (1 -e^{i \cdot (\omega_1+\omega_2) \cdot t} +1-e^{-i \cdot (\omega_1 + \omega_2) \cdot t})\geq 0
+$$
+
+$\omega_1$ und $\omega_2$ sind beide Element der reellen Zahlen $\mathbb{R}$, somit ist auch die Summe $\omega_1 + \omega_2$ Element der reelen Zahlen $\mathbb{R}$.\
+Der reelle Teil von $e^{-a}$ liegt im Intervall $[-1;1]$, wenn $a$ eine reelle Zahl $\mathbb{R}$ ist ($a \in \mathbb{R}$).
+
+Also definiert man $k$ als eine beliebige reelle Zahle im Intervall $[-1;1]$:
+
+$$
+ (1 -k +1-k)\geq 0
+$$
+
+$(1-k)$ ist größer-gleich $0$, da $k$ maximal $1$ sein kann.
+Also ist der Term $(1 -k +1-k) \geq 0$.
+
+Somit haben wir herausgefunden, das das Vorzeichen von $p(t)$ dem Vorzeichen von $\frac{AB}{4}$ entspricht (es existieren auch Zeitpunkte, wo $p(t) = 0$ ist).
+
+Da $A$ und $B$ ungleich $0$ sein müssen, kann man folgende Tabelle aufstellen:
+
+$$
+\begin{array}{c|c|c}
+\text{Vorzeichen } A & \text{Vorzeichen } B & \text{Vorzeichen } p(t) \\ \hline
++ & + & +\\
++ & - & -\\
+- & + & - \\
+- & - & +\\
+
+\end{array}
+$$
+
+**Was sagt uns das jetzt über das Integral?**\
+Da unzählbar unendlich viele Stellen $(\aleph_1)$existieren, bei denen $p(t)$ ungleich $0$ ist (Auf einen Beweis wird hier verzichte.) und alle jene Stellen das selbe Vorzeichen haben, muss der Betrag des Integrals $\infty$ sein. Das Vorzeichen entspricht dabei dem Vorzeichen von $A\cdot B$.
+
+</ExpandableCallout>
+
+### Integral ohne Unendlich
+
+Da es häufig schwierig ist ein Integral von $-\infty$ bis $\infty$ zu berechnen, kann man zur Vereinfachung sehr große Grenzen nehmen,
+da dies zur Annäherung ausreicht.
+
+<Callout>
+  Der numerische Wert ist hierbei nicht der einzige ausschlaggebende Wert. Die _"Größe"_ der Grenzen hängt auch von der Periodendauer der Schwingungen ab.
+
+Beispiel:\
+ Hat man eine Schwingung mit der Periodendauer $T_1=1$ umfassen die Grenzen von $-10$ bis $10$ 20 Perioden, was meist für die Auswertung ausreicht.
+Sollte es sich im Gegensatz dazu, um eine Schwingung mit der Periodendauer $T_2=100$ handeln, würden die Grenzen zu klein sein, da nur ein sehr geringer Ausschnitt einer einzigen Periode betrachtet werden würde.
+
+</Callout>
+
+In diesem Beispiel nehmen wir als Grenzen mal $-1000$ und $1000$ an.
+
+$$
+A = \int_{-1000}^{1000} p(t) dt
+$$
+
+<WaveCheck fixed_periodendauer={4} leftBound={-1000} rightBound={1000} />
+
+Führt man diese Auswertung nun für alle Periodendauern durch und stellt diese in einem Diagramm dar, erhält man einen Graphen, der einem die "Richtigkeit" der Periodendauer angibt.
+
+
+
+Dieser Graph ist allerdings nur sehr schwer zu bestimmen, da man das Integral für jeden Wert neu bestimmen muss und der Ausdruck sehr rechenaufwändig ist. Dies ist dir vielleicht bereits beim Laden der Seite aufgefallen, da das Erstellen des Graphens bei langsameren Geräten sehr viel Zeit in Anspruch nimmt.
+
+Die Lücke bei $T=4$ entsteht dadurch, dass dort eine Division durch $0$ stattfindet, wodurch der Wert Unendlich groß wird und eine Definitionslücke entsteht. Zur Verdeutlichung ist hier eine Näherung der Einhüllenden in lila angezeigt.
+
+<Callout type="info" emoji="📚">
+  Falls du wissen möchtest, wie dieser Graph entstanden ist, kannst du dies im
+  Anhang nachlesen: [Herleitung Integral für
+  Fourier-Transformation](../appendix/other/integral-derivation) an.
+</Callout>
+
+### Anwendung
+
+Mit einer einzigen Welle, ist die Periodendauer noch sehr einfach mit dem Auge abzulesen, weshalb sich der Aufwand nicht lohnt. Das wahre Potenzial der Fourier-Transformation entfaltet sich erst, wenn man komplexe Funktionen mit vielen Anteilen zerlegen möchte.
+
+Zum Beispiel die Funktion ganz zu Anfang dieses Eintrages.
+
+Nochmal zu Erinnerung:
+
+<FixedWaveSummation
+  fixedCoordinates={[
+    [2, 3],
+    [0.5, 0.2],
+    [1, 1],
+    [5, 2],
+    [7, 1],
+    [0.1, 0.05],
+  ]}
+/>
+
+<DynamicProductIntegral waveCoordinates={[
+    [2, 3],
+    [0.5, 0.2],
+    [1, 1],
+    [5, 2],
+    [7, 1],
+    [0.1, 0.05],
+
+]}
+
+lowerBound={-10}
+upperBound={10}
+step={0.5}
+maxX={8.2}
+minX={-0.2}
+
+/>
+
+Mithilfe dieser Kurve kann man nun die Einzelnen Periodendauern bestimmen. Diese sind in lila eingezeichnet.
+**/}

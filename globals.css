@@ -1,30 +1,10 @@
-@import 'mafs/index.css';
-@import 'tailwindcss/base';
+@import "mafs/core.css";
+@import "mafs/font.css";
+@import "katex/dist/katex.min.css";
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
-@import 'tailwindcss/components';
-
-@import 'tailwindcss/utilities';
-
-@font-face {
-  font-family: 'Computer Modern';
-  src: url('http://mirrors.ctan.org/fonts/cm-unicode/fonts/otf/cmunss.otf');
-}
-@font-face {
-  font-family: 'Computer Modern';
-  src: url('http://mirrors.ctan.org/fonts/cm-unicode/fonts/otf/cmunsx.otf');
-  font-weight: bold;
-}
-@font-face {
-  font-family: 'Computer Modern';
-  src: url('http://mirrors.ctan.org/fonts/cm-unicode/fonts/otf/cmunsi.otf');
-  font-style: italic, oblique;
-}
-@font-face {
-  font-family: 'Computer Modern';
-  src: url('http://mirrors.ctan.org/fonts/cm-unicode/fonts/otf/cmunbxo.otf');
-  font-weight: bold;
-  font-style: italic, oblique;
-}
-.MafsView {
-  font-family: 'Computer Modern Serif', serif;
-}
+.katex-display > .katex { white-space: normal }
+.katex-display > .base { margin: 0.25em 0 }
+.katex-display { margin: 0.5em 0; }
