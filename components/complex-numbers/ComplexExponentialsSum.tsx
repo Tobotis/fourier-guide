@@ -1,9 +1,7 @@
 import * as React from 'react'
 import {
   Mafs,
-  Plot,
   Coordinates,
-  Theme,
   Vector,
   useStopwatch,
   Circle,

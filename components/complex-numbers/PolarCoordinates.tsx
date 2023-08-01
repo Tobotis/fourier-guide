@@ -9,7 +9,6 @@ import {
   Plot,
   vec
 } from 'mafs'
-//import { Angle } from '../../utils/mafs_extended/Angle'
 
 const PolarCoordinates = () => {
   const tip = useMovablePoint([2, 1], {

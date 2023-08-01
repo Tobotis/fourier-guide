@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { InlineMath } from 'react-katex'
 import ProductIntegral from './FixedProductIntegral'
-//import { Integral } from '../utils/mafs_extended/Integral'
 import {
   Mafs,
   Plot,

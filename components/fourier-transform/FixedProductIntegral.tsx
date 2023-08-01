@@ -3,10 +3,6 @@ import {
   Mafs,
   Plot,
   Coordinates,
-  useMovablePoint,
-  MovablePoint,
-  Text,
-  Vector,
   Theme,
   Line,
 } from 'mafs'
