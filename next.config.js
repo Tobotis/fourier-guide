@@ -1,22 +1,12 @@
-const remarkMath = require('remark-math')
-const rehypeKatex = require('rehype-katex')
-
-const withNextra = require('nextra')({
-  theme: 'nextra-theme-docs',
-  themeConfig: './theme.config.jsx',
-  // ...
-  mdxOptions: {
-    remarkPlugins: [remarkMath],
-    rehypePlugins: [rehypeKatex],
-  },
-  images: {
-    unoptimized: true,
-  },
-})
+const withNextra = require("nextra")({
+  theme: "nextra-theme-docs",
+  themeConfig: "./theme.config.jsx",
+  latex: true,
+});
 
 module.exports = withNextra({
   i18n: {
-    locales: ['en', 'de'],
-    defaultLocale: 'en',
+    locales: ["en", "de"],
+    defaultLocale: "en",
   },
-})
+});

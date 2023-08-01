@@ -1,5 +1,8 @@
 {
-  "trigonometric-identities": "Trigonmetric Identities",
-  "complex-numbers": "Complex Numbers",
-  "other": "Miscellaneous"
+  "1-sine-angle-sum": "Sine-Angle-Sum",
+  "2-cosine-angle-sum": "Cosine-Angle-Sum",
+  
+    "fourier-series-examples": "Examples for Fourier-Series"
+  
+  
 }

@@ -8,3 +8,4 @@ examples
 packages
 out
 .vscode
+next-env.d.ts

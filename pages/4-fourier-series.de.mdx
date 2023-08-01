@@ -1,0 +1,601 @@
+import SignalPlotter from '../components/fourier-series/SignalPlotter.tsx'
+import Harmonics from '../components/fourier-series/Harmonics.tsx'
+import ComplexExpoentialsSum from '../components/complex-numbers/ComplexExponentialsSum.tsx'
+import FourierSeries from '../components/fourier-series/FourierSeries.tsx'
+import MCQComponent from '../components/general/MultipleChoiceQuestion.tsx'
+import SingleSignal from '../components/fourier-series/SingleSignal.tsx'
+import PeriodicSignal from '../components/fourier-series/PeriodicSignal.tsx'
+import { Callout } from 'nextra-theme-docs'
+import ComplexConjugates from '../components/complex-numbers/ComplexConjugates.tsx'
+import {
+  Coordinates,
+  Mafs,
+  Plot,
+  Text,
+  Point,
+  Line,
+} from 'mafs'
+
+# Fourier-Reihen
+
+## Motivation der Fourier-Reihen
+
+Im Abschnitt [_Periodische Funktionen_](./1-periodic-functions) wurde die Frage gestellt, inwiefern jede periodische Funktion $f(t)$ in der Schreibweise:
+
+$$
+f(t) = \sum_{k=-n}^n c_k e^{2 \pi i k f_0 t } \qquad \text{ (dies ist noch keine Fourier-Reihe)}
+$$
+
+ausgedrückt werden kann. Diese Frage soll in diesem Abschnitt beantwortet werden. Zudem soll ein Verfahren ermittelt werden, mit welchem man die Koeffizienten $c_k$ bestimmen kann, wenn eine bestimmte periodische Funktion $f(t)$ bekannt ist.
+
+Warum sollte man jedoch überhaupt versuchen eine bekannte periodische Funktion $f(t)$ mithilfe einer Summe der obigen Form darzustellen?
+
+### Rechtecksignal
+
+Man kann zum Beispiel das Signal, welches der Funktion $f(t) = \begin{cases} 1 \text{ wenn } \lfloor t \rfloor \text{ gerade} \\ -1 \text{ wenn } \lfloor t \rfloor \text{ ungerade} \end{cases}$ entspricht, betrachten:
+
+<Callout>
+  $\lfloor x \rfloor$ bedeutet, dass $x$ abgerundet wird. Also z.B. $\lfloor 0.8
+  \rfloor = 0$ oder $\lfloor 5.99 \rfloor = 5$
+</Callout>
+
+<SignalPlotter f={(x) => 2 * (1 - Math.abs(Math.floor(x) % 2) - 0.5)} />
+
+<Callout type="info" emoji="📚">
+  Nachlesen zur Rechteckschwingung: [Wikipedia:
+  Rechteckschwingung](https://de.wikipedia.org/wiki/Rechteckschwingung)
+</Callout>
+
+Dieses Signal ist beispielsweise relevant in der Informationsübertragung (Kodierung von $1$ und $0$ mit verschiedenen Spannungen).
+
+Da es jedoch nicht möglich einen Spannungsanstieg innerhalb von $0s$ hervorzurufen, ist es relevant, eine andere Annäherung für diese Funktion zu finden, was z.B. durch die **Fourier-Reihe** erreicht werden kann.
+Bis jetzt ist jedoch noch nicht klar, ob es überhaupt möglich ist eine solche Funktion mit einer Summe von komplexen Exponentialfunktionen zu modellieren.
+
+---
+
+Im Folgenden wird die **Grundfrequenz** mit einer Periodendauer $f_0 = \frac{1}{T}$ ausgedrückt, um den Funktionsnamen $f(t)$ und das $f$ der Frequenz nicht zu verwechseln:
+
+$$
+f(t) = \sum_{k=-n}^n c_k e^{\frac{2 \pi i k}{T} t }
+$$
+
+$T$ beschreibt dabei die Zeit, welche für eine Periode benötigt wird: $f(t) = f(t+T)$
+
+## Komplexe Funktionen
+
+Um sich der obigen Frage anzunähern, lassen sich die Koeffizienten $c_k$ nochmal etwas genauer betrachten.
+
+### Darstellung von Funktionswerten
+
+Um mehr Intuition über die Modellierung eines periodischen Vorgangs durch die Summe
+
+$$
+f(t) = \sum_{k=-n}^n c_k e^{\frac{2 \pi i k}{T} t }
+$$
+
+zu bekommen, lassen sich die Funktionswerte auf einer [komplexen Ebene](../appendix/complex-numbers/1-complex-plane) betrachten.
+
+<MCQComponent
+  questionData={{
+    question: "Was würde für $f(t)$ gelten, wenn nur $c_1 = 0.5$ gesetzt wird und die Eigenschaft der konjugierten komplexen Koeffizienten beachtet wird?",
+    options: [
+      {
+        text: '$f(t) = 0.5  e^{\\frac{2 \\pi i }{T} t } + 0.5 e^{\\frac{-2 \\pi i}{T} t }$',
+        isCorrect: true,
+      },
+      {
+        text: "$f(t) = 0.5 e^{\\frac{2 \\pi i }{T} t }$",
+        isCorrect: false,
+      },
+      {
+        text: "$f(t) =  e^{\\frac{2 \\pi i }{T} t }$",
+        isCorrect: false,
+      },
+    ],
+  }}
+/>
+
+Wenn man die Ergebnisse von $f(t)$ auf der komplexen Ebene betrachtet, wird deutlich, dass sich die Ergebnisse lediglich auf der _Realteil-Achse_ befinden:
+
+<ComplexExpoentialsSum
+  ak={[
+    [0.5, 0, 1],
+    [0.5, 0, -1],
+  ]}
+  xExtent={[-2.75, 2.75]}
+  yExtent={[-1.75, 1.75]}
+/>
+
+Warum sich die komplexen Exponentialfunktionen als Rotationen verstehen lassen, sollte aus dem Abschnitt [_komplexe Exponentialfunktion_](../appendix/complex-numbers/2-complex-exponentials) bekannt sein.
+Zudem sollte die Addition als Vektoraddition bekannt sein. Die Vektoren der einzelnen komplexen Zahlen bzw. komplexen Exponentialfunktionen, werden im Folgenden auch als **Zeiger** bezeichnet.
+
+Die obige Darstellungsweise ist womöglich etwas ungewohnt, da die Funktionswerte alleine dargestellt werden und nicht etwa in Abhängigkeit der Funktionseingaben ($t$). Aus diesem Grund bewegen sich **reelle Funktionswerten** lediglich in einer Dimension.
+
+Wenn man die Werte der **Realteil** Achse jedoch gegen die Zeit auftragen würde, würde man eine harmonische Schwingung erkennen. Es handelt sich um $f(t) = \sin (\frac{2 \pi}{T} t)$, da für die Koeffizientenübersetzung $c_k = \frac{1}{2}(a_k-b_k i)$ gilt und somit mit $c_1 = 0.5$
+
+$$
+1 = a_1-b_1 i \Leftrightarrow a_1 = 1
+$$
+
+Mit $a_1 = 1$ und
+
+$$
+f(t) = \frac{a_0}{2} + \sum_{k=1}^n a_k \sin \left(\frac{2 \pi k}{T} t\right)+ b_k \cos \left(\frac{2 \pi k}{T} t \right)
+$$
+
+folgt also $f(t) = \sin(\frac{2 \pi}{T} t)$.
+
+### Begründung reeller Funktionswerte
+
+Durch die Eigenschaft der **komplexen konjugierten Koeffizienten** wird garantiert, dass es nur **reelle Funktionswerte** gibt. Dies wurde bereits im Abschnitt [_Periodische Funktionen_](./1-periodic-functions) durch das Umformen der Summe
+
+$$
+\begin{equation}
+f(t) = \frac{a_0}{2} + \sum_{k=1}^n a_k \sin \left(\frac{2 \pi k}{T} t\right)+ b_k \cos \left(\frac{2 \pi k}{T} t \right)
+\end{equation}
+$$
+
+welche ausschließlich **reelle Funktionswerte** erzeugt, in die Summe
+
+$$
+\begin{equation}
+f(t) = \sum_{k=-n}^n c_k e^{\frac{2 \pi i k}{T} t }
+\end{equation}
+$$
+
+mit der Koeffizientenübersetzung
+
+$$
+c_k =
+\begin{cases}
+\frac{1}{2}(a_k - b_k i) &  \text{ wenn } k > 0 \\
+\frac{a_0}{2} & \text{ wenn } k = 0 \\
+\overline{c}_{-k} & \text{ wenn } k < 0\\
+\end{cases}
+$$
+
+gezeigt. Es wurde gezeigt, dass die beiden Summenausdrücke ($(1)$ und $(2)$) äquivalent sind, insofern die Koeffizienten richtig übersetzt werden.
+Somit muss immer wenn die Eigenschaft gilt, dass $c_k = \overline{c}_{-k}$ für $k <0$ folgen, dass es ausschließlich **reelle Funktionswerte** gibt, da sich $(2)$ in
+$(1)$ übersetzen ließe.
+
+Berechtigterweise kann man sich die Frage stellen, was passiert, wenn die Bedingung: $c_k = \overline{c}_{-k}$ für $k <0$, nicht erfüllt ist.
+Um folgende Formulierungen und Folgerungen allgemeiner gestalten zu können und somit auch komplexe Funktionswerte zuzulassen, wird der Ausdruck $(2)$ ohne die Bedingung betrachet.
+Somit befinden sich die Ausgaben nicht unbedigt ausschließlich auf der _Realteil-Achse_.
+
+Die Eigenschaft der **konjugierten komplexen Zahlen** lässt sich auch visuell darstellen und verstehen. In der folgenden Darstellung lässt sich die Summe der Terme $c_{-1} \cdot e^{- \frac{2 \pi }{T} t}$ und $c_{1} \cdot e^{- \frac{2 \pi }{T} t}$ mit der Eigenschaft von **konjugierten komplexen Zahlen** betrachten.
+
+<ComplexConjugates />
+
+Dadurch, dass die Koeffizienten $c_k$ und $c_{-k}$ in der obigen Summe $(2)$ jeweils **konjugierte komplexe Zahlen sind**, sind die beiden Zeiger, welche sich mit der gleichen Frequenz ($\frac{k}{T}$) jedoch durch das negative Vorzeichen in unterschiedliche Richtungen drehen, **achsensymmetrisch** zur _Realteil-Achse_. Dies wird dadurch verursacht, dass die Startposition der Zeiger durch die **konjugierten komplexen Zahlen** $c_k$ und $c_{-k}$ festgelegt werden (**konjugierte komplexe Zahlen** sind liegen immer achsensymmetrisch zur _Realteil-Achse_).
+
+Dadurch kommt es also zustande, dass nur **reelle Zahlen** entstehen, wenn die Eigenschaft $c_{-k} = \overline{c_k}$ gegeben ist.
+
+## Ermittlung der Koeffizienten
+
+Es ist zwar noch nicht klar, ob es möglich ist jede periodische Funktion mit der obigen Summe zu modellieren.
+Im Folgenden wird jedoch betrachtet, was für die Koeffizienten $c_k$ folgen würde, wenn es so wäre.
+Wenn also gelten würde:
+
+$$
+f(t) = \sum_{k=-n}^n c_k e^{\frac{2 \pi i k}{T} t }
+$$
+
+Wie müssten dann die Koeffizienten $c_k$ in Abhängigkeit von $f(t)$ gewählt werden?
+
+Dabei wird jedoch auch zugelassen, dass $f(t) \in \mathbb{C}$ und somit die Eigenschaft $c_{-k} = \overline{c_k}$ nicht gegeben ist.
+Man bestimme also die Koeffizienten $c_k$ mit $k<0$ unabhängig von $c_k$ mit $k>0$.
+
+Das Einzige, was bekannt ist, ist die Funktion $f(t)$ (in welcher Form das genau der Fall ist wird später relevant), und die Periodendauer der Funktion $f$. Also $T$ mit $f(t) = f(t+T)$ für alle $t \in \mathbb{R}$.
+
+### Überlegung mithilfe von durchschnittlichen Funktionswerten
+
+Zunächst lässt sich zum Beispiel überlegen, wie der _einfachste_ Koeffizient $c_0$ gewählt werden müsste.
+Dieser entspricht wie zuvor herausgestellt, einer Verschiebung.
+Das liegt daran, dass $c_0$ mit $e^{\frac{2 \pi i \cdot 0}{T} t} = 1$ multipliziert wird. Wenn man also die Ergebnisse der Summe auf der komplexen Ebene betrachtet, entspricht der $c_0$ Koeffizient einer konstanten Verschiebung vom Ursprung.
+
+Im Folgenden ist das Ergebnis der Summe $(1)$ mit $c_0 = 2+i$, $c_1 = 2$ und $c_2 = i$ dargestellt. Der Rest der Koeffizienten ist $0$.
+
+<ComplexExpoentialsSum
+  ak={[
+    [2, 1, 0],
+    [2, 0, 1],
+    [0, 1, 2],
+  ]}
+  showPath={true}
+/>
+
+<MCQComponent
+  questionData={{
+    question: "Wo liegt der durchschnittliche Wert der obigen Funktion, wenn man eine Periode der gesamten Schwingung betrachtet?",
+    options: [
+      {
+        text: 'Bei $0$',
+        isCorrect: false,
+      },
+      {
+        text: "Bei $1+i$",
+        isCorrect: false,
+      },
+      {
+        text: "Bei $2+i$",
+        isCorrect: true,
+      },
+      {
+        text: "Man kann keine Aussage darüber treffen",
+        isCorrect: false,
+      }
+    ],
+  }}
+/>
+
+
+Eine Herangehensweise zu obiger Frage könnte über die durchschnittlichen Werte der einzelnen Schwingungsbeiträge sein.
+Da alle Schwingungsbeiträge per Definition der Summe, eine Frequenz haben, welche einem ganzzahliges Vielfachen der **Grundfrequenz** (Frequenz der gesamten Schwingung) entspricht, muss jeder **rotierende Zeiger** eine ganzzahlige Anzahl an Rotationen vollführen.
+
+Wenn man nun einen Zeiger separat betrachtet und dieser eine ganzzahlige Anzahl an Malen um den Ursprung rotiert, dann muss dieser Zeiger logischerweise einen durchschnittlichen Wert von $0$ haben.
+
+Da dies für jeden Zeiger gilt, welcher eine ganzzahlige Anzahl an Malen in der Zeit einer Periode rotiert, hängt der durchschnittliche Funktionswert nur von jenen Zeigern ab, welche nicht rotieren.
+Da nur der Zeiger, welcher aus dem Term $c_0 \cdot e^{0} = c_0$ resultiert, nicht rotiert, ist somit der durchschnittliche Funktionswert nur von $c_0$ abhängig. Der durchschnittliche Funktionswert entspricht also dadurch, dass $c_0$ konstant ist, $c_0$.
+
+**Was bringt das nun?** Wenn der durchschnittliche Funktionswert in einer Periode genau $c_0$ entspricht, dann ließe sich $c_0$ bestimmen, wenn $f(t)$ un die Periodendauer $T$ bekannt sind. Man berechne also mithilfe den durchschnittlichen Funktionswert einer bekannten Funktion $f(t)$ innerhalb einer Zeitspanne von $T$.
+
+Somit ließe sich schonmal der Koeffizient $c_0$ bestimmen. Man ist also dem Ziel, alle Koeffizienten der Summendarstellung zu bestimmen, um $f(t)$ anders auszudrücken, etwas näher.
+
+### Bestimmung von durchschnittlichen Funktionswerten
+
+Um den durchschnittlichen Funktionswert einer Funktion über eine Periode zu bestimmen folgt:
+
+$$
+c_0 = \frac{1}{T} \int_0^{T} f(t) dt
+$$
+
+<Callout>
+  Für den durchschnittlichen Funktionswert $\overline{y}$ einer Funktion $f(x)$
+  in einem Intervall $[a,b]$ gilt: 
+  $$
+  \begin{equation*}
+  \overline{y} = \frac{1}{b - a} \int_a^{b} f(x) dx 
+  \end{equation*}
+  $$
+  Das Integral kann hierbei als eine Art Summierung aller Funktionswerte verstanden werden.
+  Wenn man den Durchschnitt (bzw. arithmetischen Mittelwert) $\overline{a}$ einer diskreten (d.h. abzählbaren Größe) berechnet, gilt der Zusammenhang:
+  $$
+  \overline{a} = \frac{1}{n} \sum_{k=1}^n a_k
+  $$
+  wobei $n$ der Anzahl an Werten entspricht.
+  Wenn es sich nun um Funktionswerte handelt, welche nicht diskret, sondern kontinuierlich vorliegen, wird die diskrete Summe zu einem kontinuierlichen Integral.
+</Callout>
+
+### Verallgemeinerung des Verfahrens auf alle Koeffizienten
+
+Die obige [Idee](#überlegung-mithilfe-von-durchschnittlichen-funktionswerten), den durchschnittlichen Funktionswert auszunutzen, um den Wert eines Koeffizienten zu bestimmen, welcher zur konstanten Verschiebung gehört, lässt sich tatsächlich für alle Koeffizienten anwenden.
+
+Man könnte versuchen jeweils einen spezifischen rotierenden Zeiger, zu einem Zeiger zu verändern, welcher für eine konstante Verschiebung sorgt. Dabei müssen jedoch alle anderen Zeiger eine ganzzahlige Anzahl an Malen um den Ursprung rotieren.
+
+Um einen spezifischen Koeffizienten $c_m$ herauszufinden, probiert man also die Funktion $f(t)$ so zu manipulieren, dass genau der Zeiger $m$ _stehen bleibt_
+und somit _alleinig_ den durchschnittlichen Funktionswert der manipulierten Funktion beeinflusst. Folgend könnte man $c_m$ analog zu $c_0$ ermitteln.
+
+Hier nochmal der Summenausdruck:
+
+$$
+f(t) = \sum_{k=-n}^n c_k e^{\frac{2 \pi i k}{T} t }
+$$
+
+<MCQComponent
+  questionData={{
+    question: "Wie könnte man die oben beschriebene Manipulation für $c_m$ erreichen?",
+    options: [
+      {
+        text: 'Multiplikation mit $e^{\\frac{2 \\pi i m}{T}t}$',
+        isCorrect: false,
+      },
+      {
+        text: "Multiplikation mit $e^{-\\frac{2 \\pi i m}{T}t}$",
+        isCorrect: true,
+      },
+      {
+        text: "Multiplikation mit $c_k$",
+        isCorrect: false,
+      },
+      {
+        text: "Multiplikation mit $-c_k$",
+        isCorrect: false,
+      },
+      {
+        text: "Es ist nicht möglich",
+        isCorrect: false,
+      }
+    ],
+  }}
+/>
+
+Es besteht weiterhin die Annahme, dass $f(t)$ mit der Summendarstellung von komplexen Exponentialfunktionen angenähert werden kann.
+Wenn die Funktion $f(t)$ mit $e^{-\frac{2 \pi i m}{T}t}$ multipliziert würde für die Summendarstellung von $f(t)$ folgen, dass alle Zeiger, außer der Zeiger mit dem Term $e^{\frac{2 \pi i m}{T}t}$ rotieren, da gilt:
+
+$$
+c_m \cdot e^{\frac{2 \pi i m}{T}t} \cdot e^{-\frac{2 \pi i m}{T}t} = c_m
+$$
+
+Die Multiplikation mit $e^{-\frac{2 \pi i m}{T}t}$ kann man als Rotation der gesamten Funktion $f(t)$ sehen, welche die Rotation $e^{\frac{2 \pi i m}{T}t}$ _rauskürzt_. Somit erscheint der Koeffizient $c_m$ wie eine konstante Verschiebung.
+
+Da es nur genau diesen einen Term mit $k=m$ gibt, wird auch nur genau dieser Zeiger $m$ die konstante Verschiebung von Ursprung beeinflussen.
+
+
+    <ComplexExpoentialsSum
+      ak={[
+        [2, 1, 0],
+        [2, 0, 1],
+        [0, 1, 2],
+      ]}
+      width={400}
+      height={300}
+      xExtent={[-6, 6]}
+      yExtent={[-4, 4]}
+    />
+  
+Hier sieht man eine mögliche Funktion. Der Verlauf dieser Funktion auf der komplexen Ebene ist also bekannt. Wenn es nun so wäre, dass man die Funktion mit einer Summe aus komplexen Exponentialfunktionen modellieren kann, dann ließe sich die Schwingung mit einer Aneinanderkettung von rotierenden Zeigern visualisieren (wie oben). Selbstverständlich ist jedoch unbekannt, welche Koeffizienten für die verschiedenen Schwingungsbeiträge gewählt werden müssen. In der Darstellung wird die Funktion aus Demonstrationszwecken bereits mit Zeigern modelliert, um das oben erklärte Verfahren zu zeigen.
+
+
+    <ComplexExpoentialsSum
+      ak={[
+        [2, 1, -1],
+        [2, 0, 0],
+        [0, 1, 1],
+      ]}
+      width={400}
+      height={300}
+      xExtent={[-6, 6]}
+      yExtent={[-4, 4]}
+    />
+
+  Wenn man nun die gesamte Funktion durch den ersten Exponentialfunktionsterm teil (bzw. Multiplikation mit negativen Exponenten), dann ändert sich offensichtlich der Verlauf der Funktion. In der Zeigermodellierung würden nun alle Zeiger außer der Erste rotieren. Man hat die Rotation des ersten Zeigers rausgekürzt und die Rotation aller anderen Zeiger um das negative der Rotation des ersten Zeigers verändert. Dies ist z.B. beim "nullten" Zeiger zu sehen. Man könnte sich also nun den durchschnittlichen Funktionswert über eine Periode anschauen, um die konstante Verschiebung von Ursprung berechnen. Diese würde dann dem Koeffizienten des ersten Terms entsprechen.
+
+Verwirrend erscheint womöglich, dass man die Funktion $f(t)$ die ganze Zeit
+bereits im Zeigermodell betrachtet, obwohl man die Koeffizienten der
+Summendarstellung und somit die Zeiger noch gar nicht kennt. Die obigen
+Darstellungen sollen jedoch nur illustrieren, wie eine Funktion $f(t)$ in der Summendarstellung aussähe.
+
+Wenn nur die Funktion $f(t)$ bekannt ist, kennt man nur den resultierenden Funktionswert zu einem gegebenen Zeitpunkt. Dieser entspricht der Spitze des letzten Zeigers in obiger Darstellung.
+Wenn man jedoch diesen Punkt für ein Zeitintervall $[t,t+T]$ kennt und weiß, dass die Funktion $f(t)$ mit dem Summenausdruck modelliert werden kann, dann weiß man, dass dieser Punkt das Ergebnis einer Addition mehrerer rotierender Zeiger ist.
+Manche Koeffizienten könnten selbstverständlich auch $0$ sein, was dazu zu erkennen wäre, dass $0$ der durchschnittliche Funktionswert von $f(t) \cdot e^{\frac{-2 \pi i m}{T} t}$ ist.
+
+Mit der Idee von durchschnittlichen Funktionswerten über die Periodendauer und einer geschickten _Manipulation_ der Funktion lassen sich somit alle Koeffizienten $c_m$ bestimmen:
+
+$$
+c_m = \frac{1}{T}\int_0^{T} f(t) e^{\frac{-2 \pi i m}{T} t} dt
+$$
+
+### Algebraischer Ansatz
+
+Wenn der [obige Ansatz](#%C3%BCberlegung-mithilfe-von-durchschnittlichen-funktionswerten) nicht überzeugend genug war, lässt sich der Zusammenhang auch algebraisch herleiten.
+Man will also den Wert eines bestimmten Koeffizienten bestimmen.
+
+Für die Ermittlung einer gesuchten Variable, lernt man, dass man diese Variable auf einer Seite der Gleichung isolieren soll.
+Wenn also beispielsweise ein Koeffizient $c_m$ ($-n\leq m\leq n$) gesucht ist, folgt mit algebraischen Umformungen:
+
+$$
+\begin{equation*}
+\begin{split}
+\sum_{k=-n}^n c_k e^{2 \pi i k\frac{1}{T} t } &= f(t) \\
+c_m e^{2 \pi i m\frac{1}{T}t}+ \sum_{\substack{k=-n \\ k\neq m}}^n c_k e^{2 \pi i k\frac{1}{T}t} &= f(t) \qquad | -\sum_{\substack{k=-n \\ k\neq m}}^n c_k e^{2 \pi i k\frac{1}{T}t}\\
+c_m e^{2 \pi i m\frac{1}{T}t} & = f(t) - \sum_{\substack{k=-n \\ k\neq m}}^n c_k e^{2 \pi i k\frac{1}{T}t} \qquad | \cdot e^{-2 \pi i m\frac{1}{T}t}\\
+c_m & = f(t) \cdot e^{-2 \pi i m\frac{1}{T}t} - \sum_{\substack{k=-n \\ k\neq m}}^n c_k e^{2 \pi i k\frac{1}{T}t} \cdot e^{-2 \pi i m\frac{1}{T}t}\\
+c_m & = f(t) \cdot e^{-2 \pi i m\frac{1}{T}t} - \sum_{\substack{k=-n \\ k\neq m}}^n c_k e^{2 \pi i (k-m)\frac{1}{T}t}\\
+\end{split}
+\end{equation*}
+$$
+
+Nun lassen sich beide Seiten nach $t$ über das Intervall $[0,T]$ integrieren:
+
+$$
+\begin{equation*}
+\begin{split}
+\int_{0}^{T} c_m dt & = \int_{0}^{T} f(t) e^{-2 \pi i m\frac{1}{T}t} dt - \sum_{\substack{k=-n \\ k\neq m}}^n \int_{0}^{T} c_k e^{2 \pi i (k-m)\frac{1}{T}t} dt\\
+\left[c_m t\right]^T_0 &= \int_{0}^{T} f(t) e^{-2 \pi i m\frac{1}{T}t} dt - \sum_{\substack{k=-n \\ k\neq m}}^n c_k \left[ \frac{1}{2 \pi i (k-m)\frac{1}{T}} e^{2 \pi i (k-m)\frac{1}{T}t}\right]^T_0\\
+c_m \cdot T &= \int_{0}^{T} f(t) e^{-2 \pi i m\frac{1}{T}t} dt - \sum_{\substack{k=-n \\ k\neq m}}^n \frac{c_k}{2 \pi i (k-m)\frac{1}{T}} \left(  e^{2 \pi i (k-m)} - 1\right) \qquad | \quad * \\
+c_m \cdot T &= \int_{0}^{T} f(t) e^{-2 \pi i m\frac{1}{T}t} dt - \sum_{\substack{k=-n \\ k\neq m}}^n \frac{c_k}{2 \pi i (k-m)\frac{1}{T}} \left( 1 - 1\right)\\
+c_m \cdot T &= \int_{0}^{T} f(t) e^{-2 \pi i m\frac{1}{T}t} dt \qquad | : T\\
+c_m &= \frac{1}{T} \int_{0}^{T} f(t) e^{-2 \pi i m\frac{1}{T}t} dt\
+\end{split}
+\end{equation*}
+$$
+
+$*$ hierbei ist relevant, dass $e^{2 \pi i a} = 1$ mit $a \in \mathbb{Z}$ (a ist eine ganze Zahl). Dies wird in [_Komplexe Exponentialfunktion_](../appendix/complex-numbers/2-complex-exponentials) deutlich.
+Dadurch, dass es sich bei $k-m$ um eine ganze Zahl handelt, folgt also $e^{2 \pi i (k-m)} = 1$
+
+Es sind einige Argumentationspunkte aus [der Verallgemeinerung von durchschnittlichen Funktionswerten](#verallgemeinerung-des-verfahrens-auf-alle-koeffizienten) in der algebraischen Herleitung wiederzuerkennen.
+Zum Beispiel, dass das Integral über eine Periode für alle Terme mit $k\neq m$, $0$ ergibt. Dies wurde zuvor mit der Idee begründet, dass jeder Zeiger mit $k\neq m$ eine ganzzahlige Anzahl an Rotation um den Ursprung vollführt.
+
+Es ist jedoch schön zu sehen, wie die mehr oder weniger geometrische Intuition und algebraische Umformungen zur gleichen Lösung führen:
+
+$$
+\begin{equation}
+c_m = \frac{1}{T}\int_0^{T} f(t) e^{\frac{-2 \pi i m}{T} t} dt
+\end{equation}
+$$
+
+Wenn $f(t)$ bekannt ist ließen sich also die Koeffizienten $c_m$ bestimmen.
+
+## Von Summe zu Reihe
+
+Es wurde herausgefunden, wie man die Koeffizienten $c_k$ bestimmen könnte, insofern:
+
+$$
+f(t) = \sum_{k=-n}^n c_k e^{\frac{2 \pi i}{T} k t }
+$$
+
+gilt. Ein Parameter, welcher jedoch bis jetzt unbeachtet geblieben ist, ist die Anzahl an Summanden $n$.
+
+Zudem ist weiterhin die Frage offen, inwiefern jede beliebige periodische Funktion $f(t)$ mit dieser Summe dargestellt werden kann.
+Um diese Frage zu beantworten, muss man zunächst $n$ betrachten. Wenn beispielsweise $n=1$ und es sich somit lediglich um zwei Summanden handelt, kann offensichtlicherweise nicht jede periodische Funktion angenähert werden.
+
+### Rechteckschwingung
+
+Wenn man z.B. die bereits gezeigte Rechteckschwingung
+
+$$
+f(t) = \begin{cases} 1 \text{ wenn } \lfloor t \rfloor \text{ gerade} \\ -1 \text{ wenn } \lfloor t \rfloor \text{ ungerade} \end{cases}
+$$
+
+(mit $T=2$) in Summenschreibweise ausdrücken will, könnte man versuchen sich die Koeffizienten $c_m$ mit dem ermittelten Verfahren herzuleiten:
+
+$$
+c_m = \frac{1}{2} \int_0^2 f(t) e^{\frac{-2 \pi i m}{2} t} dt
+$$
+
+Dadurch, dass $f(t)$ abschnittsweise definiert ist, lässt sich das Integral in zwei Teile aufspalten:
+
+$$
+\begin{equation*}
+\begin{split}
+c_m &= \frac{1}{2} \left(\int_0^1 1 \cdot e^{-\pi i m t} dt + \int_1^2 -1 \cdot e^{-\pi i m t} dt \right) \\
+c_m &= \frac{1}{2}  \left(\left[-\frac{1}{ \pi i m } e^{- \pi i m t}\right]_0^1 - \left[-\frac{1}{ \pi i m } e^{- \pi i m t}\right]_1^2 \right)\\
+c_m &= -\frac{1}{2 \pi m i}  \left(\left[e^{- \pi i m t}\right]_0^1 - \left[e^{- \pi i m t}\right]_1^2 \right)\\
+c_m & = -\frac{1}{2 \pi m i} \left((e^{-\pi i m} - 1) - (e^{- 2 \pi i m } - e^{-  \pi i m })\right) \qquad | \text{ mit } e^{2 \pi i a} = 1 \text{ für } a \in \mathbb{Z}\\
+c_m & = -\frac{1}{\pi m i} \left((-1)^{m} - 1\right) \qquad | \text{ mit } e^{- \pi i} = -1 \\
+\end{split}
+\end{equation*}
+$$
+
+Nun kann eine Fallunterscheidung getroffen werden, da der Term $\left((-1)^{m} - 1\right)$ nur zwei verschiedene Werte in Abhängigkeit von $m$ annimmt:
+
+$$
+c_m =
+\begin{cases}
+\frac{2}{\pi i m} & \text{wenn } m \text{ ungerade}\\
+0 & \text{wenn } m \text{ gerade}\\
+\end{cases}
+$$
+
+Im Folgenden lässt sich $n$ variieren:
+
+<FourierSeries
+  ithC={(x) => [0, x % 2 ? -2 / (Math.PI * x) : 0]}
+  f={(x) => 2 * (1 - Math.abs(Math.floor(x) % 2) - 0.5)}
+  omega={Math.PI}
+/>
+
+Es lässt sich erkennen, dass die Summe zwar ungefähr auf der gewünschten Funktion $f(t)$ liegt, jedoch gibt es eine bestimmte Abweichung.
+
+<MCQComponent
+  questionData={{
+    question: "Was passiert vermutlich wenn $n \\to \\infty$?",
+    options: [
+      {
+        text: 'Die Abweichung geht gegen $0$',
+        isCorrect: true,
+      },
+      {
+        text: "Es gibt keine Veränderung der Abweichung",
+        isCorrect: false,
+      },
+      {
+        text: "Die Abweichung geht gegen $\\infty$",
+        isCorrect: false,
+      },
+    ],
+  }}
+/>
+
+Dies ist kein mathematischer Beweis, jedoch lässt sich intuitiv sagen, dass eine größere Anzahl an Termen, für eine geringere Abweichung und eine bessere Annäherung sorgt.
+
+### Unendliche Anzahl von Termen
+
+Durch [Joseph Fourier's](https://de.wikipedia.org/wiki/Joseph_Fourier) Überlegungen, wurde später deutlich, dass jede periodische Funktion $f(t)$ mit der Periodendauer $T$, welche bestimmte Eigenschaften erfüllt, mit
+
+$$
+f(t) = \sum_{k=-\infty}^{\infty} c_k e^{\frac{2 \pi i}{T} k t }
+$$
+
+beschrieben werden kann.
+Dabei handelt es sich um eine **unendliche** Summe und somit eine **Reihe**, die **Fourier-Reihe**.
+Die Frage warum _unendlich_ viele Terme benötigt werden lässt sich intuitiv damit beantworten, dass es sich in manchen Fällen um nicht **stetige** Funktionen handelt, welche mit der Summendarstellung repräsentiert werden sollen.
+Es ist unmöglich mit einer endlichen Summe an **stetigen** Funktionen ($\sin$ und $\cos$) darzustellen.
+Aus diesem Grund werden, wie im obigen Beispiel illustriert, unendlich viele **Koeffizienten** auch **Fourier-Koeffizienten** $c_k$ benötigt.
+
+<Callout type="info" emoji="📚">
+  Die *Eigenschaften* welche eine Funktion $f(t)$ erfüllen muss, werden unter
+  [Wikipedia:
+  Dirichlet-Bedingung](https://en.wikipedia.org/wiki/Dirichlet%E2%80%93Jordan_test)
+  präzisiert. Es ist jedoch so, dass sich *"almost any well behaved periodic
+  function"* mit der **Fourier-Reihe** darstellen lässt. Dies ist möglicherweise
+  etwas unbefriedigend, da diese Antwort auf die Ausgangsfrage etwas schwammig
+  ist. Die *Bedingungen* beinhalten jedoch z.B., dass das Integral der
+  Funktion nicht unendlich groß sein darf, da sonst die
+  **Fourier-Koeffizienten** nicht existieren würden.
+  Spezifischer:
+  $$
+  \int_{0}^{T} |f(t)| dt < \infty
+  $$
+</Callout>
+
+In der Realität lassen sich häufig nur eine endliche Anzahl an Termen summieren. Aus diesem Grund stellt man sich berechtigterweise die Frage, wie viele Terme man braucht um eine zuverlässige Annäherung zu erhalten.
+Weitere Beispiel für Darstellungen von Signalen mit der **Fourier-Reihe** sind unter [_Beispiele für Fourier-Reihen_](../appendix/other/fourier-series-examples) zu finden.
+
+## Schlussfolgerung
+
+Nach dem Lesen dieses Abschnittes sollte klar sein, dass eine periodische Funktion $f(t)$ mit der **Fourier-Reihe**:
+
+$$
+f(t) = \sum_{k=-\infty}^{\infty} c_k e^{\frac{2 \pi i}{T} k t }
+$$
+
+angenähert bzw. beschrieben werden kann. Für die **Fourier-Koeffizienten** $c_k$ folgt dabei:
+
+$$
+c_k = \frac{1}{T}\int_0^{T} f(t) e^{\frac{-2 \pi i k}{T} t} dt
+$$
+
+Man kann sich ausgiebig Gedanken über die **Konvergenz** der **Fourier-Reihe** Gedanken machen. In diesem Abschnitt sollte jedoch lediglich geklärt werden, woher die **Fourier-Reihe** kommt, und wie man sie möglicherweise anwenden kann.
+
+## Ausblick: Fourier-Transformation
+
+Mit der **Fourier-Transformation** werden die obigen Ideen auch auf **nicht-periodische Phänomene** ausgeweitet.
+
+Es gibt zwar viele Phänomene, welche periodisches Verhalten aufweisen, jedoch gibt es in der Realität häufig solche, welche nur in einem bestimmte Zeitintervall existieren, bzw. betrachtet werden.
+
+Also eine Funktion $f(t)$, welche nur für ein bestimmtes Intervall $[a,b]$ betrachtet wird und außerhalb dieses Intervalls $0$ ist.
+Zudem scheitert die **Fourier-Reihe**, wenn folgende Funktion analysiert werden soll:
+
+  <Mafs>
+    <Coordinates.Cartesian />
+    <Plot.OfX y={(x) => Math.sin(10 * x) * Math.exp(-1 * x ** 2)} />
+  </Mafs>
+
+Es könnte sich zum Beispiel ein kurzeitiger Ton handeln.
+Man könnte diese Problematik wie folgt umgehen:
+
+<SingleSignal />
+
+Es handelt sich hierbei um ein einzelnes Signal, welches somit nur in einem Intervall von a bis b Werte annimmt. Man kann jedoch eine Periodizität erzwingen, indem man das einzelne Signal einfach wiederholt.
+<PeriodicSignal />
+Das Signal wurde somit künstlich erweitert. Diese Technik wird auch Periodisierung genannt. Obwohl man sich nur für einen bestimmten Abschnitt interessiert, lassen sich nun mathematische Werkzeuge für perdiodisches Verhalten anwenden.
+
+Die Technik der Periodisierung wird im Grunde auch bei der **Fourier-Transformation** angewandt
+
+<MCQComponent
+  questionData={{
+    question: "Was könnte man tun um das Signal unabhängig von $a$ und $b$ zu periodisieren?",
+    options: [
+      {
+        text: 'Eine sehr kleine Periodendauer $T$ wählen.',
+        isCorrect: false,
+      },
+      {
+        text: "Eine sehr große Periodendauer wählen.",
+        isCorrect: true,
+      },
+      {
+        text: "Die Periodendauer $T=1$ wählen.",
+        isCorrect: false,
+      },
+    ],
+  }}
+/>
+
+Es liegt zugrunde, dass man die **Periodendauer** gegen unendlich gehen lässt ($T \to \infty$).
+Somit würde sich das _nicht-periodische_ Phänomen quasi in _unendlicher_ Zeit nur ein einmal wiederholen.
+Eine Idee wäre also, die **Fourier-Reihe** zu verallgemeinern, indem man einfach die Periodendauer unendlich groß macht und dadurch auch auf nicht-periodische Phänomene anwenden kann.
+Es stellt sich heraus, dass sich damit auch Signale analysieren lassen, welche über keine oszillierenden (schwingenden) Anteile verfügen.
+
+Dies ist jedoch nicht ganz so einfach möglich. Eine Umsetzung dieser Idee befindet sich im nächsten Abschnitt.

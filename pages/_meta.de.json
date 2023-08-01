@@ -1,9 +1,11 @@
 {
-  "index": "Übersicht",
-  "motivation": "Motivation",
-  "fourier-analysis": "Kapitel 1: Fourier-Analysis",
-  "fft": "Kapitel 2: FFT",
-  "appendix": "Kapitel X: Anhang",
+  "index": "Übersicht & Motivation",
+  "1-complex-plane": "1. Komplexe Zahlen",
+  "2-complex-exponentials": "2. Komplexe e-Funktion",
+  "3-periodic-functions": "3. Periodische Funktionen",
+  "4-fourier-series": "4. Fourier-Reihen",
+  "5-fourier-transform": "5. Fourier-Transformation",
+  "appendix":"Anhang",
   "references": "Verweise",
   "about": {
     "type": "page",

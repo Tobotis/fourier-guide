@@ -1,9 +1,5 @@
 import { Callout } from 'nextra-theme-docs'
-import FrameMafs from '../components/FrameMafs.tsx'
-import VectorFieldExample from '../components/VectorFieldExample.tsx'
-import QuestionAnswer, { Answer } from '../components/QuestionAnswer.tsx'
-import TestFrame from '../components/TestFrame.tsx'
-import LinkButton from '../components/LinkButton.tsx'
+import MCQComponent from '../components/general/MultipleChoiceQuestion.tsx'
 import Image from 'next/image'
 
 # Fourier... ? Eine Einführung
@@ -13,25 +9,34 @@ import Image from 'next/image'
 <Image src="/fourier-guide.png" width={1920} height={1080} />
 ___
 
-Nach dem Lesen dieses Artikels solltest du einen Überblick über die **Fourier-Transformation** und den Algorithmus der **Schnellen-Fourier-Transformation** haben. Es steht dabei vor allem im Vordergrund, dass keine Annahmen getätigt werden,
-sondern ein Verständnis auf dem Fundament der Schulphysik/-mathematik aufgebaut wird.
+Nach dem Lesen dieses Artikels wirst du einen umfassenden Überblick über die Fourier-Transformation haben. <br/>
+ Dabei legen wir besonderen Wert darauf, dass keine voreiligen Annahmen getroffen werden und das Verständnis auf den Grundlagen der Schulmathematik aufbaut. <br/>
+Es ist von großer Bedeutung, dass du aktiv beim Lernen mitwirkst und dir selbst Gedanken über den Inhalt machst. Die Entwicklung einer intuitiven Verständnisweise spielt dabei eine entscheidende Rolle, um den Inhalt plausibel nachvollziehen zu können. Aus diesem Grund werden während des Artikels immer wieder Zwischenfragen gestellt, die zum Nachdenken anregen. Diese **Zwischenfragen** sind wie folgt strukturiert:
 
-Es ist wichtig, sich selbst Gedanken über den Inhalt zu machen und _aktiv_ zu lernen. Dabei ist vor allem die Intuition wichtig um sich den Inhalt plausibel zu machen.
-Aus diesem Grund werden kleine Zwischenfragen zum Nachdenken gestellt, diese sind wie folgt aufgebaut:
+<MCQComponent
+  questionData={{
+    question: 'Was ist $\\sin(0)$?',
+    options: [
+      {
+        text: "$0$",
+        isCorrect: true,
+      },
+      {
+        text: '$1$',
+        isCorrect: false,
+      },
+      {
+        text: '$\\pi$',
+        isCorrect: false,
+      },
+    ],
+  }}
+/>
 
-<QuestionAnswer>
-  <>Was ist $\sin(0)$?</>
-  <Answer correct={true}>$0$</Answer>
-  <Answer> $1$ </Answer>
-  <Answer>$\pi$</Answer>
-</QuestionAnswer>
-
-Es ist nicht schlimm, wenn man manche Fragen nicht beantworten kann.
+Es ist nicht schlimm, wenn du manche Fragen nicht sofort beantworten kannst.
 Man sollte jedoch versuchen die richtige Antwort nachzuvollziehen und sich plausibel zu machen.
 
-## Anmerkungen
-
-Zudem befinden sich an manchen Stellen Anmerkungen:
+Zudem befinden sich an manchen Stellen **Anmerkungen**, welche auf verschiedene Dinge hinweisen sollen:
 
 <Callout>
   Diese Anmerkungen sind für Ergänzungen mathematischer Natur, welche teilweise
@@ -43,6 +48,42 @@ Zudem befinden sich an manchen Stellen Anmerkungen:
   Dies ist jedoch nicht essentiell für das Verstehen des Artikels.
 </Callout>
 
-## Anhang
+## Motivation
 
-Auch die Inhalte im Anhang sind zu empfehlen. Diese sind essentiell zum Verständnis mancher Zusammenhänge, haben jedoch keinen Platz in der direkten Umgebung von **Fourier-Transformation** gefunden. Speziell die Einführung in [**komplexe Zahlen**](./appendix/complex-numbers/1-complex-plane) und die [**komplexe Exponentialfunktion**](./appendix/complex-numbers/2-complex-exponentials) ist zu empfehlen.
+> The Fast-Fourier-Transform is the most important numerical algorithm of our lifetime.  
+> ~ <cite>[Gilbert Strang](https://en.wikipedia.org/wiki/Gilbert_Strang), amerikanischer Mathematiker</cite>
+
+Die **Schnelle-Fourier-Transformation** (bzw. **FFT**) ist ein Algorithmus zur sehr _schnellen_ Durchführung einer bestimmten Art der **Fourier-Transformation**.  
+Zunächst soll jedoch geklärt werden, warum eine **Fourier-Transformation** so relevant ist.
+
+---
+
+In diesem Artikel wird zunächst die **Fourier-Reihe** betrachtet. Diese bietet umfangreiche Möglichkeiten zur Untersuchung **periodischer Phänomen**.
+
+Mit der **Fourier-Transformation** lassen sich die Ideen der **Fourier-Reihe** auch auf nicht-periodische Phänomene verallgemeinern, indem man die **Periodendauer** gegen unendlich gehen lässt. Was das bedeutet, wird später deutlich.
+Die **Fourier-Transformation** kann auch unabhängig von der **Fourier-Reihe** betrachtet und verstanden werden, jedoch soll in diesem Artikel zunächst auf die **Fourier-Reihe** eingegangen werden und daraus die **Fourier-Transformation** hervorgehen.
+
+## Anwendungszwecke
+
+Es lassen sich zahlreiche Anwendungszwecke der **Fourier-Transformation** bzw. sogar spezifischer, nur des Algorithmus der **FFT** auflisten.
+
+<br />
+
+| Anwendungsbereich der Fourier-Transformation | Beschreibung |
+|---------------------------------------------|--------------|
+| Bildverarbeitung                             | Die Fourier-Transformation wird in der Bildverarbeitung verwendet, um das Frequenzspektrum eines Bildes zu analysieren. Dies ermöglicht zum Beispiel die Entfernung von periodischem Rauschen oder das Erkennen von Mustern und Strukturen in einem Bild. |
+| Signalverarbeitung                           | In der Signalverarbeitung wird die Fourier-Transformation genutzt, um Signale in den Frequenzbereich zu übertragen. Dadurch können verschiedene Eigenschaften des Signals, wie Amplituden und Phasen, analysiert und verändert werden. Dies ist besonders nützlich für die Rauschunterdrückung, Filterung und Kompression von Signalen. |
+| Spektralanalyse                              | Die Fourier-Transformation ermöglicht die Spektralanalyse von Signalen. Sie erlaubt es, die Frequenzanteile eines Signals zu bestimmen und so Informationen über die enthaltenen Frequenzen und ihre Stärke zu gewinnen. Dies wird in vielen Bereichen wie der Akustik, Elektrotechnik und Physik eingesetzt. |
+| Datenkompression                             | Fourier-Transformationen werden in verschiedenen Kompressionsalgorithmen verwendet, um redundante Informationen in Daten zu identifizieren und zu entfernen. Durch die Umwandlung der Daten in den Frequenzbereich kann eine effiziente Kompression erreicht werden, indem weniger wichtige Frequenzanteile reduziert oder eliminiert werden. |
+| Quantenmechanik                              | Die Fourier-Transformation spielt eine wichtige Rolle in der Quantenmechanik. Sie ermöglicht die Darstellung von Zuständen und Operatoren im Impulsraum und erleichtert die Berechnung quantenmechanischer Effekte wie Tunneling und Wechselwirkungen. |
+| und viele mehr | ...
+
+## Ausgangsfrage
+
+Um den Nutzen von **Fourier-Reihe** und **Fourier-Transformation** zu illustrieren, addiert man **trigonometrische Funktionen** (z.B. $\sin$) mit verschiedenen Parametern.
+Es entsteht eine Funktion, welche sich aus der Überlagerung der verschiedenen $\sin$-Funktionen ergibt.
+Möchte man von dieser Funktion auf die ursprünglichen Anteilen zurückschließen, ist das manuell erstmal ziemlich schwierig.
+
+Man möchte sich also ein _mathematisches Werkzeug_ konstruieren, welches diese _Zerlegung_ in die **Frequenzbestandteile** durchführt. Ein solches Werkzeug soll in diesem Artikel erklärt werden.
+
+Kapitel [1](1-complex-plane) und [2](2-complex-exponentials) versuchen zunächst eine Einführung in **komplexe Zahlen** und **komplexe Exponentialfunktionen** bieten, dessen Verständnis und Interpretation essentiell für die nächsten Kapitel ist.
