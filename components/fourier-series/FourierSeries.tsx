@@ -18,7 +18,7 @@ const FourierSeries = ({
   yBExtent = [-3, 3],
   xAExtent = [-2, 2],
 }: FourierSeriesProps) => {
-  let [n, setN] = React.useState<number>(20)
+  let [n, setN] = React.useState<number>(5)
   let [ak, setAk] = React.useState<Array<[number, number, number]>>(
     generateAk(n)
   )
@@ -38,7 +38,7 @@ const FourierSeries = ({
           className="h-2.5"
           type="range"
           min={1}
-          max={100}
+          max={30}
           value={n}
           onChange={(event) => {
             setN(+event.target.value)

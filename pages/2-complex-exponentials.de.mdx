@@ -1,7 +1,10 @@
 import { Callout } from 'nextra-theme-docs'
 
-import ComplexExponential from '../components/complex-numbers/ComplexExponential.tsx'
-import ComplexExpoentialsSum from '../components/complex-numbers/ComplexExponentialsSum.tsx'
+
+import LazyWrapper from '../components/LazyWrapper';
+
+
+
 import MCQComponent from '../components/general/MultipleChoiceQuestion.tsx'
 
 # Komplexe Exponentialfunktion
@@ -186,7 +189,10 @@ Beim Term $z = 1+\frac{\theta i }{n}$ handelt es sich um eine komplexe Zahl mit 
 somit $n$ mal mit sich selbst multipliziert. Ein imaginärer Zinssatz macht selbstverständlich wenig Sinn. Jedoch lässt sich damit die Verbindung zwischen der Exponentialfunktion und den komplexen Zahlen illustrieren.
 Im Folgenden lässt sich ausprobieren, wie sich $\exp (\theta i)$ für verschiedene Approximationen und Winkel $\theta$ verhält.
 
-<ComplexExponential />
+<LazyWrapper
+  component={() => import('../components/complex-numbers/ComplexExponential.tsx')}
+  fallback={<div>Loading Complex Exponential...</div>}
+/>
 
 Es lässt sich eindeutig erkennen, dass sich der Term $(1+\frac{\theta i }{n})^n$ für immer größere $n$, der komplexen Zahl mit dem Winkel $\theta$ auf dem **Einheitskreis** annähert.
 
@@ -266,8 +272,14 @@ $$
 
 Dies lässt sich dann als eine Rotation verstehen, welche häufig mit einem Vektor bzw. **Zeiger** visualisiert wird:
 
-<ComplexExpoentialsSum ak={[[1, 0, 1]]} omega={(2 * Math.PI) / 5} />
-
+<LazyWrapper
+  component={() => import('../components/complex-numbers/ComplexExponentialsSum.tsx')}
+  props={{
+    ak: [[1, 0, 1]],
+    omega: (2 * Math.PI) / 5
+  }}
+  fallback={<div>Loading Complex Exponentials Sum...</div>}
+/>
 
 Wenn der Zeiger bei $1$ startet lässt sich erkennen, dass es sich beim **Realteil** um $\cos (2 \pi t)$ und beim **Imaginärteil** um $\sin (2 \pi t)$ handelt.
 
@@ -302,14 +314,19 @@ $$
 
 z.B. mit $f_1 = \frac{1}{4}$, $f_2 = \frac{1}{2}$ und $f_3 = 1$
 
-<ComplexExpoentialsSum
-  ak={[
+<LazyWrapper
+  component={() => import('../components/complex-numbers/ComplexExponentialsSum.tsx')}
+  props={{
+     ak:[
     [1, 0, 1],
     [1, 0, 2],
     [1, 0, 4],
-  ]}
-  omega={(2 * Math.PI) / 4}
+    ],
+    omega:(2 * Math.PI) / 4
+  }}
+  fallback={<div>Loading Complex Exponentials Sum...</div>}
 />
+
 
 ### Multiplikation mit Koeffizienten
 

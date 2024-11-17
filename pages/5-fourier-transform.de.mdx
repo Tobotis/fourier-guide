@@ -1,4 +1,4 @@
-import WaveCheck from '../components/fourier-transform/WaveCheck.tsx'
+
 import MCQComponent from '../components/general/MultipleChoiceQuestion.tsx'
 import { Callout } from 'nextra-theme-docs'
 import {
@@ -10,6 +10,9 @@ import {
   Line,
   LaTeX,
 } from 'mafs'
+
+import LazyWrapper from '../components/LazyWrapper';
+
 
 
 # Fourier-Transformation
@@ -357,7 +360,13 @@ e^{- 2 \pi i \xi t} f(t) = \cos(- 2 \pi \xi t) \cdot f(t) + i \sin(- 2 \pi \xi t
 $$
 
 
-<WaveCheck fixed_periodendauer={4} leftBound={-8} rightBound={8}/>
+<LazyWrapper
+  component={() => import('../components/fourier-transform/WaveCheck.tsx')}
+  props={{
+    fixed_periodendauer:4, leftBound:-8, rightBound:8
+  }}
+  fallback={<div>Loading Complex Exponentials Sum...</div>}
+/>
 
 Es lässt sich erkennen, dass ein Maximum im Frequenzspektrum genau da entsteht, wo $\xi$ der Frequenz des $\sin$-Terms der Funktion $f(t)$ entspricht.
 Es konnten also mithilfe der **Fourier-Transfomation** die Frequenzbestandteile eines nicht-periodischen Signals herausgefunden werden. Die **Fourier-Reihe** bzw. der Zusammenhang für den **Fourier-Koeffizienten** konnte hierbei nicht angewendet werden, da es sich nicht um einen periodische Funktion handelt ($f(t) = f(t+T)$ gilt nicht für alle $t$).

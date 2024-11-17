@@ -14,9 +14,9 @@ export default function ComplexPlaneAdder() {
   const tip2 = useMovablePoint([1, 2], { color: Theme.orange })
   const calcAttachment = (point: any) => {
     if (point[1] > 0) {
-      return 'n'
-    } else {
       return 's'
+    } else {
+      return 'n'
     }
   }
   return (

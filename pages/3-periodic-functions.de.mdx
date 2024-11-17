@@ -1,9 +1,10 @@
 import { Callout } from "nextra-theme-docs";
-import InteractiveSin from "../components/periodic-functions/InteractiveSin.tsx";
+
 import MCQComponent from '../components/general/MultipleChoiceQuestion.tsx'
-import SampleAddition from "../components/periodic-functions/SampleAddition";
-import UnitCircle from "../components/periodic-functions/UnitCircle";
-import ComplexExponentialsSum from "../components/complex-numbers/ComplexExponentialsSum.tsx";
+
+
+import LazyWrapper from '../components/LazyWrapper';
+
 
 # Periodische Funktionen
 
@@ -21,7 +22,11 @@ $$
 \sin(t) = \sin(t+2\pi) \qquad \text{und}\qquad \cos(t) = \cos(t+2\pi)
 $$
 
-<UnitCircle />
+<LazyWrapper
+  component={() => import('../components/periodic-functions/UnitCircle')}
+  fallback={<div>Loading Unit Circle...</div>}
+/>
+
 
 Es kann somit eine **harmonische Schwingung** erzeugt werden. Die ausführliche, trigonometrische Definition der Funktionen $\sin$ und $\cos$ soll hierbei erspart bleiben.
 
@@ -53,7 +58,11 @@ Dabei gilt:
 ____
 Im Folgenden lassen sich die obigen Parameter variieren:
 
-<InteractiveSin />
+
+<LazyWrapper
+  component={() => import("../components/periodic-functions/InteractiveSin.tsx")}
+  fallback={<div>Loading Interactive Sin...</div>}
+/>
 
 <MCQComponent
   questionData={{
@@ -104,7 +113,11 @@ $$
 g(t) = \sin(2 \pi \cdot t) + 2 \sin (2 \pi \cdot 2t)+  \sin(2 \pi \cdot 9t)
 $$
 
-<SampleAddition />
+<LazyWrapper
+  component={() => import('../components/periodic-functions/SampleAddition')}
+  fallback={<div>Loading Addition Sample</div>}
+/>
+
 
 <MCQComponent
   questionData={{

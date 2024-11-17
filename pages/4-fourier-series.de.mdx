@@ -1,12 +1,12 @@
 import SignalPlotter from '../components/fourier-series/SignalPlotter.tsx'
 import Harmonics from '../components/fourier-series/Harmonics.tsx'
-import ComplexExpoentialsSum from '../components/complex-numbers/ComplexExponentialsSum.tsx'
 import FourierSeries from '../components/fourier-series/FourierSeries.tsx'
 import MCQComponent from '../components/general/MultipleChoiceQuestion.tsx'
 import SingleSignal from '../components/fourier-series/SingleSignal.tsx'
-import PeriodicSignal from '../components/fourier-series/PeriodicSignal.tsx'
+
+import LazyWrapper from '../components/LazyWrapper';
+
 import { Callout } from 'nextra-theme-docs'
-import ComplexConjugates from '../components/complex-numbers/ComplexConjugates.tsx'
 import {
   Coordinates,
   Mafs,
@@ -17,6 +17,8 @@ import {
 } from 'mafs'
 
 # Fourier-Reihen
+
+
 
 ## Motivation der Fourier-Reihen
 
@@ -97,14 +99,19 @@ zu bekommen, lassen sich die Funktionswerte auf einer [komplexen Ebene](../appen
 
 Wenn man die Ergebnisse von $f(t)$ auf der komplexen Ebene betrachtet, wird deutlich, dass sich die Ergebnisse lediglich auf der _Realteil-Achse_ befinden:
 
-<ComplexExpoentialsSum
-  ak={[
+<LazyWrapper
+  component={() => import('../components/complex-numbers/ComplexExponentialsSum.tsx')}
+  props={{
+     ak:[
     [0.5, 0, 1],
     [0.5, 0, -1],
-  ]}
-  xExtent={[-2.75, 2.75]}
-  yExtent={[-1.75, 1.75]}
+  ],
+  xExtent:[-2.75, 2.75],
+  yExtent: [-1.75, 1.75]
+  }}
+  fallback={<div>Loading Complex Exponentials Sum...</div>}
 />
+
 
 Warum sich die komplexen Exponentialfunktionen als Rotationen verstehen lassen, sollte aus dem Abschnitt [_komplexe Exponentialfunktion_](../appendix/complex-numbers/2-complex-exponentials) bekannt sein.
 Zudem sollte die Addition als Vektoraddition bekannt sein. Die Vektoren der einzelnen komplexen Zahlen bzw. komplexen Exponentialfunktionen, werden im Folgenden auch als **Zeiger** bezeichnet.
@@ -164,7 +171,10 @@ Somit befinden sich die Ausgaben nicht unbedigt ausschließlich auf der _Realtei
 
 Die Eigenschaft der **konjugierten komplexen Zahlen** lässt sich auch visuell darstellen und verstehen. In der folgenden Darstellung lässt sich die Summe der Terme $c_{-1} \cdot e^{- \frac{2 \pi }{T} t}$ und $c_{1} \cdot e^{- \frac{2 \pi }{T} t}$ mit der Eigenschaft von **konjugierten komplexen Zahlen** betrachten.
 
-<ComplexConjugates />
+<LazyWrapper
+  component={() => import('../components/complex-numbers/ComplexConjugates.tsx')}
+  fallback={<div>Loading Complex Conjugates...</div>}
+/>
 
 Dadurch, dass die Koeffizienten $c_k$ und $c_{-k}$ in der obigen Summe $(2)$ jeweils **konjugierte komplexe Zahlen sind**, sind die beiden Zeiger, welche sich mit der gleichen Frequenz ($\frac{k}{T}$) jedoch durch das negative Vorzeichen in unterschiedliche Richtungen drehen, **achsensymmetrisch** zur _Realteil-Achse_. Dies wird dadurch verursacht, dass die Startposition der Zeiger durch die **konjugierten komplexen Zahlen** $c_k$ und $c_{-k}$ festgelegt werden (**konjugierte komplexe Zahlen** sind liegen immer achsensymmetrisch zur _Realteil-Achse_).
 
@@ -195,13 +205,18 @@ Das liegt daran, dass $c_0$ mit $e^{\frac{2 \pi i \cdot 0}{T} t} = 1$ multiplizi
 
 Im Folgenden ist das Ergebnis der Summe $(1)$ mit $c_0 = 2+i$, $c_1 = 2$ und $c_2 = i$ dargestellt. Der Rest der Koeffizienten ist $0$.
 
-<ComplexExpoentialsSum
-  ak={[
+
+<LazyWrapper
+  component={() => import('../components/complex-numbers/ComplexExponentialsSum.tsx')}
+  props={{
+     ak:[
     [2, 1, 0],
     [2, 0, 1],
     [0, 1, 2],
-  ]}
-  showPath={true}
+  ],
+  showPath:true
+  }}
+  fallback={<div>Loading Complex Exponentials Sum...</div>}
 />
 
 <MCQComponent
@@ -320,33 +335,36 @@ Die Multiplikation mit $e^{-\frac{2 \pi i m}{T}t}$ kann man als Rotation der ges
 
 Da es nur genau diesen einen Term mit $k=m$ gibt, wird auch nur genau dieser Zeiger $m$ die konstante Verschiebung von Ursprung beeinflussen.
 
-
-    <ComplexExpoentialsSum
-      ak={[
+<LazyWrapper
+  component={() => import('../components/complex-numbers/ComplexExponentialsSum.tsx')}
+  props={{
+ ak:[
         [2, 1, 0],
         [2, 0, 1],
         [0, 1, 2],
-      ]}
-      width={400}
-      height={300}
-      xExtent={[-6, 6]}
-      yExtent={[-4, 4]}
-    />
+      ],
+      xExtent:[-6, 6],
+      yExtent:[-4, 4]
+  }}
+  fallback={<div>Loading Complex Exponentials Sum...</div>}
+/>
   
 Hier sieht man eine mögliche Funktion. Der Verlauf dieser Funktion auf der komplexen Ebene ist also bekannt. Wenn es nun so wäre, dass man die Funktion mit einer Summe aus komplexen Exponentialfunktionen modellieren kann, dann ließe sich die Schwingung mit einer Aneinanderkettung von rotierenden Zeigern visualisieren (wie oben). Selbstverständlich ist jedoch unbekannt, welche Koeffizienten für die verschiedenen Schwingungsbeiträge gewählt werden müssen. In der Darstellung wird die Funktion aus Demonstrationszwecken bereits mit Zeigern modelliert, um das oben erklärte Verfahren zu zeigen.
 
 
-    <ComplexExpoentialsSum
-      ak={[
+<LazyWrapper
+  component={() => import('../components/complex-numbers/ComplexExponentialsSum.tsx')}
+  props={{
+ ak:[
         [2, 1, -1],
         [2, 0, 0],
         [0, 1, 1],
-      ]}
-      width={400}
-      height={300}
-      xExtent={[-6, 6]}
-      yExtent={[-4, 4]}
-    />
+      ],
+      xExtent:[-6, 6],
+      yExtent:[-4, 4]
+  }}
+  fallback={<div>Loading Complex Exponentials Sum...</div>}
+/>
 
   Wenn man nun die gesamte Funktion durch den ersten Exponentialfunktionsterm teil (bzw. Multiplikation mit negativen Exponenten), dann ändert sich offensichtlich der Verlauf der Funktion. In der Zeigermodellierung würden nun alle Zeiger außer der Erste rotieren. Man hat die Rotation des ersten Zeigers rausgekürzt und die Rotation aller anderen Zeiger um das negative der Rotation des ersten Zeigers verändert. Dies ist z.B. beim "nullten" Zeiger zu sehen. Man könnte sich also nun den durchschnittlichen Funktionswert über eine Periode anschauen, um die konstante Verschiebung von Ursprung berechnen. Diese würde dann dem Koeffizienten des ersten Terms entsprechen.
 
@@ -475,6 +493,7 @@ Im Folgenden lässt sich $n$ variieren:
   omega={Math.PI}
 />
 
+
 Es lässt sich erkennen, dass die Summe zwar ungefähr auf der gewünschten Funktion $f(t)$ liegt, jedoch gibt es eine bestimmte Abweichung.
 
 <MCQComponent
@@ -568,7 +587,14 @@ Man könnte diese Problematik wie folgt umgehen:
 <SingleSignal />
 
 Es handelt sich hierbei um ein einzelnes Signal, welches somit nur in einem Intervall von a bis b Werte annimmt. Man kann jedoch eine Periodizität erzwingen, indem man das einzelne Signal einfach wiederholt.
-<PeriodicSignal />
+
+
+
+<LazyWrapper
+  component={() => import('../components/fourier-series/PeriodicSignal.tsx')}
+  fallback={<div>Loading Periodic Signal...</div>}
+/>
+
 Das Signal wurde somit künstlich erweitert. Diese Technik wird auch Periodisierung genannt. Obwohl man sich nur für einen bestimmten Abschnitt interessiert, lassen sich nun mathematische Werkzeuge für perdiodisches Verhalten anwenden.
 
 Die Technik der Periodisierung wird im Grunde auch bei der **Fourier-Transformation** angewandt

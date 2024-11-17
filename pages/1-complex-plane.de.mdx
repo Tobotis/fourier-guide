@@ -2,15 +2,15 @@ import { Callout } from 'nextra-theme-docs'
 
 # Komplexe Ebene
 
-import ComplexPlaneAdder from '../components/complex-numbers/ComplexPlaneAdder.tsx'
-import ComplexPlaneRotation from '../components/complex-numbers/ComplexPlaneRotation.tsx'
-import ComplexPowers from '../components/complex-numbers/ComplexPowers.tsx'
+import LazyWrapper from '../components/LazyWrapper';
+
+
 import QuestionAnswer, { Answer } from '../components/general/QuestionAnswer.tsx'
 import MCQComponent from '../components/general/MultipleChoiceQuestion.tsx'
 import {Coordinates,Mafs,Plot,Text,Vector} from "mafs"
 import { BlockMath, InlineMath } from 'react-katex';
 
-import PolarCoordinates from '../components/complex-numbers/PolarCoordinates.tsx'
+
 
 
 ## Neue Zahlensysteme
@@ -148,7 +148,10 @@ Man kann sich die komplexe Zahlenebene also wie ein **kartesisches Koordinatensy
 
 Im Folgenden lässt sich die Addition von komplexen Zahlen betrachten. Sie funktioniert genauso so wie man es wahrscheinlich erwartet.
 
-<ComplexPlaneAdder />
+<LazyWrapper
+  component={() => import('../components/complex-numbers/ComplexPlaneAdder.tsx')}
+  fallback={<div>Loading Complex Plane Adder...</div>}
+/>
 <MCQComponent
   questionData={{
     question: 'Was ergibt $(2+2i)+ (-3+i)$?',
@@ -181,7 +184,10 @@ Dieser wird jedoch bei der Multiplikation von komplexen Zahlen sehr deutlich. Da
 
 Zunächst soll ein scheinbar bezugloses Phänomen betrachtet werden: die **Rotation** um $90°$ um den Ursprung:
 
-<ComplexPlaneRotation />
+<LazyWrapper
+  component={() => import('../components/complex-numbers/ComplexPlaneRotation.tsx')}
+  fallback={<div>Loading Complex Plane Rotation...</div>}
+/>
 
 Jeder Vektor bzw. Punkt auf der **komplexen Ebene** bzw. auch im **kartesischen Koordinatensystem** lässt sich um den Ursprung rotieren.
 
@@ -378,7 +384,10 @@ Jede komplexe Zahl ist eindeutig durch ihren Realteil $\Re$ und ihren Imaginärt
 
 Im Folgenden wird eine Zahl $a+bi$ auf der **komplexen Ebene** und der zugehörige **Winkel** zwischen dem Vektor der komplexen Zahl und der _Realteil-Achse_ betrachtet:
 
-<PolarCoordinates />
+<LazyWrapper
+  component={() => import('../components/complex-numbers/PolarCoordinates.tsx')}
+  fallback={<div>Loading Polar Coordinates...</div>}
+/>
 
 <MCQComponent
   questionData={{
@@ -547,7 +556,10 @@ Interessant ist zudem die Betrachtung von **Potenzen** komplexer Zahlen. Es hand
 
 Im Folgenden lässt sich ausprobieren, wie sich die **Potenzen** einer komplexen Zahl $z$ verhalten.
 
-<ComplexPowers interactive={true} />
+<LazyWrapper
+  component={() => import('../components/complex-numbers/ComplexPowers.tsx')}
+  fallback={<div>Loading Complex Powers...</div>}
+/>
 
 <MCQComponent
   questionData={{
