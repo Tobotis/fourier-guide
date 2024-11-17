@@ -9,6 +9,7 @@ interface FourierSeriesProps {
   omega: number
   yBExtent?: [number, number]
   xAExtent?: [number, number]
+  show?: boolean
 }
 
 const FourierSeries = ({
@@ -16,7 +17,7 @@ const FourierSeries = ({
   f,
   omega,
   yBExtent = [-3, 3],
-  xAExtent = [-2, 2],
+  xAExtent = [-2, 2],show=true
 }: FourierSeriesProps) => {
   let [n, setN] = React.useState<number>(5)
   let [ak, setAk] = React.useState<Array<[number, number, number]>>(
@@ -47,14 +48,14 @@ const FourierSeries = ({
         />
       </div>
       <div className="flex-col justify-center mt-3">
-        <ComplexExponentialsSum
+        {show?<ComplexExponentialsSum
           height={350}
           xExtent={xAExtent}
           yExtent={[-1.5, 1.5]}
           ak={ak ?? []}
           vectorSize={1}
           omega={omega * 0.2}
-        />
+        />:<></>}
         <ScrollingFunction
           height={350}
           slow={0.2}
